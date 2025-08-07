@@ -21,9 +21,12 @@
 
 ---
 
-### 📈 GitHub 活跃度图（贪吃蛇）
+###  GitHub 活跃度（贪吃蛇动画）
 
-![snake gif](./github-contribution-grid-snake.gif)
+<p align="center">
+  <img src="https://github.com/lora-sys/lora-sys/blob/output/github-contribution-snake.gif" alt="contribution snake">
+</p>
+
 
 
 ---
