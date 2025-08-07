@@ -23,7 +23,8 @@
 
 ### 📈 GitHub 活跃度图（贪吃蛇）
 
-![snake gif](https://github.com/lora/lora/blob/output/github-contribution-grid-snake.svg)
+![snake gif](./github-contribution-grid-snake.gif)
+
 
 ---
 
