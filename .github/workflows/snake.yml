@@ -2,24 +2,25 @@ name: Generate Snake Animation
 
 on:
   schedule:
-    - cron: "0 */12 * * *"      # 每 12 小时执行一次
-  workflow_dispatch:           # 支持手动触发
+    - cron: "0 0 * * *"   # 每天 UTC 0 点执行一次
+  workflow_dispatch:
 
 jobs:
-  build:
+  generate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Generate Snake GIF
+      - name: Generate GitHub Contribution Snake
         uses: Platane/snk@v3
         with:
-          github_user_name: ${{ github.repository_owner }}
+          github_user_name: lora-sys
           outputs: |
             dist/github-contribution-snake.gif
 
       - name: Push to output branch
-        uses: crazy-max/[email protected]
+        uses: crazy-max/ghaction-github-pages@v3
         with:
           target_branch: output
           build_dir: dist
