@@ -1,16 +1,36 @@
-## Hi there 👋
+<!-- 动态打字效果 -->
+<h1 align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=30&pause=1000&color=FF61D4&center=true&vCenter=true&width=435&lines=Hi+I'm+Lora!;Welcome+to+my+GitHub+profile!" alt="Typing SVG" />
+</h1>
 
-<!--
-**lora-sys/lora-sys** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+<!-- 简介 -->
+<p align="center">
+  👋 Hello! I'm <b>Lora</b>, a passionate developer who loves building cool things with code.<br>
+  🚀 Currently exploring full-stack development and contributing to open-source projects.<br>
+  💡 I enjoy solving real-world problems with elegant solutions.<br>
+  📫 Contact me: <a href="mailto:3526039967@qq.com">3526039967@qq.com</a>
+</p>
 
-Here are some ideas to get you started:
+---
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+### 🧠 About Me
+
+- 🌱 I’m currently learning **Web development**, **Python**, and **AI tools**
+- 💬 Ask me about **GitHub**, **coding**, or **coffee ☕**
+- 🛠️ Tech Stack: `HTML` `CSS` `JavaScript` `Python` `React` `Node.js`
+
+---
+
+### 📈 GitHub 活跃度图（贪吃蛇）
+
+![snake gif](https://github.com/lora/lora/blob/output/github-contribution-grid-snake.svg)
+
+---
+
+<!-- 社交图标（可选） -->
+<p align="center">
+  <a href="mailto:3526039967@qq.com">
+    <img src="https://img.shields.io/badge/Email-3526039967@qq.com-blue?style=flat-square&logo=gmail" />
+  </a>
+</p>
+
