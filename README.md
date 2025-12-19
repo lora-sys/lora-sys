@@ -21,6 +21,21 @@
 
 ---
 
+
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=lora-sys&show_icons=true&theme=tokyonight&hide_border=true" />
+</p>
+
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=lora-sys&layout=compact&theme=tokyonight&hide_border=true" />
+</p>
+
+<p align="center">
+  <img src="https://github-readme-streak-stats.herokuapp.com?user=lora-sys&theme=tokyonight&hide_border=true" />
+</p>
+
+
+---
 ###  GitHub 活跃度（贪吃蛇动画）
 
 <p align="center">
