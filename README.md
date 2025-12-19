@@ -32,6 +32,7 @@
 
 <p align="center">
   <img src="https://github-readme-streak-stats.herokuapp.com?username=lora-sys&theme=tokyonight&hide_border=true" />
+  [![GitHub Streak](https://streak-stats.demolab.com/?user=DenverCoder1)](https://git.io/streak-stats)
 </p>
 
 
