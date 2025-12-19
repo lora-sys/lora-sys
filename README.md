@@ -31,7 +31,7 @@
 </p>
 
 <p align="center">
-  <img src="https://streak-stats.demolab.com?user=你的用户名&theme=tokyonight&hide_border=true" />
+  <img src="https://streak-stats.demolab.com?user=lora-sys&theme=tokyonight&hide_border=true" />
 </p>
 
 ---
