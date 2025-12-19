@@ -31,9 +31,8 @@
 </p>
 
 <p align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com?user=lora-sys&theme=tokyonight&hide_border=true" />
+  <img src="https://streak-stats.demolab.com?user=你的用户名&theme=tokyonight&hide_border=true" />
 </p>
-
 
 ---
 ###  GitHub 活跃度（贪吃蛇动画）
