@@ -23,11 +23,11 @@
 
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=lora-sys&show_icons=true&theme=tokyonight&hide_border=true" />
+  <img src="https://github-readme-stats-sigma-fawn-45.vercel.app/api?username=lora-sys&show_icons=true&theme=tokyonight&hide_border=true" />
 </p>
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=lora-sys&layout=compact&theme=tokyonight&hide_border=true" />
+  <img src="https://github-readme-stats-sigma-fawn-45.vercel.app/api/top-langs/?username=lora-sys&layout=compact&theme=tokyonight&hide_border=true" />
 </p>
 
 <p align="center">
