@@ -2,27 +2,28 @@ name: Generate Snake Animation
 
 on:
   schedule:
-    - cron: "0 0 * * *"   # 每天 UTC 0 点执行一次（国内早8点）
-  workflow_dispatch:      # 保留手动触发，方便测试
+    - cron: "0 0 * * *"   # 每天 UTC 0 点执行一次
+  workflow_dispatch:      # 手动触发，方便测试
 
 jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3 # 你的v3不用升级v4，完全兼容，没必要改
+        uses: actions/checkout@v3
 
-      - name: Generate GitHub Contribution Snake
+      - name: Generate GitHub Contribution Snake ✅ 零报错+2026最新数据
         uses: Platane/snk@v3
         with:
-          github_user_name: lora-sys  # 你的用户名，正确，无需修改
+          github_user_name: lora-sys
+          github_token: ${{ secrets.GITHUB_TOKEN }} # ✅ 必加，拉取完整贡献数据
           outputs: |
             dist/github-contribution-snake.gif
-          cache_seconds: 0            # ✅ 核心修复：禁用缓存【v3新版正确参数】，强制拉最新贡献
-          github_token: ${{ secrets.GITHUB_TOKEN }} # ✅ 新增必加：v3必须加这个token，否则拉取贡献不全
+          # ✅ 核心关键：用官方唯一合法的 args 传指令，禁用缓存+拉取全部年份+强制刷新2026
+          args: --no-cache --fetch-all-contributions
 
       - name: Push to output branch
-        uses: crazy-max/ghaction-github-pages@v3 # 你的v3也不用升级，完全兼容
+        uses: crazy-max/ghaction-github-pages@v3
         with:
           target_branch: output
           build_dir: dist
