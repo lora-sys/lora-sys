@@ -37,7 +37,7 @@
 </p>
 
 ---
-###  GitHub 活跃度（贪吃蛇动画）
+###  GitHub 活跃度（贪吃蛇动画） 
 
 <p align="center">
   <img src="https://github.com/lora-sys/lora-sys/blob/output/github-contribution-snake.gif" alt="contribution snake">
