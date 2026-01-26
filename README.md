@@ -7,7 +7,7 @@
   👋 Hello! I'm <b>Lora</b>, a passionate developer who loves building cool things with code.<br>
   🚀 Currently exploring full-stack development and contributing to open-source projects.<br>
   💡 I enjoy solving real-world problems with elegant solutions.<br>
-  📫 Contact me: <a href="mailto:3526039967@qq.com">3526039967@qq.com</a>
+  📫 Contact me: <a href="mailto:lorasys@outlook.com">lorasys@outlook.com</a>
 </p>
 
 ---
