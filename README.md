@@ -2,9 +2,6 @@
 <h1 align="center">
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=30&pause=1000&color=FF61D4&center=true&vCenter=true&width=435&lines=Hi+I'm+Lora!;Welcome+to+my+GitHub+profile!" alt="Typing SVG" />
 </h1>
-
-<!-- banner -->
-![Banner](banner.png)
 <!-- 简介 -->
 <p align="center">
   👋 Hello! I'm <b>Lora</b>, a passionate developer who loves building cool things with code.<br>
