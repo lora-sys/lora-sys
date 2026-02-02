@@ -46,8 +46,8 @@
 
 <!-- 社交图标（可选） -->
 <p align="center">
-  <a href="mailto:3526039967@qq.com">
-    <img src="https://img.shields.io/badge/Email-3526039967@qq.com-blue?style=flat-square&logo=gmail" />
+  <a href="mailto:lorasys@outlook.com">
+    <img src="https://img.shields.io/badge/Email-lorasys@outlook.com-blue?style=flat-square&logo=gmail" />
   </a>
 </p>
 
