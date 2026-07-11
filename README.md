@@ -5,15 +5,11 @@
 </p>
 
 <h1 align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=28&pause=1200&color=8B5CF6&center=true&vCenter=true&width=900&lines=Building+AI+Agents+That+Think%2C+Plan+and+Act;Open+Source+Builder;Research+Assistant+Creator;Automation+Engineer" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=28&pause=1200&color=8B5CF6&center=true&vCenter=true&width=900&lines=Building+Agents+That+Think%2C+Plan+and+Act;From+Prompt+to+Production;Multi-Agent+%C2%B7+LLM+Infra+%C2%B7+Dev+Tools;Always+Shipping+%C2%B7+Always+Learning" alt="Typing SVG" />
 </h1>
 
 <p align="center">
-  <b>AI Agent Engineer · Open Source Builder · Full Stack Developer</b>
-</p>
-
-<p align="center">
-Building autonomous AI systems, research workflows and intelligent products.
+  <sub>👇 currently shipping · core stack · self-built projects</sub>
 </p>
 
 <p align="center">
@@ -26,61 +22,34 @@ Building autonomous AI systems, research workflows and intelligent products.
 
 ## 🧠 About Me
 
-- 👋 Hi, I’m **Lora Sys**  
-- 🤖 AI Agent Engineer & Open Source Builder  
-- 🎯 Focused on AI workflow automation, multi-agent collaboration, and LLM infrastructure  
-- 💡 Passionate about building autonomous AI systems that solve real-world problems  
-- 🌐 Based in China  
+👋 I'm **Lora** — I build AI agents that ship.
+
+- 🛠 Multi-agent SE tools · Claude / OpenAI plugin backends
+- 🚀 Driving **[ReposTwin](https://github.com/ACAMLab/ReposTwin)**, **[ai-engineering-harness](https://github.com/lora-sys/ai-engineering-harness)**, and the Hermes plugin stack
+- 🌏 China-based · working in public · always shipping
+
+> Building the tools that build the agents. From prompt to production.
 
 ---
 
-## 🎯 Current Focus
+## 🛠 Currently Building
 
-- Multi-Agent Systems  
-- AI Workflow Automation  
-- RAG Architectures  
-- Knowledge Engineering  
-- AI Product Development  
+- 🚧 **[ReposTwin](https://github.com/ACAMLab/ReposTwin)** (ACAMLab) — 3D GitHub code galaxy with an AI agent sidebar · actively in development
+- 🔥 **[ai-engineering-harness](https://github.com/lora-sys/ai-engineering-harness)** — Multi-agent SE org harness with adversarial review + L0-L3 context
+- 📦 **[hermes-minimax-media](https://github.com/lora-sys/hermes-minimax-media)** + **[hermes-stepfun-imagegen](https://github.com/lora-sys/hermes-stepfun-imagegen)** — Hermes Agent backends for media generation
 
 ---
 
 ## ⚔️ Tech Arsenal
 
-### AI / LLM
-<p>
-<img src="https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white">
-<img src="https://img.shields.io/badge/Claude-D97706?style=for-the-badge">
-<img src="https://img.shields.io/badge/Gemini-0099FF?style=for-the-badge">
-<img src="https://img.shields.io/badge/LangGraph-7C3AED?style=for-the-badge">
-<img src="https://img.shields.io/badge/LangChain-00C853?style=for-the-badge">
-</p>
+<sub>🏗️ Hand-curated stack · what's actually used across 41 self-built repos</sub>
 
-### Backend
-<p>
-<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python">
-<img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi">
-<img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js">
-</p>
-
-### Frontend
-<p>
-<img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react">
-<img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js">
-<img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript">
-</p>
-
-### Database
-<p>
-<img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql">
-<img src="https://img.shields.io/badge/Redis-DD0031?style=for-the-badge&logo=redis">
-</p>
-
-### DevOps
-<p>
-<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker">
-<img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux">
-<img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions">
-</p>
+| | |
+|---|---|
+| **Languages** | ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) ![Go](https://img.shields.io/badge/Go-00ADD8?style=flat-square&logo=go&logoColor=white) ![Shell](https://img.shields.io/badge/Shell-4EAA25?style=flat-square&logo=gnubash&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) ![Java](https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white) ![C++](https://img.shields.io/badge/C++-00599C?style=flat-square&logo=c%2B%2B&logoColor=white) |
+| **AI · LLMs · Agents** | ![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat-square&logo=openai&logoColor=white) ![Claude](https://img.shields.io/badge/Claude-D97706?style=flat-square&logo=anthropic&logoColor=white) ![Gemini](https://img.shields.io/badge/Gemini-8E75B2?style=flat-square&logo=googlegemini&logoColor=white) ![Ollama](https://img.shields.io/badge/Ollama-000000?style=flat-square&logo=ollama&logoColor=white) ![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=flat-square&logo=langchain&logoColor=white) ![LangGraph](https://img.shields.io/badge/LangGraph-7C3AED?style=flat-square) ![Claude MCP](https://img.shields.io/badge/Claude%20MCP-000000?style=flat-square) ![Multi-Agent](https://img.shields.io/badge/Multi--Agent-8B5CF6?style=flat-square&logo=robotframework&logoColor=white) |
+| **Frontend · 3D · UI** | ![Next.js](https://img.shields.io/badge/Next.js-000?style=flat-square&logo=nextdotjs&logoColor=white) ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB) ![Three.js](https://img.shields.io/badge/Three.js-000?style=flat-square&logo=threedotjs&logoColor=white) ![Tailwind](https://img.shields.io/badge/Tailwind-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white) ![Svelte](https://img.shields.io/badge/Svelte-FF3E00?style=flat-square&logo=svelte&logoColor=white) ![Aceternity](https://img.shields.io/badge/UI-FF6B9D?style=flat-square) |
+| **Infra & DevOps** | ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat-square&logo=postgresql&logoColor=white) ![Redis](https://img.shields.io/badge/Redis-DD0031?style=flat-square&logo=redis&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white) ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=black) ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white) ![Vercel](https://img.shields.io/badge/Vercel-000?style=flat-square&logo=vercel&logoColor=white) ![Cloudflare](https://img.shields.io/badge/Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white) ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?style=flat-square&logo=playwright&logoColor=white) |
 
 ---
 
