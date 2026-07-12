@@ -72,9 +72,11 @@
 <a href="https://github.com/lora-sys/monadmon"><img width="49%" src="https://github-readme-stats-sigma-fawn-45.vercel.app/api/pin/?username=lora-sys&repo=monadmon&theme=tokyonight&hide_border=true&show_owner=false" alt="monadmon" /></a>
 <a href="https://github.com/lora-sys/second-brain"><img width="49%" src="https://github-readme-stats-sigma-fawn-45.vercel.app/api/pin/?username=lora-sys&repo=second-brain&theme=tokyonight&hide_border=true&show_owner=false" alt="second-brain" /></a>
 <a href="https://github.com/lora-sys/ai-engineering-harness"><img width="49%" src="https://github-readme-stats-sigma-fawn-45.vercel.app/api/pin/?username=lora-sys&repo=ai-engineering-harness&theme=tokyonight&hide_border=true&show_owner=false" alt="ai-engineering-harness" /></a>
-<a href="https://github.com/ACAMLab/ReposTwin"><img width="49%" src="https://github-readme-stats-sigma-fawn-45.vercel.app/api/pin/?username=ACAMLab&repo=ReposTwin&theme=tokyonight&hide_border=true&show_owner=false" alt="ReposTwin" /></a>
+<a href="https://github.com/lora-sys/aicompanyos"><img width="49%" src="https://github-readme-stats-sigma-fawn-45.vercel.app/api/pin/?username=lora-sys&repo=aicompanyos&theme=tokyonight&hide_border=true&show_owner=false" alt="aicompanyos" /></a>
 <a href="https://github.com/lora-sys/hermes-minimax-media"><img width="49%" src="https://github-readme-stats-sigma-fawn-45.vercel.app/api/pin/?username=lora-sys&repo=hermes-minimax-media&theme=tokyonight&hide_border=true&show_owner=false" alt="hermes-minimax-media" /></a>
 <a href="https://github.com/lora-sys/JonLinker"><img width="49%" src="https://github-readme-stats-sigma-fawn-45.vercel.app/api/pin/?username=lora-sys&repo=JonLinker&theme=tokyonight&hide_border=true&show_owner=false" alt="JonLinker" /></a>
+
+<sub>🔒 **[ReposTwin](https://github.com/ACAMLab/ReposTwin)** (ACAMLab) · the showcase of this profile · 3D GitHub code galaxy · currently in active development · not pinnable while private</sub>
 
 ### 🤖 AI Agents & Multi-Agent · 6
 
