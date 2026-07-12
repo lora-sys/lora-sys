@@ -34,9 +34,15 @@
 
 ## 🛠 Currently Building
 
-- 🚧 **[ReposTwin](https://github.com/ACAMLab/ReposTwin)** (ACAMLab) — 3D GitHub code galaxy with an AI agent sidebar · actively in development
+- 🐉 **[monadmon](https://github.com/lora-sys/monadmon)** — Monad 上第一批"活物"：链上养成 + PvP，正在补经济模型
+- 🏢 **[aicompanyos](https://github.com/lora-sys/aicompanyos)** — AI 公司级 OS 雏形：PR / OKR / agent / 数据流统一面板
+- 🤝 **[JonLinker](https://github.com/lora-sys/JonLinker)** — agent-to-agent 求职：resume 投递 + 对话自动化
+- 🧠 **[second-brain](https://github.com/lora-sys/second-brain)** — Personal second-brain dashboard · Obsidian 同步
 - 🔥 **[ai-engineering-harness](https://github.com/lora-sys/ai-engineering-harness)** — Multi-agent SE org harness with adversarial review + L0-L3 context
+- 🚧 **[ReposTwin](https://github.com/ACAMLab/ReposTwin)** (ACAMLab) — 3D GitHub code galaxy with an AI agent sidebar · actively in development
 - 📦 **[hermes-minimax-media](https://github.com/lora-sys/hermes-minimax-media)** + **[hermes-stepfun-imagegen](https://github.com/lora-sys/hermes-stepfun-imagegen)** — Hermes Agent backends for media generation
+- 🌐 **[loraSys](https://github.com/lora-sys/loraSys)** — Svelte 个人站，部署在 GitHub Pages，正在迭代首页
+- 🧱 **[Init-codebase](https://github.com/lora-sys/Init-codebase)** — agent 起步 skill：`读 CLAUDE.md → 扫依赖 → 跑测试 → 出任务卡片`
 
 ---
 
@@ -57,16 +63,16 @@
 
 ## 🚀 Projects
 
-> **41 self-built projects** across [`lora-sys`](https://github.com/lora-sys?tab=repositories) and [`ACAMLab`](https://github.com/ACAMLab) (dev org) · [**+29 earlier · WIP · private**](#earlier) · forks excluded.
+> **44 self-built projects** across [`lora-sys`](https://github.com/lora-sys?tab=repositories) and [`ACAMLab`](https://github.com/ACAMLab) (dev org) · [**+27 earlier · WIP · private**](#earlier) · forks excluded.
 >
 > ⭐ **Top stars**: [nanochat-studay](https://github.com/ACAMLab/nanochat-studay) · 4★ · [mianshiya-next-lora](https://github.com/lora-sys/mianshiya-next-lora) · 3★
 
 ### ⭐ Featured
 
+<a href="https://github.com/lora-sys/monadmon"><img width="49%" src="https://github-readme-stats-sigma-fawn-45.vercel.app/api/pin/?username=lora-sys&repo=monadmon&theme=tokyonight&hide_border=true&show_owner=false" alt="monadmon" /></a>
+<a href="https://github.com/lora-sys/second-brain"><img width="49%" src="https://github-readme-stats-sigma-fawn-45.vercel.app/api/pin/?username=lora-sys&repo=second-brain&theme=tokyonight&hide_border=true&show_owner=false" alt="second-brain" /></a>
 <a href="https://github.com/lora-sys/ai-engineering-harness"><img width="49%" src="https://github-readme-stats-sigma-fawn-45.vercel.app/api/pin/?username=lora-sys&repo=ai-engineering-harness&theme=tokyonight&hide_border=true&show_owner=false" alt="ai-engineering-harness" /></a>
 <a href="https://github.com/ACAMLab/ReposTwin"><img width="49%" src="https://github-readme-stats-sigma-fawn-45.vercel.app/api/pin/?username=ACAMLab&repo=ReposTwin&theme=tokyonight&hide_border=true&show_owner=false" alt="ReposTwin" /></a>
-<a href="https://github.com/ACAMLab/nanochat-studay"><img width="49%" src="https://github-readme-stats-sigma-fawn-45.vercel.app/api/pin/?username=ACAMLab&repo=nanochat-studay&theme=tokyonight&hide_border=true&show_owner=false" alt="nanochat-studay" /></a>
-<a href="https://github.com/lora-sys/sysclean"><img width="49%" src="https://github-readme-stats-sigma-fawn-45.vercel.app/api/pin/?username=lora-sys&repo=sysclean&theme=tokyonight&hide_border=true&show_owner=false" alt="sysclean" /></a>
 <a href="https://github.com/lora-sys/hermes-minimax-media"><img width="49%" src="https://github-readme-stats-sigma-fawn-45.vercel.app/api/pin/?username=lora-sys&repo=hermes-minimax-media&theme=tokyonight&hide_border=true&show_owner=false" alt="hermes-minimax-media" /></a>
 <a href="https://github.com/lora-sys/JonLinker"><img width="49%" src="https://github-readme-stats-sigma-fawn-45.vercel.app/api/pin/?username=lora-sys&repo=JonLinker&theme=tokyonight&hide_border=true&show_owner=false" alt="JonLinker" /></a>
 
@@ -81,10 +87,18 @@
 | [hermes-stepfun-imagegen](https://github.com/lora-sys/hermes-stepfun-imagegen) | ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) | Hermes Agent backend · StepFun image generation (step-image-edit-2 / step-2x-large) |
 | [WishLive](https://github.com/lora-sys/WishLive) | ![Web3](https://img.shields.io/badge/Web3-F16822?style=flat-square&logo=Web3.js&logoColor=white) | Live-music ecosystem · AI Agent + Web3 collaboration platform |
 
-### 🎨 Apps & Sites · 13
+### 🐉 Web3 & On-chain Demos · 2
 
 | Project | Stack | What |
 |---|---|---|
+| [monadmon](https://github.com/lora-sys/monadmon) | ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | Monad 上链上养成 + PvP 对战：first living creatures on Monad |
+| [Newtube-clone](https://github.com/lora-sys/Newtube-clone) | ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | YouTube 风视频站 · AI 推荐 |
+
+### 🎨 Apps & Sites · 16
+
+| Project | Stack | What |
+|---|---|---|
+| [second-brain](https://github.com/lora-sys/second-brain) | ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) | Personal second-brain dashboard · Obsidian vault sync |
 | [loraSys](https://github.com/lora-sys/loraSys) | ![Svelte](https://img.shields.io/badge/Svelte-FF3E00?style=flat-square&logo=svelte&logoColor=white) | Personal site · GitHub Pages (active) |
 | [SCIDRAFT.AI](https://github.com/ACAMLab/SCIDRAFT.AI) | ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | Science-paper writing platform |
 | [TrandingOs](https://github.com/lora-sys/TrandingOs) | ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) | Personal trading operating system |
@@ -139,9 +153,9 @@
 
 <a id="earlier"></a>
 <details>
-<summary><b>📦 Earlier experiments · WIP · Private (29 more)</b></summary>
+<summary><b>📦 Earlier experiments · WIP · Private (27 more)</b></summary>
 
-### 🧪 WIP & Earlier Experiments (22)
+### 🧪 WIP & Earlier Experiments (20)
 
 Projects without GitHub description or in early iteration. Listed for completeness; will be either promoted or archived.
 
@@ -158,7 +172,6 @@ Projects without GitHub description or in early iteration. Listed for completene
 - [better-auth-learn](https://github.com/lora-sys/better-auth-learn) — Better-auth learning
 - [note-app](https://github.com/lora-sys/note-app) — Note-taking app
 - [zchat-demo](https://github.com/lora-sys/zchat-demo) — Chat UI demo
-- [Newtube-clone](https://github.com/lora-sys/Newtube-clone) — YouTube clone
 
 **Skills & automation**
 - [ui-aesthetic-improve](https://github.com/lora-sys/ui-aesthetic-improve) — UI polish workflow
