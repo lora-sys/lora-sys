@@ -1,7 +1,7 @@
 
 
 <p align="center">
-  <img src="banner.png" alt="Lora Sys Banner" width="100%">
+  <img src="已生成图像 1 (1).png" alt="Lora Sys Banner" width="100%">
 </p>
 
 <h1 align="center">
