@@ -42,9 +42,14 @@
 - 🚧 **[ReposTwin](https://github.com/ACAMLab/ReposTwin)** (ACAMLab) — 3D GitHub code galaxy with an AI agent sidebar · actively in development
 - 📦 **[hermes-minimax-media](https://github.com/lora-sys/hermes-minimax-media)** + **[hermes-stepfun-imagegen](https://github.com/lora-sys/hermes-stepfun-imagegen)** — Hermes Agent backends for media generation
 - 🌐 **[loraSys](https://github.com/lora-sys/loraSys)** — Svelte 个人站，部署在 GitHub Pages，正在迭代首页
-- 🧱 **[Init-codebase](https://github.com/lora-sys/Init-codebase)** — agent 起步 skill：`读 CLAUDE.md → 扫依赖 → 跑测试 → 出任务卡片`
-
+- 🧱 **[Init-codebase](https://github.com/lora-sys/Init-codebase)** — agent 起步 skill：`读 CLAUDE.md → 扫依赖 → 跑测试 → 出任务卡片
 ---
+## Current contributing
+- **[moss](https://github.com/nishuzumi/moss)** -- 参与moss monad 开源项目，产出合格合并pr
+plead enter
+- **[pr1](https://github.com/nishuzumi/moss/pull/29)**
+- **[pr2](https://github.com/nishuzumi/moss/pull/24)**  
+
 
 ## ⚔️ Tech Arsenal
 
