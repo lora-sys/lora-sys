@@ -1,0 +1,8 @@
+Use case: illustration-story
+Asset type: reusable transparent cutout subject for a GitHub profile README hero
+Reference: canonical lora character reference; preserve lora and Mochi.
+Scene: lora sits at a compact creator desk, turned slightly toward the viewer, writing beside an open laptop. Mochi sits close beside the desk. Include only the desk, laptop, notebook, pencil, lora, and Mochi.
+Style: cute Japanese-anime editorial character illustration, clean charcoal-black line work, restrained warm paper coloring, not photorealistic and not 3D.
+Palette: black, off-white, cream, warm gray, brown, and amber.
+Background: perfectly uniform flat #00FF00 rectangle with no gradient, texture, noise, shadow, floor, reflection, or lighting variation.
+Constraints: generous padding; nothing touches the border; no text, letters, logos, watermark, floating UI, purple, blue glow, neon, or glossy effects. PNG.

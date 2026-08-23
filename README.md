@@ -1,25 +1,19 @@
-
-
 <p align="center">
   <a href="https://github.com/lora-sys">
-    <img src="https://raw.githubusercontent.com/lora-sys/lora-sys/main/%E5%B7%B2%E7%94%9F%E6%88%90%E5%9B%BE%E5%83%8F%201%20%281%29.png" alt="Lora Sys — AI Agent Engineer" width="100%" />
+    <img src="./assets/readme/hero-v1.webp" alt="Lora Sys, AI Agent Engineer building inspectable agent systems, inference guides, and developer tools" width="100%" />
   </a>
 </p>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=26&pause=1400&color=8B5CF6&center=true&vCenter=true&width=780&lines=Building+Agents+That+Think%2C+Plan+and+Act;From+Prompt+to+Production;Multi-Agent+Engineering+%C2%B7+LLM+Inference+%C2%B7+Developer+Tools" alt="Building agents that think, plan and act" />
+  <a href="https://github.com/lora-sys?tab=repositories"><img src="https://img.shields.io/badge/Focus-Agent%20Engineering-E0A62F?style=for-the-badge&logo=robotframework&logoColor=1A1A1A" alt="Focus: Agent Engineering" /></a>
+  <a href="https://github.com/lora-sys?tab=repositories"><img src="https://img.shields.io/badge/Mode-Always%20Shipping-1A1A1A?style=for-the-badge&logo=github&logoColor=F7F4EE" alt="Mode: Always Shipping" /></a>
+  <a href="https://github.com/lora-sys?tab=repositories"><img src="https://img.shields.io/badge/Base-China-8B5E34?style=for-the-badge&logo=googlemaps&logoColor=F7F4EE" alt="Based in China" /></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/lora-sys?tab=repositories"><img src="https://img.shields.io/badge/Focus-Agent%20Engineering-8B5CF6?style=for-the-badge&logo=robotframework&logoColor=white" alt="Focus: Agent Engineering" /></a>
-  <a href="https://github.com/lora-sys?tab=repositories"><img src="https://img.shields.io/badge/Mode-Always%20Shipping-1E1B4B?style=for-the-badge&logo=github&logoColor=white" alt="Mode: Always Shipping" /></a>
-  <a href="https://github.com/lora-sys?tab=repositories"><img src="https://img.shields.io/badge/Base-China-2DD4BF?style=for-the-badge&logo=googlemaps&logoColor=white" alt="Based in China" /></a>
-</p>
-
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=lora-sys&label=Profile+Views&color=8B5CF6&style=flat-square" alt="Profile views" />
-  <img src="https://img.shields.io/github/followers/lora-sys?style=flat-square&color=8B5CF6" alt="Followers" />
-  <img src="https://img.shields.io/github/stars/lora-sys?style=flat-square&color=8B5CF6" alt="Stars" />
+  <img src="https://komarev.com/ghpvc/?username=lora-sys&label=Profile+Views&color=E0A62F&style=flat-square" alt="Profile views" />
+  <img src="https://img.shields.io/github/followers/lora-sys?style=flat-square&color=8B5E34" alt="Followers" />
+  <img src="https://img.shields.io/github/stars/lora-sys?style=flat-square&color=1A1A1A" alt="Stars" />
 </p>
 
 ---
