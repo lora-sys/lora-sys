@@ -26,10 +26,10 @@ jobs:
           python -m playwright install --with-deps chromium
           sudo apt-get install -y fonts-noto-cjk
       - name: Verify the actual public profile
-        run: python scripts/review_profile.py
+        run: python scripts/review_approved_profile.py
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
           name: profile-visual-review
-          path: qa/
+          path: qa-live/
           retention-days: 7
