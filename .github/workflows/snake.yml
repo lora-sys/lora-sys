@@ -5,7 +5,9 @@ on:
     branches: [main]
     paths:
       - README.md
-      - scripts/build_profile_v4.py
+      - scripts/build_approved_profile.py
+      - scripts/prepare_approved_layout.py
+      - assets/profile/**
       - .github/workflows/snake.yml
   schedule:
     - cron: '23 0 * * *'
@@ -22,14 +24,19 @@ jobs:
   generate:
     if: github.repository == 'lora-sys/lora-sys'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 18
     steps:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
-      - name: Build profile gallery and typing assets
+      - name: Read last successful public assets
         run: |
-          python3 -m pip install Pillow==11.3.0
-          python3 scripts/build_profile_v4.py --output dist
+          git fetch --depth=1 origin output
+          git worktree add --detach previous FETCH_HEAD
+      - name: Install render dependencies
+        run: |
+          python3 -m pip install Pillow==11.3.0 beautifulsoup4==4.13.4 playwright==1.55.0
+          python3 -m playwright install --with-deps chromium
+          sudo apt-get install -y fonts-noto-cjk
       - name: Generate contribution snakes
         uses: Platane/snk/svg-only@d8f6715049803e982ee5ff501b6b9b7d5deeb09b
         with:
@@ -39,41 +46,58 @@ jobs:
             dist/snake-dark.svg?palette=github-dark&color_snake=%23E0A62F&color_dots=%23242529,%234D4030,%23755A31,%23AB7A32,%23DDB365
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Validate assets and static fallbacks
+      - name: Build approved profile and verify real statistics
+        run: python3 scripts/build_approved_profile.py
+      - name: Validate published files
         run: |
           python3 - <<'PY'
-          from pathlib import Path
+          import json
           import xml.etree.ElementTree as ET
-          for name in ('snake-light.svg', 'snake-dark.svg'):
-              path=Path('dist')/name
-              svg=path.read_text()
-              svg=svg.replace('</svg>', '<style>@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style></svg>')
-              path.write_text(svg)
-              still=svg.replace('</svg>', '<style>*{animation:none!important;transition:none!important}</style></svg>')
-              path.with_name(path.stem+'-static.svg').write_text(still)
-          assets=list(Path('dist').rglob('*.svg'))
-          assert len(assets)==64, len(assets)
-          for path in assets:
+          from pathlib import Path
+          root=Path('dist/v5')
+          source=json.loads((root/'sources.json').read_text())
+          assert len(source['statistics'])==6
+          for key,item in source['statistics'].items():
+              assert item['status'] in ('fresh','retained_previous'), key
+              assert item.get('fetched_at') and item.get('sha256'), key
+          for path in root.rglob('*.svg'):
               data=path.read_text()
               ET.fromstring(data)
               assert '<script' not in data and '<foreignObject' not in data, path
-          print('64 SVGs validated; original banner unchanged')
+              assert '@font-face' not in data and 'font/woff' not in data, path
+          for name in ('snake-light.svg','snake-dark.svg'):
+              path=Path('dist')/name
+              svg=path.read_text().replace('</svg>','<style>@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style></svg>')
+              path.write_text(svg)
+              path.with_name(path.stem+'-static.svg').write_text(svg.replace('</svg>','<style>*{animation:none!important}</style></svg>'))
+          print('Verified',len(list(root.rglob('*.svg'))),'SVGs and six real data sources')
           PY
-      - name: Publish assets without rewriting history
-        shell: bash
+      - name: Publish approved assets without rewriting history
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git fetch --depth=1 origin output
-          git worktree add --detach publish FETCH_HEAD
-          cp -R dist/. publish/
-          touch publish/.nojekyll
-          cd publish
-          git add -- v4 '*.svg' .nojekyll
+          cp -R dist/v5 previous/
+          cp dist/snake-*.svg previous/
+          touch previous/.nojekyll
+          cd previous
+          git add -- v5 '*.svg' .nojekyll
           if git diff --cached --quiet; then
-            echo 'Profile assets unchanged'
-            exit 0
+            echo 'Assets unchanged'
+          else
+            git commit -m 'chore(profile): refresh approved assets and verified data'
+            git push origin HEAD:output
           fi
-          git commit -m 'chore: refresh profile gallery and animations'
-          git push origin HEAD:output
+      - name: Upload generated README, source and screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: approved-profile-build
+          path: |
+            dist/
+            qa/
+            scripts/build_approved_profile.py
+            scripts/prepare_approved_layout.py
+            assets/profile/approved-layout.html
+            assets/readme/hero-v1.webp
+          retention-days: 7
