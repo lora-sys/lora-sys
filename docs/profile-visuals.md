@@ -1,23 +1,31 @@
 # Profile visuals
 
-The profile README keeps the existing hero illustration and uses generated SVGs for the introduction, project links, and contribution snake.
+The current profile uses a native heading, one short typing line, and six text-based project panels. Project descriptions remain visible. The contribution animation is collapsed by default. The previous large hero and illustration cards are no longer displayed; their source files and old output URLs are retained.
 
-## Edit the introduction
+## Editing
 
-Update `INTRO` and the desktop and mobile line layouts in `scripts/build_profile.py`. Keep the plain text and image alt text in `README.md` identical. Run the generator before committing.
+Edit the biography and project descriptions in `README.md`. Update `TEXT` in `scripts/build_profile.py` for the typing line, keeping the image alt text in sync.
 
 ```sh
 python3 scripts/build_profile.py --output dist
 ```
 
-The generator creates eight introduction variants and eight project cards. The introduction types once, then leaves the full text visible. Static variants are selected for reduced motion. Assets have no external fonts, JavaScript, API calls, or audio.
+The generator produces `typing-v3-light.svg` and `typing-v3-dark.svg`. They have transparent backgrounds and use system fonts. Text types once, remains visible, and has no audio or looping cursor. Reduced motion shows complete text immediately.
 
-## Contribution snake
+## Publishing
 
-`.github/workflows/snake.yml` uses Platane/snk to fetch lora-sys contribution data and render light and dark SVGs. It runs after relevant pushes, daily at 00:23 UTC, or through workflow_dispatch. The two upstream actions are pinned to commit SHAs.
+`.github/workflows/snake.yml` adds two contribution snakes and validates exactly four generated SVGs. It publishes to the existing `output` branch with a normal fast-forward commit, preserving old URLs. Upstream actions remain pinned to commit SHAs. No force-push is used.
 
-The workflow publishes all 18 SVGs to the existing `output` branch with a normal fast-forward commit. It preserves existing files and never force-pushes. The README points to that branch. A failed generation stops before publication, leaving the previous assets intact.
+Publish new asset names before updating README references. A failed build must not replace the current README with links to missing images.
 
-The original hero and its source files remain unchanged on `main`. Repository names, visibility, pinned projects, profile settings, and the personal website are outside this change.
+## Verification limits
 
-Upstream source: https://github.com/Platane/snk
+The 2026-09-16 revision was checked using a local reconstruction of the README with GitHub-like Markdown styling. Desktop and narrow layouts were tested for horizontal overflow and visible broken images. The external contribution snake was excluded from this offline browser test; the workflow validates its generated SVG separately.
+
+The browser could not open the actual GitHub profile due to an environment restriction. Local screenshots are not GitHub screenshots and do not validate GitHub's HTML sanitization or image proxy. Do not describe this as a complete live-page visual check.
+
+## Native profile pins
+
+The selected order is Glassbox-Agent-Harness, zhihu-threads, AgentArena, skills, nano-vllm-interactive-guide, and free-vision-skill.
+
+Changing this README does not change GitHub's native pins. The available connector has no pin write action, and no authenticated browser session was available. Native pin selection and ordering remain unapplied. Do not use repository metadata or README cards as evidence that native pins changed.

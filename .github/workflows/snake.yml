@@ -27,7 +27,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
-      - name: Build typing and project cards
+      - name: Build compact typing line
         run: python3 scripts/build_profile.py --output dist
 
       - name: Generate contribution snakes
@@ -51,13 +51,14 @@ jobs:
               style = '<style>@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>'
               svg = svg.replace('</svg>', style + '</svg>')
               path.write_text(svg, encoding='utf-8')
+          expected = {'typing-v3-light.svg', 'typing-v3-dark.svg', 'snake-light.svg', 'snake-dark.svg'}
           assets = list(Path('dist').glob('*.svg'))
-          assert len(assets) == 18, f'Expected 18 SVGs, found {len(assets)}'
+          assert {path.name for path in assets} == expected
           for path in assets:
               svg = path.read_text(encoding='utf-8')
               ET.fromstring(svg)
               assert '<script' not in svg and '<foreignObject' not in svg, path
-          print('18 self-contained SVGs validated')
+          print('4 self-contained SVGs validated')
           PY
 
       - name: Publish assets without rewriting history
