@@ -1,6 +1,11 @@
 name: Review profile appearance
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/review_approved_profile.py
+      - .github/workflows/profile-review.yml
   workflow_run:
     workflows: [Build profile visuals]
     types: [completed]
@@ -15,7 +20,7 @@ concurrency:
 
 jobs:
   review:
-    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.event != 'schedule')
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.event != 'schedule')
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
