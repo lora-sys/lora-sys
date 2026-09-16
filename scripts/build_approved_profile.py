@@ -165,6 +165,10 @@ def build(local=False):
   'banner':ROOT/'assets/readme/hero-v1.webp',
   'glassbox':'https://raw.githubusercontent.com/lora-sys/Glassbox-Agent-Harness/main/assets/readme/glassbox-hero.png',
   'zhihu':'https://raw.githubusercontent.com/lora-sys/zhihu-threads/main/assets/readme/lora-v3-project-zhihu-threads-zh.webp',
+  'arena':'https://raw.githubusercontent.com/lora-sys/AgentArena/main/docs/qa/visual-baselines/v052-home-desktop-20260725.png',
+  'skills':'https://raw.githubusercontent.com/lora-sys/skills/main/assets/readme/hero.png',
+  'vllm':'https://raw.githubusercontent.com/lora-sys/nano-vllm-interactive-guide/main/assets/readme/hero-v1.webp',
+  'vision':'https://raw.githubusercontent.com/lora-sys/free-vision-skill/main/assets/readme/hero-v1.webp',
  }
  art_records={}
  for key,location in arts.items():
