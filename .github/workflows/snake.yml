@@ -7,6 +7,7 @@ on:
       - README.md
       - scripts/build_approved_profile.py
       - scripts/prepare_approved_layout.py
+      - scripts/normalize_profile_svg.py
       - assets/profile/**
       - .github/workflows/snake.yml
   schedule:
@@ -47,13 +48,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build approved profile and verify real statistics
-        run: python3 scripts/build_approved_profile.py
-      - name: Validate published files
+        run: |
+          python3 scripts/build_approved_profile.py
+          python3 scripts/normalize_profile_svg.py dist/v5
+      - name: Validate published files and motion
         run: |
           python3 - <<'PY'
+          import base64
+          import hashlib
           import json
           import xml.etree.ElementTree as ET
           from pathlib import Path
+          from playwright.sync_api import sync_playwright
           root=Path('dist/v5')
           source=json.loads((root/'sources.json').read_text())
           assert len(source['statistics'])==6
@@ -65,12 +71,28 @@ jobs:
               ET.fromstring(data)
               assert '<script' not in data and '<foreignObject' not in data, path
               assert '@font-face' not in data and 'font/woff' not in data, path
+          motion={}
+          with sync_playwright() as p:
+              browser=p.chromium.launch()
+              page=browser.new_page(viewport={'width':980,'height':700})
+              for name in ('typing-light-desktop','snake-light-desktop','typing-dark-mobile-static','snake-dark-mobile-static'):
+                  data=base64.b64encode((root/(name+'.svg')).read_bytes()).decode()
+                  page.set_content('<img src="data:image/svg+xml;base64,'+data+'">')
+                  page.wait_for_timeout(150)
+                  first=page.screenshot()
+                  page.wait_for_timeout(1500)
+                  second=page.screenshot()
+                  different=hashlib.sha256(first).digest()!=hashlib.sha256(second).digest()
+                  motion[name]={'frames_differ':different}
+                  assert different==('-static' not in name), name
+              browser.close()
+          Path('qa/motion.json').write_text(json.dumps(motion,indent=2))
           for name in ('snake-light.svg','snake-dark.svg'):
               path=Path('dist')/name
               svg=path.read_text().replace('</svg>','<style>@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style></svg>')
               path.write_text(svg)
               path.with_name(path.stem+'-static.svg').write_text(svg.replace('</svg>','<style>*{animation:none!important}</style></svg>'))
-          print('Verified',len(list(root.rglob('*.svg'))),'SVGs and six real data sources')
+          print('Verified',len(list(root.rglob('*.svg'))),'SVGs, six real data sources and animated/static frames')
           PY
       - name: Publish approved assets without rewriting history
         run: |
@@ -98,6 +120,7 @@ jobs:
             qa/
             scripts/build_approved_profile.py
             scripts/prepare_approved_layout.py
+            scripts/normalize_profile_svg.py
             assets/profile/approved-layout.html
             assets/readme/hero-v1.webp
           retention-days: 7
