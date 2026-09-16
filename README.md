@@ -1,6 +1,8 @@
 # Lora
 
 <picture>
+  <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/typing-v3-dark-static.svg">
+  <source media="(prefers-reduced-motion: reduce)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/typing-v3-light-static.svg">
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/typing-v3-dark.svg">
   <img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/typing-v3-light.svg" width="420" alt="个人 Agent · 开源工具 · 交互教程">
 </picture>
@@ -60,6 +62,8 @@
 <summary>展开代码记录动画</summary>
 <br>
 <picture>
+  <source media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/snake-dark-static.svg">
+  <source media="(prefers-reduced-motion: reduce)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/snake-light-static.svg">
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/snake-dark.svg">
   <img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/snake-light.svg" width="100%" alt="由 lora-sys 的 GitHub 贡献记录生成的贪吃蛇动画">
 </picture>
