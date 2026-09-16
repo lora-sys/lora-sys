@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="164" viewBox="0 0 480 164" role="img" aria-label="Glassbox，个人 Agent 系统，开发中">
+<title>Glassbox</title><desc>项目导航卡片，不是产品截图。</desc>
+<rect x=".75" y=".75" width="478.5" height="162.5" rx="13" fill="#191A1D" stroke="#42403C" stroke-width="1.5"/>
+<rect x="22" y="34" width="84" height="91" rx="12" fill="#242529"/>
+<g transform="translate(30 45)" fill="none" stroke="#E0A62F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="9" width="51" height="42" rx="7"/><path d="M8 21h51M34 21v30M14 31h12m-12 9h12"/><circle cx="47" cy="34" r="5"/><path d="m45 41 3 3 7-9"/></g>
+<g font-family="'Noto Sans CJK SC','Microsoft YaHei','PingFang SC',sans-serif">
+<text x="126" y="43" fill="#D0B899" font-size="12" letter-spacing="1.5">开发中</text>
+<text x="126" y="80" fill="#F7F4EE" font-weight="700" font-size="29">Glassbox</text>
+<text x="126" y="112" fill="#D0B899" font-size="19">个人 Agent 系统</text>
+</g><path d="M438 30h12v12m-12 0 12-12" stroke="#D0B899" fill="none" stroke-width="1.5"/>
+</svg>

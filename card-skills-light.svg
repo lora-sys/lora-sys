@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="164" viewBox="0 0 480 164" role="img" aria-label="Lora Skills，可安装的技能集合，工具">
+<title>Lora Skills</title><desc>项目导航卡片，不是产品截图。</desc>
+<rect x=".75" y=".75" width="478.5" height="162.5" rx="13" fill="#F7F4EE" stroke="#D9CCB9" stroke-width="1.5"/>
+<rect x="22" y="34" width="84" height="91" rx="12" fill="#EEE8DD"/>
+<g transform="translate(30 45)" fill="none" stroke="#B67D17" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="20" height="20" rx="4"/><rect x="37" y="9" width="20" height="20" rx="4"/><rect x="9" y="37" width="20" height="20" rx="4"/><path d="M47 36v22M36 47h22"/></g>
+<g font-family="'Noto Sans CJK SC','Microsoft YaHei','PingFang SC',sans-serif">
+<text x="126" y="43" fill="#796248" font-size="12" letter-spacing="1.5">工具</text>
+<text x="126" y="80" fill="#1A1A1A" font-weight="700" font-size="29">Lora Skills</text>
+<text x="126" y="112" fill="#796248" font-size="19">可安装的技能集合</text>
+</g><path d="M438 30h12v12m-12 0 12-12" stroke="#796248" fill="none" stroke-width="1.5"/>
+</svg>
