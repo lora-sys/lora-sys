@@ -1,0 +1,74 @@
+[
+  {
+    "project": "glassbox",
+    "url": "https://raw.githubusercontent.com/lora-sys/Glassbox-Agent-Harness/main/assets/readme/glassbox-hero.png",
+    "sha256": "da5841157147d990c48e6a75a2bcda143a780a443162dae0ed43d57d11c29861",
+    "crop": [
+      690,
+      150,
+      1630,
+      650
+    ],
+    "caption": "项目插画"
+  },
+  {
+    "project": "zhihu",
+    "url": "https://raw.githubusercontent.com/lora-sys/zhihu-threads/main/assets/readme/lora-v3-project-zhihu-threads-zh.webp",
+    "sha256": "005d49a036e3b9900a916aea1d6824a7a62ffa19b98297506dc7dad3a96be30b",
+    "crop": [
+      700,
+      305,
+      1590,
+      855
+    ],
+    "caption": "项目插画"
+  },
+  {
+    "project": "arena",
+    "url": "https://raw.githubusercontent.com/lora-sys/AgentArena/main/docs/qa/visual-baselines/v052-home-desktop-20260725.png",
+    "sha256": "13b888d01908bd2f6352a7ef324fc4d30bcb4b9092031034d0f2e8318341fc93",
+    "crop": [
+      620,
+      220,
+      1360,
+      590
+    ],
+    "caption": "界面截图"
+  },
+  {
+    "project": "skills",
+    "url": "https://raw.githubusercontent.com/lora-sys/skills/main/assets/readme/hero.png",
+    "sha256": "5cbcedbd17e7a10452150aaef73c91c4c3d58f3c9a680ba0dbcb357e61457a23",
+    "crop": [
+      670,
+      25,
+      1190,
+      400
+    ],
+    "caption": "项目插画"
+  },
+  {
+    "project": "vllm",
+    "url": "https://raw.githubusercontent.com/lora-sys/nano-vllm-interactive-guide/main/assets/readme/hero-v1.webp",
+    "sha256": "dc9ed744aa47aa47644a829180ff9eb67dc43f06e034052e0f8b19390a2b578a",
+    "crop": [
+      620,
+      32,
+      1175,
+      340
+    ],
+    "caption": "项目插画"
+  },
+  {
+    "project": "vision",
+    "url": "https://raw.githubusercontent.com/lora-sys/free-vision-skill/main/assets/readme/hero-v1.webp",
+    "sha256": "5cc3403a84fbb63b67f960a41ea876dfadab332cc6fec816b87364675262e26c",
+    "crop": [
+      630,
+      37,
+      1173,
+      326
+    ],
+    "caption": "项目插画"
+  }
+]
