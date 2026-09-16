@@ -1,33 +1,85 @@
-name: Generate Snake Animation
+name: Build profile visuals
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - README.md
+      - scripts/build_profile.py
+      - .github/workflows/snake.yml
   schedule:
-    - cron: "0 0 * * *"   # 每天 UTC 0 点执行
-  workflow_dispatch:      # 保留手动触发
+    - cron: '23 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-visuals
+  cancel-in-progress: false
 
 jobs:
   generate:
+    if: github.repository == 'lora-sys/lora-sys'
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
-      - name: ✅ 关键修复：手动创建dist文件夹 (解决Build dir does not exist)
-        run: mkdir -p dist
+      - name: Build typing and project cards
+        run: python3 scripts/build_profile.py --output dist
 
-      - name: Generate GitHub Contribution Snake (零报错+2026最新数据)
-        uses: Platane/snk@v3
+      - name: Generate contribution snakes
+        uses: Platane/snk/svg-only@d8f6715049803e982ee5ff501b6b9b7d5deeb09b # v3
         with:
-          github_user_name: lora-sys
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_user_name: ${{ github.repository_owner }}
           outputs: |
-            dist/github-contribution-snake.gif
-          args: --no-cache --fetch-all-contributions
-
-      - name: Push to output branch
-        uses: crazy-max/ghaction-github-pages@v3
-        with:
-          target_branch: output
-          build_dir: dist
+            dist/snake-light.svg?color_snake=%23B67D17&color_dots=%23EEE8DD,%23E9D8B8,%23DAB477,%23BA873B,%238B5E34
+            dist/snake-dark.svg?palette=github-dark&color_snake=%23E0A62F&color_dots=%23242529,%234D4030,%23755A31,%23AB7A32,%23DDB365
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Validate assets and honor reduced motion
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          for name in ('snake-light.svg', 'snake-dark.svg'):
+              path = Path('dist') / name
+              svg = path.read_text(encoding='utf-8')
+              style = '<style>@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>'
+              svg = svg.replace('</svg>', style + '</svg>')
+              path.write_text(svg, encoding='utf-8')
+          assets = list(Path('dist').glob('*.svg'))
+          assert len(assets) == 18, f'Expected 18 SVGs, found {len(assets)}'
+          for path in assets:
+              svg = path.read_text(encoding='utf-8')
+              ET.fromstring(svg)
+              assert '<script' not in svg and '<foreignObject' not in svg, path
+          print('18 self-contained SVGs validated')
+          PY
+
+      - name: Publish assets without rewriting history
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if git ls-remote --exit-code --heads origin output > /dev/null; then
+            git fetch --depth=1 origin output
+            git worktree add --detach publish FETCH_HEAD
+          else
+            git worktree add --detach publish HEAD
+            git -C publish switch --orphan profile-output
+          fi
+          cp dist/*.svg publish/
+          touch publish/.nojekyll
+          cd publish
+          git add -- '*.svg' .nojekyll
+          if git diff --cached --quiet; then
+            echo 'Profile assets unchanged'
+            exit 0
+          fi
+          git commit -m 'chore: refresh profile visuals'
+          git push origin HEAD:output
