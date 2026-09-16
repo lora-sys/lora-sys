@@ -1,0 +1,196 @@
+{
+  "build_source_sha256": "68a4598dd4f455fe855564c08876f25ad7560bdfcab26da77b13d4a0a58efaab",
+  "generated_at": "2026-09-16T09:08:20.742177+00:00",
+  "artwork": {
+    "banner": {
+      "source": "/home/runner/work/lora-sys/lora-sys/assets/readme/hero-v1.webp",
+      "sha256": "c2573c101012c3480a282920a82f9ab28ebbe35920009c4072d88dd6bd9ee7ff"
+    },
+    "glassbox": {
+      "source": "https://raw.githubusercontent.com/lora-sys/Glassbox-Agent-Harness/main/assets/readme/glassbox-hero.png",
+      "sha256": "da5841157147d990c48e6a75a2bcda143a780a443162dae0ed43d57d11c29861"
+    },
+    "zhihu": {
+      "source": "https://raw.githubusercontent.com/lora-sys/zhihu-threads/main/assets/readme/lora-v3-project-zhihu-threads-zh.webp",
+      "sha256": "005d49a036e3b9900a916aea1d6824a7a62ffa19b98297506dc7dad3a96be30b"
+    }
+  },
+  "statistics": {
+    "overview-light": {
+      "url": "https://github-readme-stats-fast.vercel.app/api?username=lora-sys&bg_color=F6F2EA&title_color=9A661B&text_color=24211E&icon_color=9A661B&hide_border=true&hide_title=true&disable_animations=true&locale=cn&card_width=520&show_icons=true&hide_rank=false&rank_icon=default&ring_color=D6A03B&line_height=31",
+      "fetched_at": "2026-09-16T09:08:20.742177+00:00",
+      "sha256": "4b24a78dbc32ef0ff9206db28c15624c3fe6f0114806040e2f20fe28c1a18a5d",
+      "text": "\n         lora 的 GitHub 统计数据, Rank: A- \n         获标星数（star）: 104, 累计提交数（commit） in 2026 : 2104, 拉取请求数（PR）: 133, 指出问题数（issue）: 217, 贡献于（去年）: 29 \n         \n          .header {\n            font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;\n            fill: #9A661B;\n            animation: fadeInAnimation 0.8s ease-in-out forwards;\n          }\n          @supports(-moz-appearance: auto) {\n            /* Selector detects Firefox */\n            .header { font-size: 15.5px; }\n          }\n          \n    .stat {\n      font: 600 14px 'Segoe UI', Ubuntu, \"Helvetica Neue\", Sans-Serif; fill: #24211E;\n    }\n    @supports(-moz-appearance: auto) {\n      /* Selector detects Firefox */\n      .stat { font-size:12px; }\n    }\n    .stagger {\n      opacity: 0;\n      animation: fadeInAnimation 0.3s ease-in-out forwards;\n    }\n    .rank-text {\n      font: 800 24px 'Segoe UI', Ubuntu, Sans-Serif; fill: #24211E;\n      animation: scaleInAnimation 0.3s ease-in-out forwards;\n    }\n    .rank-percentile-header {\n      font-size: 14px;\n    }\n    .rank-percentile-text {\n      font-size: 16px;\n    }\n    \n    .not_bold { font-weight: 400 }\n    .bold { font-weight: 700 }\n    .icon {\n      fill: #9A661B;\n      display: block;\n    }\n\n    .rank-circle-rim {\n      stroke: #D6A03B;\n      fill: none;\n      stroke-width: 6;\n      opacity: 0.2;\n    }\n    .rank-circle {\n      stroke: #D6A03B;\n      stroke-dasharray: 250;\n      fill: none;\n      stroke-width: 6;\n      stroke-linecap: round;\n      opacity: 0.8;\n      transform-origin: -10px 8px;\n      transform: rotate(-90deg);\n      animation: rankAnimation 1s forwards ease-in-out;\n    }\n    \n    @keyframes rankAnimation {\n      from {\n        stroke-dashoffset: 251.32741228718345;\n      }\n      to {\n        stroke-dashoffset: 64.07658165433398;\n      }\n    }\n  \n  \n\n          \n      /* Animations */\n      @keyframes scaleInAnimation {\n        from {\n          transform: translate(-5px, 5px) scale(0);\n        }\n        to {\n          transform: translate(-5px, 5px) scale(1);\n        }\n      }\n      @keyframes fadeInAnimation {\n        from {\n          opacity: 0;\n        }\n        to {\n          opacity: 1;\n        }\n      }\n    \n          * { animation-duration: 0s !important; animation-delay: 0s !important; }\n         \n\n        \n\n         \n\n        \n\n         \n          \n     \n         \n         \n         \n          \n         \n          A-\n         \n      \n         \n       \n     \n       \n     \n      \n     \n       \n     \n  \n       获标星数（star）: \n       104 \n     \n   \n     \n      \n     \n       \n     \n  \n       累计提交数（commit） (2026): \n       2.1k \n     \n   \n     \n      \n     \n       \n     \n  \n       拉取请求数（PR）: \n       133 \n     \n   \n     \n      \n     \n       \n     \n  \n       指出问题数（issue）: \n       217 \n     \n   \n     \n      \n     \n       \n     \n  \n       贡献于（去年）: \n       29 \n     \n   \n     \n  \n         \n      ",
+      "status": "fresh"
+    },
+    "languages-light": {
+      "url": "https://github-readme-stats-sigma-fawn-45.vercel.app/api/top-langs/?username=lora-sys&bg_color=F6F2EA&title_color=9A661B&text_color=24211E&icon_color=9A661B&hide_border=true&hide_title=true&disable_animations=true&locale=cn&card_width=410&layout=compact&langs_count=6",
+      "fetched_at": "2026-09-16T09:08:20.742177+00:00",
+      "sha256": "f6725c2ee0a9e4b6255c8263eb3de05bbf58bd6bee4c85c73fcd1031fb8cb4a9",
+      "text": "\n         \n         \n         \n          .header {\n            font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;\n            fill: #9A661B;\n            animation: fadeInAnimation 0.8s ease-in-out forwards;\n          }\n          @supports(-moz-appearance: auto) {\n            /* Selector detects Firefox */\n            .header { font-size: 15.5px; }\n          }\n          \n    @keyframes slideInAnimation {\n      from {\n        width: 0;\n      }\n      to {\n        width: calc(100%-100px);\n      }\n    }\n    @keyframes growWidthAnimation {\n      from {\n        width: 0;\n      }\n      to {\n        width: 100%;\n      }\n    }\n    .stat {\n      font: 600 14px 'Segoe UI', Ubuntu, \"Helvetica Neue\", Sans-Serif; fill: #24211E;\n    }\n    @supports(-moz-appearance: auto) {\n      /* Selector detects Firefox */\n      .stat { font-size:12px; }\n    }\n    .bold { font-weight: 700 }\n    .lang-name {\n      font: 400 11px \"Segoe UI\", Ubuntu, Sans-Serif;\n      fill: #24211E;\n    }\n    .stagger {\n      opacity: 0;\n      animation: fadeInAnimation 0.3s ease-in-out forwards;\n    }\n    #rect-mask rect{\n      animation: slideInAnimation 1s ease-in-out forwards;\n    }\n    .lang-progress{\n      animation: growWidthAnimation 0.6s ease-in-out forwards;\n    }\n    \n\n          \n      /* Animations */\n      @keyframes scaleInAnimation {\n        from {\n          transform: translate(-5px, 5px) scale(0);\n        }\n        to {\n          transform: translate(-5px, 5px) scale(1);\n        }\n      }\n      @keyframes fadeInAnimation {\n        from {\n          opacity: 0;\n        }\n        to {\n          opacity: 1;\n        }\n      }\n    \n          * { animation-duration: 0s !important; animation-delay: 0s !important; }\n         \n\n        \n\n         \n\n        \n\n         \n          \n     \n      \n  \n       \n           \n         \n        \n         \n      \n         \n      \n         \n      \n         \n      \n         \n      \n         \n      \n      \n     \n       \n     \n       \n       \n        TypeScript 61.44%\n       \n     \n   \n     \n       \n       \n        JavaScript 13.15%\n       \n     \n   \n     \n       \n       \n        Python 11.65%\n       \n     \n   \n     \n       \n       \n        Java 4.77%\n       \n     \n   \n     \n       \n       \n        HTML 4.65%\n       \n     \n   \n     \n       \n       \n        Astro 4.34%\n       \n     \n   \n     \n  \n     \n  \n         \n      ",
+      "status": "fresh"
+    },
+    "streak-light": {
+      "url": "https://github-readme-streak-stats-eight.vercel.app/?user=lora-sys&hide_border=true&background=F6F2EA&stroke=DED8CF&ring=9A661B&fire=9A661B&currStreakNum=24211E&sideNums=24211E&currStreakLabel=9A661B&sideLabels=70675D&dates=70675D",
+      "fetched_at": "2026-09-16T09:08:20.742177+00:00",
+      "sha256": "f3daa1220d61f792f3c977b7f699892548709f2622b5cf48ec27a3b8c9ffbdac",
+      "text": "\n         \n            @keyframes currstreak {\n                0% { font-size: 3px; opacity: 0.2; }\n                80% { font-size: 34px; opacity: 1; }\n                100% { font-size: 28px; opacity: 1; }\n            }\n            @keyframes fadein {\n                0% { opacity: 0; }\n                100% { opacity: 1; }\n            }\n         \n         \n             \n                 \n             \n             \n                 \n                 \n             \n            \n         \n         \n             \n                 \n             \n             \n                 \n                 \n             \n             \n                \n                 \n                     \n                        2,685\n                     \n                 \n\n                \n                 \n                     \n                        Total Contributions\n                     \n                 \n\n                \n                 \n                     \n                        Jul 26, 2024 - Present\n                     \n                 \n             \n             \n                \n                 \n                     \n                        3\n                     \n                 \n\n                \n                 \n                     \n                        Current Streak\n                     \n                 \n\n                \n                 \n                     \n                        Sep 14 - Sep 16\n                     \n                 \n\n                \n                 \n                     \n                 \n                \n                 \n                     \n                     \n                 \n\n             \n             \n                \n                 \n                     \n                        26\n                     \n                 \n\n                \n                 \n                     \n                        Longest Streak\n                     \n                 \n\n                \n                 \n                     \n                        Apr 9 - May 4\n                     \n                 \n             \n            \n         \n    ",
+      "status": "fresh"
+    },
+    "overview-dark": {
+      "url": "https://github-readme-stats-fast.vercel.app/api?username=lora-sys&bg_color=25231F&title_color=E2B45D&text_color=F4F0E9&icon_color=E2B45D&hide_border=true&hide_title=true&disable_animations=true&locale=cn&card_width=520&show_icons=true&hide_rank=false&rank_icon=default&ring_color=E0A62F&line_height=31",
+      "fetched_at": "2026-09-16T09:08:20.742177+00:00",
+      "sha256": "abb222da633a84505b75c97793a1e6bbf1b821139134b27b4b5a041f3dea69e4",
+      "text": "\n         lora 的 GitHub 统计数据, Rank: A- \n         获标星数（star）: 104, 累计提交数（commit） in 2026 : 2104, 拉取请求数（PR）: 133, 指出问题数（issue）: 217, 贡献于（去年）: 29 \n         \n          .header {\n            font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;\n            fill: #E2B45D;\n            animation: fadeInAnimation 0.8s ease-in-out forwards;\n          }\n          @supports(-moz-appearance: auto) {\n            /* Selector detects Firefox */\n            .header { font-size: 15.5px; }\n          }\n          \n    .stat {\n      font: 600 14px 'Segoe UI', Ubuntu, \"Helvetica Neue\", Sans-Serif; fill: #F4F0E9;\n    }\n    @supports(-moz-appearance: auto) {\n      /* Selector detects Firefox */\n      .stat { font-size:12px; }\n    }\n    .stagger {\n      opacity: 0;\n      animation: fadeInAnimation 0.3s ease-in-out forwards;\n    }\n    .rank-text {\n      font: 800 24px 'Segoe UI', Ubuntu, Sans-Serif; fill: #F4F0E9;\n      animation: scaleInAnimation 0.3s ease-in-out forwards;\n    }\n    .rank-percentile-header {\n      font-size: 14px;\n    }\n    .rank-percentile-text {\n      font-size: 16px;\n    }\n    \n    .not_bold { font-weight: 400 }\n    .bold { font-weight: 700 }\n    .icon {\n      fill: #E2B45D;\n      display: block;\n    }\n\n    .rank-circle-rim {\n      stroke: #E0A62F;\n      fill: none;\n      stroke-width: 6;\n      opacity: 0.2;\n    }\n    .rank-circle {\n      stroke: #E0A62F;\n      stroke-dasharray: 250;\n      fill: none;\n      stroke-width: 6;\n      stroke-linecap: round;\n      opacity: 0.8;\n      transform-origin: -10px 8px;\n      transform: rotate(-90deg);\n      animation: rankAnimation 1s forwards ease-in-out;\n    }\n    \n    @keyframes rankAnimation {\n      from {\n        stroke-dashoffset: 251.32741228718345;\n      }\n      to {\n        stroke-dashoffset: 64.07658165433398;\n      }\n    }\n  \n  \n\n          \n      /* Animations */\n      @keyframes scaleInAnimation {\n        from {\n          transform: translate(-5px, 5px) scale(0);\n        }\n        to {\n          transform: translate(-5px, 5px) scale(1);\n        }\n      }\n      @keyframes fadeInAnimation {\n        from {\n          opacity: 0;\n        }\n        to {\n          opacity: 1;\n        }\n      }\n    \n          * { animation-duration: 0s !important; animation-delay: 0s !important; }\n         \n\n        \n\n         \n\n        \n\n         \n          \n     \n         \n         \n         \n          \n         \n          A-\n         \n      \n         \n       \n     \n       \n     \n      \n     \n       \n     \n  \n       获标星数（star）: \n       104 \n     \n   \n     \n      \n     \n       \n     \n  \n       累计提交数（commit） (2026): \n       2.1k \n     \n   \n     \n      \n     \n       \n     \n  \n       拉取请求数（PR）: \n       133 \n     \n   \n     \n      \n     \n       \n     \n  \n       指出问题数（issue）: \n       217 \n     \n   \n     \n      \n     \n       \n     \n  \n       贡献于（去年）: \n       29 \n     \n   \n     \n  \n         \n      ",
+      "status": "fresh"
+    },
+    "languages-dark": {
+      "url": "https://github-readme-stats-sigma-fawn-45.vercel.app/api/top-langs/?username=lora-sys&bg_color=25231F&title_color=E2B45D&text_color=F4F0E9&icon_color=E2B45D&hide_border=true&hide_title=true&disable_animations=true&locale=cn&card_width=410&layout=compact&langs_count=6",
+      "fetched_at": "2026-09-16T09:08:20.742177+00:00",
+      "sha256": "8d9d4dd554712df3e38305ab4cfaf054c7c2fd637cfd80bd9df0b875c41dcc4f",
+      "text": "\n         \n         \n         \n          .header {\n            font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;\n            fill: #E2B45D;\n            animation: fadeInAnimation 0.8s ease-in-out forwards;\n          }\n          @supports(-moz-appearance: auto) {\n            /* Selector detects Firefox */\n            .header { font-size: 15.5px; }\n          }\n          \n    @keyframes slideInAnimation {\n      from {\n        width: 0;\n      }\n      to {\n        width: calc(100%-100px);\n      }\n    }\n    @keyframes growWidthAnimation {\n      from {\n        width: 0;\n      }\n      to {\n        width: 100%;\n      }\n    }\n    .stat {\n      font: 600 14px 'Segoe UI', Ubuntu, \"Helvetica Neue\", Sans-Serif; fill: #F4F0E9;\n    }\n    @supports(-moz-appearance: auto) {\n      /* Selector detects Firefox */\n      .stat { font-size:12px; }\n    }\n    .bold { font-weight: 700 }\n    .lang-name {\n      font: 400 11px \"Segoe UI\", Ubuntu, Sans-Serif;\n      fill: #F4F0E9;\n    }\n    .stagger {\n      opacity: 0;\n      animation: fadeInAnimation 0.3s ease-in-out forwards;\n    }\n    #rect-mask rect{\n      animation: slideInAnimation 1s ease-in-out forwards;\n    }\n    .lang-progress{\n      animation: growWidthAnimation 0.6s ease-in-out forwards;\n    }\n    \n\n          \n      /* Animations */\n      @keyframes scaleInAnimation {\n        from {\n          transform: translate(-5px, 5px) scale(0);\n        }\n        to {\n          transform: translate(-5px, 5px) scale(1);\n        }\n      }\n      @keyframes fadeInAnimation {\n        from {\n          opacity: 0;\n        }\n        to {\n          opacity: 1;\n        }\n      }\n    \n          * { animation-duration: 0s !important; animation-delay: 0s !important; }\n         \n\n        \n\n         \n\n        \n\n         \n          \n     \n      \n  \n       \n           \n         \n        \n         \n      \n         \n      \n         \n      \n         \n      \n         \n      \n         \n      \n      \n     \n       \n     \n       \n       \n        TypeScript 61.44%\n       \n     \n   \n     \n       \n       \n        JavaScript 13.15%\n       \n     \n   \n     \n       \n       \n        Python 11.65%\n       \n     \n   \n     \n       \n       \n        Java 4.77%\n       \n     \n   \n     \n       \n       \n        HTML 4.65%\n       \n     \n   \n     \n       \n       \n        Astro 4.34%\n       \n     \n   \n     \n  \n     \n  \n         \n      ",
+      "status": "fresh"
+    },
+    "streak-dark": {
+      "url": "https://github-readme-streak-stats-eight.vercel.app/?user=lora-sys&hide_border=true&background=25231F&stroke=3A3732&ring=E2B45D&fire=E2B45D&currStreakNum=F4F0E9&sideNums=F4F0E9&currStreakLabel=E2B45D&sideLabels=BFB6A8&dates=BFB6A8",
+      "fetched_at": "2026-09-16T09:08:20.742177+00:00",
+      "sha256": "675ffe9b32f4fb5c67c25457548122185793eb428d44cb40cd4edeb0de020c89",
+      "text": "\n         \n            @keyframes currstreak {\n                0% { font-size: 3px; opacity: 0.2; }\n                80% { font-size: 34px; opacity: 1; }\n                100% { font-size: 28px; opacity: 1; }\n            }\n            @keyframes fadein {\n                0% { opacity: 0; }\n                100% { opacity: 1; }\n            }\n         \n         \n             \n                 \n             \n             \n                 \n                 \n             \n            \n         \n         \n             \n                 \n             \n             \n                 \n                 \n             \n             \n                \n                 \n                     \n                        2,685\n                     \n                 \n\n                \n                 \n                     \n                        Total Contributions\n                     \n                 \n\n                \n                 \n                     \n                        Jul 26, 2024 - Present\n                     \n                 \n             \n             \n                \n                 \n                     \n                        3\n                     \n                 \n\n                \n                 \n                     \n                        Current Streak\n                     \n                 \n\n                \n                 \n                     \n                        Sep 14 - Sep 16\n                     \n                 \n\n                \n                 \n                     \n                 \n                \n                 \n                     \n                     \n                 \n\n             \n             \n                \n                 \n                     \n                        26\n                     \n                 \n\n                \n                 \n                     \n                        Longest Streak\n                     \n                 \n\n                \n                 \n                     \n                        Apr 9 - May 4\n                     \n                 \n             \n            \n         \n    ",
+      "status": "fresh"
+    }
+  },
+  "components": {
+    "heading-work": {
+      "alt": "01 / SELECTED WORK。。项目与作品。浏览全部项目",
+      "href": "https://lora-sys.github.io/loraSys/projects"
+    },
+    "feature-glassbox": {
+      "alt": "项目插画。PERSONAL AGENT。开发中。Glassbox。。开发中的个人 Agent 工作台，管理对话、权限与任务执行。。。当前在做 QQ 接入与任务执行流程。",
+      "href": "https://github.com/lora-sys/Glassbox-Agent-Harness"
+    },
+    "feature-zhihu": {
+      "alt": "项目插画。LEARNING APP。应用。Zhihu Threads。。把选中的知乎摘录整理成带来源的学习线，支持追问、自测和导出。。。用户选来源，AI 基于所选摘录回答。",
+      "href": "https://github.com/lora-sys/zhihu-threads"
+    },
+    "compact-arena": {
+      "alt": "AgentArena。。让三支 Agent 团队处理同一任务，保留提案、证据与对战回放。。。多 Agent 实验。查看项目",
+      "href": "https://github.com/lora-sys/AgentArena"
+    },
+    "compact-skills": {
+      "alt": "Lora Skills。。按需安装的 Agent 工作流集合，涵盖工程、写作和内容发布。。。可安装工具。查看安装说明",
+      "href": "https://github.com/lora-sys/skills#安装"
+    },
+    "compact-vllm": {
+      "alt": "nano-vLLM 交互教程。。结合源码与浏览器实验，讲解推理调度、KV Cache 和采样。。。交互式源码教程。打开教程",
+      "href": "https://lora-sys.github.io/nano-vllm-interactive-guide/guide/00-start"
+    },
+    "compact-vision": {
+      "alt": "Free Vision Skill。。按任务提取图片中的相关信息，输出文本证据供 Agent 继续处理。。。开发者工具。查看使用方式",
+      "href": "https://github.com/lora-sys/free-vision-skill#使用"
+    },
+    "heading-tool": {
+      "alt": "02 / TOOLKIT。。技术与工具。项目中使用",
+      "href": null
+    },
+    "heading-stats": {
+      "alt": "03 / GITHUB ACTIVITY。。代码与贡献。lora-sys",
+      "href": null
+    },
+    "overview": {
+      "alt": "GitHub 总览。每日更新。公开数据快照。查看原始图片",
+      "href": "https://github-readme-stats-fast.vercel.app/api?username=lora-sys"
+    },
+    "languages": {
+      "alt": "仓库语言分布。每日更新。公开数据快照。查看原始图片",
+      "href": "https://github-readme-stats-sigma-fawn-45.vercel.app/api/top-langs/?username=lora-sys"
+    },
+    "streak": {
+      "alt": "连续贡献记录。每日更新。公开数据快照。查看原始图片",
+      "href": "https://github-readme-streak-stats-eight.vercel.app/?user=lora-sys"
+    },
+    "heading-writing": {
+      "alt": "04 / FIELD NOTES。。文章与笔记。全部文章",
+      "href": "https://lora-sys.github.io/loraSys/blog"
+    },
+    "heading-contributions": {
+      "alt": "05 / OPEN SOURCE。。参与的开源项目。更多合并记录",
+      "href": "https://github.com/search?q=author%3Alora-sys+is%3Apr+is%3Amerged&type=pullrequests"
+    },
+    "article-budget": {
+      "alt": "01。论文阅读。2026.09.16。Agent 该继续跑，还是重新开一轮？。。同样一笔预算，是继续当前会话，还是重新尝试？结合记忆与评测拆解这个问题。",
+      "href": "https://lora-sys.github.io/loraSys/blog/agent-budget-memory-evaluation"
+    },
+    "article-tau": {
+      "alt": "02。架构与源码。2026.09.16。把 AI Agent 拆成三层。。以 Tau 为例，拆开模型适配、Agent 核心和应用界面，说明每一层负责什么。",
+      "href": "https://lora-sys.github.io/loraSys/blog/tau-agent-architecture"
+    },
+    "article-harness": {
+      "alt": "03。工程实践。2026.08.02。Agent 开发的测试与审查。。把 Issue、实现、测试、代码审查和验收记录组织成一次可检查的交付。",
+      "href": "https://lora-sys.github.io/loraSys/blog/ai-engineering-harness"
+    },
+    "pr-eino": {
+      "alt": "cloudwego/eino-examples。已合并。修复 Excel Agent 的计划与文件路径。。修正启动路径重复、计划步骤为空，以及文件工具写入目录不正确的问题。。。2026.05.25。查看 PR #227",
+      "href": "https://github.com/cloudwego/eino-examples/pull/227"
+    },
+    "pr-nad": {
+      "alt": "portdeveloper/nad-agent。已合并。增加多账户切换与配置持久化。。在命令行列出和切换账户，保存当前选择，并让转账使用选中的账户。。。2026.08.18。查看 PR #49",
+      "href": "https://github.com/portdeveloper/nad-agent/pull/49"
+    },
+    "pr-moss": {
+      "alt": "nishuzumi/moss。已合并。增加合约 ABI 获取工具。。获取已验证的合约 ABI，生成 TypeScript 定义，并处理参数校验、错误与密钥脱敏。。。2026.07.19。查看 PR #29",
+      "href": "https://github.com/nishuzumi/moss/pull/29"
+    },
+    "contact": {
+      "alt": "06 / CONTACT。。联系我。。项目问题请在对应仓库提 Issue。。其他交流可以发邮件。。。lorasys@outlook.com",
+      "href": "mailto:lorasys@outlook.com"
+    },
+    "tool-0": {
+      "alt": "TS。TypeScript。应用逻辑",
+      "href": "https://github.com/lora-sys/zhihu-threads/blob/main/package.json"
+    },
+    "tool-1": {
+      "alt": "N。Node.js。服务端运行",
+      "href": "https://github.com/lora-sys/Glassbox-Agent-Harness/blob/main/package.json"
+    },
+    "tool-2": {
+      "alt": "React。界面与交互",
+      "href": "https://github.com/lora-sys/zhihu-threads/blob/main/package.json"
+    },
+    "tool-3": {
+      "alt": "Tailwind CSS。样式与布局",
+      "href": "https://github.com/lora-sys/zhihu-threads/blob/main/package.json"
+    },
+    "tool-4": {
+      "alt": "SQLite。本地存储",
+      "href": "https://github.com/lora-sys/zhihu-threads/blob/main/package.json"
+    },
+    "tool-5": {
+      "alt": "Effect TS。异步流程",
+      "href": "https://github.com/lora-sys/zhihu-threads/blob/main/package.json"
+    },
+    "tool-6": {
+      "alt": "Vitest。逻辑测试",
+      "href": "https://github.com/lora-sys/Glassbox-Agent-Harness/blob/main/package.json"
+    },
+    "tool-7": {
+      "alt": "Playwright。浏览器验证",
+      "href": "https://github.com/lora-sys/Glassbox-Agent-Harness/blob/main/package.json"
+    },
+    "nav-0": {
+      "alt": "个人网站",
+      "href": "https://lora-sys.github.io/loraSys/"
+    },
+    "nav-1": {
+      "alt": "项目",
+      "href": "https://lora-sys.github.io/loraSys/projects"
+    },
+    "nav-2": {
+      "alt": "文章",
+      "href": "https://lora-sys.github.io/loraSys/blog"
+    },
+    "nav-3": {
+      "alt": "联系我",
+      "href": "mailto:lorasys@outlook.com"
+    }
+  }
+}
