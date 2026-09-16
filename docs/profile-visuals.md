@@ -1,31 +1,38 @@
 # Profile visuals
 
-The current profile uses a native heading, one short typing line, and six text-based project panels. Project descriptions remain visible. The contribution animation is collapsed by default. The previous large hero and illustration cards are no longer displayed; their source files and old output URLs are retained.
+The profile uses the original `assets/readme/hero-v1.webp` unchanged. Do not remove or replace this banner when changing the layout.
 
-## Editing
+## Visual direction
 
-Edit the biography and project descriptions in `README.md`. Update `TEXT` in `scripts/build_profile.py` for the typing line, keeping the image alt text in sync.
+Keep the warm paper, brown and amber palette from the original banner. Use a visible typewriter introduction, illustrated project links, numbered sections, technology labels and the contribution snake. Do not replace the artwork with a plain table.
+
+The typewriter cycles through three short statements over 24 seconds. It includes a moving cursor and deletion between statements. Reduced-motion users get a separate static file. All essential project information is also available as image alt text and a text index.
+
+Project cards use existing artwork from Lora's public repositories. AgentArena uses an actual UI screenshot; the other cards are labeled as project illustrations. The generator records each source URL and SHA-256 in `output/v4/sources.json`.
+
+## Build
 
 ```sh
-python3 scripts/build_profile.py --output dist
+python -m pip install Pillow==11.3.0
+python scripts/build_profile_v4.py --output dist
 ```
 
-The generator produces `typing-v3-light.svg`, `typing-v3-dark.svg`, and a `-static` counterpart for each theme. They have transparent backgrounds and use system fonts. Text types once, remains visible, and has no audio or looping cursor. README selects a static file through its outer picture element when reduced motion is enabled. This avoids relying on media-query propagation into external SVG images.
+The generator creates 60 self-contained SVGs in `dist/v4`. The workflow adds four contribution snake files and publishes with a normal fast-forward push to `output`. A failure before publishing leaves existing images intact. Original source assets and older outputs are preserved.
 
-## Publishing
+Desktop cards form a two-column gallery without a Markdown table. On narrow screens the links wrap into one column and select a mobile artwork variant. The original banner remains unchanged on every screen size.
 
-`.github/workflows/snake.yml` adds two contribution snakes and two static counterparts, then validates exactly eight generated SVGs. It publishes to the existing `output` branch with a normal fast-forward commit, preserving old URLs. Upstream actions remain pinned to commit SHAs. No force-push is used.
+## Verification
 
-Publish new asset names before updating README references. A failed build must not replace the current README with links to missing images.
+`Review profile appearance` follows successful non-scheduled builds. It uses Chromium to open the actual public GitHub profile, checks every README image, theme selection, six project links, horizontal overflow, desktop and mobile arrangement, and reduced-motion selection. Screenshots and a JSON report are uploaded as a seven-day Actions artifact. These screenshots are not a locally reconstructed GitHub page.
 
-## Verification limits
+## Design references
 
-The 2026-09-16 revision was checked using a local reconstruction of the README with GitHub-like Markdown styling. Desktop and narrow layouts were tested for horizontal overflow and visible broken images. The external contribution snake was excluded from this offline browser test; the workflow validates its generated SVG separately.
+The following pages informed layout techniques, not copied artwork or biographies. Original illustration assets remain Lora's existing assets.
 
-The browser could not open the actual GitHub profile due to an environment restriction. Local screenshots are not GitHub screenshots and do not validate GitHub's HTML sanitization or image proxy. Do not describe this as a complete live-page visual check.
+- https://github.com/topics/beautiful-profile-readme
+- https://github.com/Sharann-del/Sharann-del uses numbered sections and consistent light/dark artwork.
+- https://github.com/DIMFLIX/DIMFLIX combines an illustrated introduction, typewriter text, navigation badges and clickable visual cards.
+- https://github.com/HiradEmami/HiradEmami uses animated separators and visual navigation.
+- https://github.com/Platane/snk generates the contribution snake.
 
-## Native profile pins
-
-The selected order is Glassbox-Agent-Harness, zhihu-threads, AgentArena, skills, nano-vllm-interactive-guide, and free-vision-skill.
-
-Changing this README does not change GitHub's native pins. The available connector has no pin write action, and no authenticated browser session was available. Native pin selection and ordering remain unapplied. Do not use repository metadata or README cards as evidence that native pins changed.
+The README gallery is not GitHub's native pinned-repository setting. This build does not change native pins, repository visibility or account settings.

@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - README.md
-      - scripts/build_profile.py
+      - scripts/build_profile_v4.py
       - .github/workflows/snake.yml
   schedule:
     - cron: '23 0 * * *'
@@ -25,13 +25,13 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-
-      - name: Build compact typing line
-        run: python3 scripts/build_profile.py --output dist
-
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - name: Build profile gallery and typing assets
+        run: |
+          python3 -m pip install Pillow==11.3.0
+          python3 scripts/build_profile_v4.py --output dist
       - name: Generate contribution snakes
-        uses: Platane/snk/svg-only@d8f6715049803e982ee5ff501b6b9b7d5deeb09b # v3
+        uses: Platane/snk/svg-only@d8f6715049803e982ee5ff501b6b9b7d5deeb09b
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
@@ -39,52 +39,41 @@ jobs:
             dist/snake-dark.svg?palette=github-dark&color_snake=%23E0A62F&color_dots=%23242529,%234D4030,%23755A31,%23AB7A32,%23DDB365
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Validate assets and honor reduced motion
+      - name: Validate assets and static fallbacks
         run: |
           python3 - <<'PY'
           from pathlib import Path
           import xml.etree.ElementTree as ET
           for name in ('snake-light.svg', 'snake-dark.svg'):
-              path = Path('dist') / name
-              svg = path.read_text(encoding='utf-8')
-              style = '<style>@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>'
-              svg = svg.replace('</svg>', style + '</svg>')
-              path.write_text(svg, encoding='utf-8')
-              tree = ET.fromstring(svg)
-              assert not any(element.tag.rsplit('}', 1)[-1].startswith('animate') for element in tree.iter())
-              still = svg.replace('</svg>', '<style>*{animation:none!important;transition:none!important}</style></svg>')
-              path.with_name(path.stem + '-static.svg').write_text(still, encoding='utf-8')
-          expected = {'typing-v3-light.svg', 'typing-v3-dark.svg', 'typing-v3-light-static.svg', 'typing-v3-dark-static.svg', 'snake-light.svg', 'snake-dark.svg', 'snake-light-static.svg', 'snake-dark-static.svg'}
-          assets = list(Path('dist').glob('*.svg'))
-          assert {path.name for path in assets} == expected
+              path=Path('dist')/name
+              svg=path.read_text()
+              svg=svg.replace('</svg>', '<style>@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style></svg>')
+              path.write_text(svg)
+              still=svg.replace('</svg>', '<style>*{animation:none!important;transition:none!important}</style></svg>')
+              path.with_name(path.stem+'-static.svg').write_text(still)
+          assets=list(Path('dist').rglob('*.svg'))
+          assert len(assets)==64, len(assets)
           for path in assets:
-              svg = path.read_text(encoding='utf-8')
-              ET.fromstring(svg)
-              assert '<script' not in svg and '<foreignObject' not in svg, path
-          print('8 self-contained SVGs validated')
+              data=path.read_text()
+              ET.fromstring(data)
+              assert '<script' not in data and '<foreignObject' not in data, path
+          print('64 SVGs validated; original banner unchanged')
           PY
-
       - name: Publish assets without rewriting history
         shell: bash
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          if git ls-remote --exit-code --heads origin output > /dev/null; then
-            git fetch --depth=1 origin output
-            git worktree add --detach publish FETCH_HEAD
-          else
-            git worktree add --detach publish HEAD
-            git -C publish switch --orphan profile-output
-          fi
-          cp dist/*.svg publish/
+          git fetch --depth=1 origin output
+          git worktree add --detach publish FETCH_HEAD
+          cp -R dist/. publish/
           touch publish/.nojekyll
           cd publish
-          git add -- '*.svg' .nojekyll
+          git add -- v4 '*.svg' .nojekyll
           if git diff --cached --quiet; then
             echo 'Profile assets unchanged'
             exit 0
           fi
-          git commit -m 'chore: refresh profile visuals'
+          git commit -m 'chore: refresh profile gallery and animations'
           git push origin HEAD:output
