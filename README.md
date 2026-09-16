@@ -1,7 +1,5 @@
 <p align="center">
-  <a href="https://lora-sys.github.io/loraSys/">
-    <img src="./assets/readme/hero-v1.webp" width="100%" alt="Lora Sys。AI Agent、推理源码教程与开发者工具。原版 Lora 与 Mochi 插画横幅。">
-  </a>
+  <a href="https://lora-sys.github.io/loraSys/"><img src="./assets/readme/hero-v1.webp" width="100%" alt="Lora Sys。AI Agent、推理源码教程与开发者工具。原版 Lora 与 Mochi 插画横幅。"></a>
 </p>
 
 <p align="center">
@@ -23,30 +21,10 @@
 </p>
 
 <p align="center">
-<a href="https://lora-sys.github.io/loraSys/">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/nav-website-dark.svg">
-  <img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/nav-website-light.svg" width="124" alt="个人网站">
-</picture>
-</a>
-<a href="https://lora-sys.github.io/loraSys/projects">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/nav-projects-dark.svg">
-  <img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/nav-projects-light.svg" width="124" alt="全部项目">
-</picture>
-</a>
-<a href="https://lora-sys.github.io/loraSys/blog">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/nav-writing-dark.svg">
-  <img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/nav-writing-light.svg" width="124" alt="文章">
-</picture>
-</a>
-<a href="mailto:lorasys@outlook.com">
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/nav-contact-dark.svg">
-  <img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/nav-contact-light.svg" width="124" alt="联系我">
-</picture>
-</a>
+<a href="https://lora-sys.github.io/loraSys/"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/nav-website-dark.svg"><img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/nav-website-light.svg" width="124" alt="个人网站"></picture></a>
+<a href="https://lora-sys.github.io/loraSys/projects"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/nav-projects-dark.svg"><img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/nav-projects-light.svg" width="124" alt="全部项目"></picture></a>
+<a href="https://lora-sys.github.io/loraSys/blog"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/nav-writing-dark.svg"><img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/nav-writing-light.svg" width="124" alt="文章"></picture></a>
+<a href="mailto:lorasys@outlook.com"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/nav-contact-dark.svg"><img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/nav-contact-light.svg" width="124" alt="联系我"></picture></a>
 </p>
 
 <picture>
@@ -57,54 +35,12 @@
 </picture>
 
 <p align="center">
-<a href="https://github.com/lora-sys/Glassbox-Agent-Harness">
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-glassbox-dark-mobile.svg">
-  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-glassbox-light-mobile.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-glassbox-dark.svg">
-  <img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-glassbox-light.svg" width="400" alt="Glassbox。开发中的个人 Agent 工作台，记录对话、管理任务与执行过程。项目插画。">
-</picture>
-</a>
-<a href="https://github.com/lora-sys/zhihu-threads">
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-zhihu-dark-mobile.svg">
-  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-zhihu-light-mobile.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-zhihu-dark.svg">
-  <img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-zhihu-light.svg" width="400" alt="Zhihu Threads。把选中的知乎摘录整理成带来源的学习线，支持追问、自测和导出。项目插画。">
-</picture>
-</a>
-<a href="https://github.com/lora-sys/AgentArena">
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-arena-dark-mobile.svg">
-  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-arena-light-mobile.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-arena-dark.svg">
-  <img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-arena-light.svg" width="400" alt="AgentArena。三支 Agent 团队处理同一任务，保留提案、证据和回放。界面截图。">
-</picture>
-</a>
-<a href="https://github.com/lora-sys/skills">
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-skills-dark-mobile.svg">
-  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-skills-light-mobile.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-skills-dark.svg">
-  <img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-skills-light.svg" width="400" alt="Lora Skills。可按需安装的 Agent 工作流集合，保留来源与许可证。项目插画。">
-</picture>
-</a>
-<a href="https://github.com/lora-sys/nano-vllm-interactive-guide">
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-vllm-dark-mobile.svg">
-  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-vllm-light-mobile.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-vllm-dark.svg">
-  <img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-vllm-light.svg" width="400" alt="nano-vLLM 交互教程。结合源码和浏览器实验，讲解推理调度、KV Cache 与采样。项目插画。">
-</picture>
-</a>
-<a href="https://github.com/lora-sys/free-vision-skill">
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-vision-dark-mobile.svg">
-  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-vision-light-mobile.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-vision-dark.svg">
-  <img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-vision-light.svg" width="400" alt="Free Vision Skill。按任务提取图片信息，将文本证据交给 Agent 处理。项目插画。">
-</picture>
-</a>
+<a href="https://github.com/lora-sys/Glassbox-Agent-Harness"><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-glassbox-dark-mobile.svg"><source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-glassbox-light-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-glassbox-dark.svg"><img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-glassbox-light.svg" width="400" alt="Glassbox。开发中的个人 Agent 工作台，记录对话、管理任务与执行过程。项目插画。"></picture></a>
+<a href="https://github.com/lora-sys/zhihu-threads"><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-zhihu-dark-mobile.svg"><source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-zhihu-light-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-zhihu-dark.svg"><img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-zhihu-light.svg" width="400" alt="Zhihu Threads。把选中的知乎摘录整理成带来源的学习线，支持追问、自测和导出。项目插画。"></picture></a>
+<a href="https://github.com/lora-sys/AgentArena"><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-arena-dark-mobile.svg"><source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-arena-light-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-arena-dark.svg"><img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-arena-light.svg" width="400" alt="AgentArena。三支 Agent 团队处理同一任务，保留提案、证据和回放。界面截图。"></picture></a>
+<a href="https://github.com/lora-sys/skills"><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-skills-dark-mobile.svg"><source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-skills-light-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-skills-dark.svg"><img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-skills-light.svg" width="400" alt="Lora Skills。可按需安装的 Agent 工作流集合，保留来源与许可证。项目插画。"></picture></a>
+<a href="https://github.com/lora-sys/nano-vllm-interactive-guide"><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-vllm-dark-mobile.svg"><source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-vllm-light-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-vllm-dark.svg"><img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-vllm-light.svg" width="400" alt="nano-vLLM 交互教程。结合源码和浏览器实验，讲解推理调度、KV Cache 与采样。项目插画。"></picture></a>
+<a href="https://github.com/lora-sys/free-vision-skill"><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-vision-dark-mobile.svg"><source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-vision-light-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-vision-dark.svg"><img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v4/project-vision-light.svg" width="400" alt="Free Vision Skill。按任务提取图片信息，将文本证据交给 Agent 处理。项目插画。"></picture></a>
 </p>
 
 <p align="center">

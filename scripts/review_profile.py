@@ -11,6 +11,7 @@ if 'output/v4/' not in Path('README.md').read_text():
     (out/'report.json').write_text(json.dumps({'status':'waiting_for_readme_switch'}))
     sys.exit(0)
 report={'source':'https://github.com/lora-sys','sha':os.environ.get('GITHUB_SHA'),'views':[]}
+expected=['Glassbox-Agent-Harness','zhihu-threads','AgentArena','skills','nano-vllm-interactive-guide','free-vision-skill']
 errors=[]
 with sync_playwright() as p:
     browser=p.chromium.launch()
@@ -29,9 +30,10 @@ with sync_playwright() as p:
             article.scroll_into_view_if_needed()
             page.wait_for_function('''() => [...document.querySelectorAll('article.markdown-body img')].length>=18 && [...document.querySelectorAll('article.markdown-body img')].every(i=>i.complete&&i.naturalWidth>0)''',timeout=45000)
             page.wait_for_timeout(3000)
-            data=article.evaluate('''el=>({width:el.clientWidth,scrollWidth:el.scrollWidth,images:[...el.querySelectorAll('img')].map(i=>({alt:i.alt,loaded:i.complete&&i.naturalWidth>0,src:i.currentSrc,width:i.getBoundingClientRect().width,height:i.getBoundingClientRect().height})),cards:[...el.querySelectorAll('img')].filter(i=>i.currentSrc.includes('/project-')).map(i=>({x:i.getBoundingClientRect().x,y:i.getBoundingClientRect().y,width:i.getBoundingClientRect().width}))})''')
+            data=article.evaluate('''el=>({width:el.clientWidth,scrollWidth:el.scrollWidth,images:[...el.querySelectorAll('img')].map(i=>({alt:i.alt,loaded:i.complete&&i.naturalWidth>0,src:i.currentSrc,width:i.getBoundingClientRect().width,height:i.getBoundingClientRect().height})),cards:[...el.querySelectorAll('img')].filter(i=>i.currentSrc.includes('/project-')).map(i=>({x:i.getBoundingClientRect().x,y:i.getBoundingClientRect().y,width:i.getBoundingClientRect().width,href:i.closest('a').href})),imageLinkWhitespace:[...el.querySelectorAll('a')].filter(a=>a.querySelector('img')).map(a=>a.textContent.length)})''')
             assert data['scrollWidth']<=data['width']+1,'README horizontal overflow'
-            assert len(data['cards'])==6,'Expected six project pictures'
+            assert [c['href'] for c in data['cards']]==['https://github.com/lora-sys/'+n for n in expected], 'Wrong project links or order'
+            assert all(n==0 for n in data['imageLinkWhitespace']), 'Image link whitespace creates stray underline marks'
             for image in data['images']:
                 if '/v4/' in image['src']:
                     assert ('-dark' in image['src'])==(theme=='dark'), 'Wrong theme: '+image['src']
@@ -41,8 +43,13 @@ with sync_playwright() as p:
                 assert len({round(c['x']) for c in data['cards']})==1,'Mobile cards must form one column'
             else:
                 assert len({round(c['y']) for c in data['cards']})==3,'Desktop cards must form three rows'
-            article.screenshot(path=str(out/f'profile-{label}.png'),timeout=20000)
+            page.evaluate('window.scrollTo(0,0)')
+            page.wait_for_timeout(300)
+            data['documentBox']=article.evaluate('el=>{const r=el.getBoundingClientRect();return {x:r.x+scrollX,y:r.y+scrollY,width:r.width,height:r.height}}')
             page.screenshot(path=str(out/f'page-{label}.png'),full_page=True,timeout=20000)
+            # The full-page image is the evidence master. The element image may include
+            # GitHub's sticky tab bar; use documentBox to crop the unobscured master.
+            article.screenshot(path=str(out/f'profile-{label}.png'),timeout=20000)
             if theme=='light' and width==1440:
                 (out/'profile.html').write_text(page.content(),encoding='utf-8')
                 typing=article.locator('img[alt^="我在写"]')
