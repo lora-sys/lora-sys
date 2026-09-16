@@ -8,6 +8,7 @@ on:
       - scripts/build_approved_profile.py
       - scripts/prepare_approved_layout.py
       - scripts/normalize_profile_svg.py
+      - scripts/apply_compact_cover_patch.py
       - assets/profile/**
       - .github/workflows/snake.yml
   schedule:
@@ -29,6 +30,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - name: Apply approved compact project covers
+        run: python3 scripts/apply_compact_cover_patch.py
+      - name: Persist approved cover source changes
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add scripts/prepare_approved_layout.py scripts/build_approved_profile.py
+          if git diff --cached --quiet; then
+            echo 'Compact cover sources already committed'
+          else
+            git commit -m 'feat(profile): add covers to compact project cards'
+            git push origin HEAD:main
+          fi
       - name: Read last successful public assets
         run: |
           git fetch --depth=1 origin output
