@@ -11,7 +11,7 @@ PALETTES = {
 }
 
 
-def render(theme: str) -> str:
+def render(theme: str, static: bool = False) -> str:
     """One short animation. The final text remains visible without animation."""
     foreground, accent = PALETTES[theme]
     x = 0.0
@@ -21,11 +21,13 @@ def render(theme: str) -> str:
         width = 12.2 if ord(char) < 128 or char == '·' else 20.0
         color = accent if char == '·' else foreground
         delay = .10 + index * .055
+        animation = '' if static else (
+            '<animate attributeName="opacity" values="0;1" '
+            f'keyTimes="0;1" calcMode="discrete" dur="{delay:.3f}s" fill="freeze"/>'
+        )
         items.append(
             f'<text class="letter" x="{x:.1f}" y="25" fill="{color}">'
-            f'{escape(char)}<animate attributeName="opacity" values="0;1" '
-            f'keyTimes="0;1" calcMode="discrete" dur="{delay:.3f}s" '
-            'fill="freeze"/></text>'
+            f'{escape(char)}{animation}</text>'
         )
         x += width
     assert x <= 420, f'Text exceeds viewBox: {x}'
@@ -43,12 +45,14 @@ def main() -> None:
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     for theme in PALETTES:
-        svg = render(theme)
-        ET.fromstring(svg)
-        assert '<script' not in svg and '<foreignObject' not in svg
-        path = args.output / f'typing-v3-{theme}.svg'
-        path.write_text(svg, encoding='utf-8')
-    print('Generated 2 self-contained typing SVGs; XML validation passed')
+        for static in (False, True):
+            svg = render(theme, static)
+            ET.fromstring(svg)
+            assert '<script' not in svg and '<foreignObject' not in svg
+            suffix = '-static' if static else ''
+            path = args.output / f'typing-v3-{theme}{suffix}.svg'
+            path.write_text(svg, encoding='utf-8')
+    print('Generated 4 self-contained typing SVGs; XML validation passed')
 
 
 if __name__ == '__main__':

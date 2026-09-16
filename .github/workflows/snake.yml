@@ -51,14 +51,18 @@ jobs:
               style = '<style>@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style>'
               svg = svg.replace('</svg>', style + '</svg>')
               path.write_text(svg, encoding='utf-8')
-          expected = {'typing-v3-light.svg', 'typing-v3-dark.svg', 'snake-light.svg', 'snake-dark.svg'}
+              tree = ET.fromstring(svg)
+              assert not any(element.tag.rsplit('}', 1)[-1].startswith('animate') for element in tree.iter())
+              still = svg.replace('</svg>', '<style>*{animation:none!important;transition:none!important}</style></svg>')
+              path.with_name(path.stem + '-static.svg').write_text(still, encoding='utf-8')
+          expected = {'typing-v3-light.svg', 'typing-v3-dark.svg', 'typing-v3-light-static.svg', 'typing-v3-dark-static.svg', 'snake-light.svg', 'snake-dark.svg', 'snake-light-static.svg', 'snake-dark-static.svg'}
           assets = list(Path('dist').glob('*.svg'))
           assert {path.name for path in assets} == expected
           for path in assets:
               svg = path.read_text(encoding='utf-8')
               ET.fromstring(svg)
               assert '<script' not in svg and '<foreignObject' not in svg, path
-          print('4 self-contained SVGs validated')
+          print('8 self-contained SVGs validated')
           PY
 
       - name: Publish assets without rewriting history

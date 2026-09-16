@@ -10,11 +10,11 @@ Edit the biography and project descriptions in `README.md`. Update `TEXT` in `sc
 python3 scripts/build_profile.py --output dist
 ```
 
-The generator produces `typing-v3-light.svg` and `typing-v3-dark.svg`. They have transparent backgrounds and use system fonts. Text types once, remains visible, and has no audio or looping cursor. Reduced motion shows complete text immediately.
+The generator produces `typing-v3-light.svg`, `typing-v3-dark.svg`, and a `-static` counterpart for each theme. They have transparent backgrounds and use system fonts. Text types once, remains visible, and has no audio or looping cursor. README selects a static file through its outer picture element when reduced motion is enabled. This avoids relying on media-query propagation into external SVG images.
 
 ## Publishing
 
-`.github/workflows/snake.yml` adds two contribution snakes and validates exactly four generated SVGs. It publishes to the existing `output` branch with a normal fast-forward commit, preserving old URLs. Upstream actions remain pinned to commit SHAs. No force-push is used.
+`.github/workflows/snake.yml` adds two contribution snakes and two static counterparts, then validates exactly eight generated SVGs. It publishes to the existing `output` branch with a normal fast-forward commit, preserving old URLs. Upstream actions remain pinned to commit SHAs. No force-push is used.
 
 Publish new asset names before updating README references. A failed build must not replace the current README with links to missing images.
 
