@@ -9,7 +9,7 @@
         aria-labelledby="descId"
       >
         <title id="titleId">lora &#30340; GitHub &#32479;&#35745;&#25968;&#25454;, Rank: A</title>
-        <desc id="descId">获标星数（star）: 108, 累计提交数（commit） in 2026 : 2450, 拉取请求数（PR）: 180, 指出问题数（issue）: 276, 贡献于（去年）: 29</desc>
+        <desc id="descId">获标星数（star）: 109, 累计提交数（commit） in 2026 : 2475, 拉取请求数（PR）: 190, 指出问题数（issue）: 288, 贡献于（去年）: 29</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -73,7 +73,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 52.0711374369326;
+        stroke-dashoffset: 51.22767005792627;
       }
     }
   
@@ -148,7 +148,7 @@
         x="269.01"
         y="12.5"
         data-testid="stars"
-      >108</text>
+      >109</text>
     </g>
   </g><g transform="translate(0, 31)">
     <g class="stagger" style="animation-delay: 600ms" transform="translate(25, 0)">
@@ -178,7 +178,7 @@
         x="269.01"
         y="12.5"
         data-testid="prs"
-      >180</text>
+      >190</text>
     </g>
   </g><g transform="translate(0, 93)">
     <g class="stagger" style="animation-delay: 900ms" transform="translate(25, 0)">
@@ -193,7 +193,7 @@
         x="269.01"
         y="12.5"
         data-testid="issues"
-      >276</text>
+      >288</text>
     </g>
   </g><g transform="translate(0, 124)">
     <g class="stagger" style="animation-delay: 1050ms" transform="translate(25, 0)">
