@@ -9,7 +9,7 @@
         aria-labelledby="descId"
       >
         <title id="titleId">lora &#30340; GitHub &#32479;&#35745;&#25968;&#25454;, Rank: A</title>
-        <desc id="descId">获标星数（star）: 110, 累计提交数（commit） in 2026 : 2541, 拉取请求数（PR）: 214, 指出问题数（issue）: 296, 贡献于（去年）: 29</desc>
+        <desc id="descId">获标星数（star）: 110, 累计提交数（commit） in 2026 : 2548, 拉取请求数（PR）: 216, 指出问题数（issue）: 317, 贡献于（去年）: 29</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -73,7 +73,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 49.636250442017854;
+        stroke-dashoffset: 49.54458689710107;
       }
     }
   
@@ -178,7 +178,7 @@
         x="269.01"
         y="12.5"
         data-testid="prs"
-      >214</text>
+      >216</text>
     </g>
   </g><g transform="translate(0, 93)">
     <g class="stagger" style="animation-delay: 900ms" transform="translate(25, 0)">
@@ -193,7 +193,7 @@
         x="269.01"
         y="12.5"
         data-testid="issues"
-      >296</text>
+      >317</text>
     </g>
   </g><g transform="translate(0, 124)">
     <g class="stagger" style="animation-delay: 1050ms" transform="translate(25, 0)">
