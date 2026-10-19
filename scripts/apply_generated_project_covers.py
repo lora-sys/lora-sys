@@ -59,17 +59,25 @@ def decode_cover(name: str) -> None:
 
 def patch_build_sources() -> None:
     source = BUILD.read_text(encoding="utf-8")
+    removed = [name for name, remote in REMOTE_LINES.items() if remote not in source]
+    if len(removed) == len(REMOTE_LINES):
+        # The build no longer references remote artwork at all; the
+        # migration has nothing left to patch.
+        return
+    if removed:
+        raise RuntimeError("Partially patched build sources: " + ", ".join(removed))
     for name, remote in REMOTE_LINES.items():
         local = f"  '{name}':ROOT/'assets/readme/project-covers/{name}.webp',"
         if local in source:
             continue
-        if remote not in source:
-            raise RuntimeError(f"Expected old source line missing for {name}")
         source = source.replace(remote, local, 1)
     BUILD.write_text(source, encoding="utf-8")
 
 
 def main() -> None:
+    if not STAGING.is_dir():
+        print("No staged covers left; migration already complete.")
+        return
     OUT.mkdir(parents=True, exist_ok=True)
     for name in NAMES:
         decode_cover(name)
