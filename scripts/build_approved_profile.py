@@ -18,12 +18,11 @@ from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'dist/v5';OUT.mkdir(parents=True,exist_ok=True)
 QA=ROOT/'qa';QA.mkdir(exist_ok=True)
-RAW='https://raw.githubusercontent.com/lora-sys/lora-sys/output/v5/'
+RAW='https://raw.githubusercontent.com/lora-sys/lora-sys/output/'
 PALETTES={
  'light':dict(page='FFFFFF',bg='F6F2EA',fg='24211E',muted='70675D',line='DED8CF',accent='9A661B',gold='D6A03B'),
  'dark':dict(page='161719',bg='25231F',fg='F4F0E9',muted='BFB6A8',line='3A3732',accent='E2B45D',gold='E0A62F'),
 }
-LINES=['你好，我是 Lora。','写 AI Agent，做开源项目。','把读源码的过程做成交互教程。']
 SIZES={'desktop':(1440,880,400,195),'mobile':(390,342,326,156),'small':(320,272,260,123)}
 records={};components={};captured_at=datetime.now(timezone.utc).isoformat()
 
@@ -92,48 +91,6 @@ def raster_svg(name:str,data:bytes,css_width:float,title:str,pad=0):
  label=html.escape(title,quote=True)
  save_svg(name,f'<svg xmlns="http://www.w3.org/2000/svg" width="{css_width+pad:.2f}" height="{height+pad:.2f}" viewBox="0 0 {css_width+pad:.2f} {height+pad:.2f}" role="img" aria-label="{label}"><title>{html.escape(title)}</title><image x="{pad/2}" y="0" width="{css_width:.2f}" height="{height:.2f}" href="{uri(buf.getvalue(),"image/webp")}"/></svg>')
 
-def typing_svg(page,theme,mode,static=False):
- p=PALETTES[theme];w=SIZES[mode][1];size=30 if mode=='desktop' else 22;h=88 if mode=='desktop' else 100
- font=f'650 {size}px system-ui, "Noto Sans CJK SC", sans-serif'
- lengths=page.evaluate('''({lines,font})=>{const c=document.createElement('canvas').getContext('2d');c.font=font;return lines.map(t=>[...t].map(ch=>c.measureText(ch).width));}''',dict(lines=LINES,font=font))
- layouts=[];times=[];offset=0
- for line,widths in zip(LINES,lengths):
-  rows=[[]];rw=0
-  for ch,adv in zip(line,widths):
-   if rw+adv>w-16 and rows[-1]:rows.append([]);rw=0
-   rows[-1].append((ch,adv));rw+=adv
-  points=[]
-  for rowid,row in enumerate(rows):
-   x=(w-sum(a for _,a in row))/2;y=(h-(len(rows)-1)*size*1.5)/2+size*.35+rowid*size*1.5
-   for ch,adv in row:points.append((ch,x,y,adv));x+=adv
-  duration=.18+len(line)*.095+3.2+len(line)*.046+.38
-  layouts.append(points);times.append((offset,duration));offset+=duration
- total=offset
- css='text{font-family:system-ui,"Noto Sans CJK SC","Microsoft YaHei",sans-serif;letter-spacing:.01em;font-weight:650;}'
- body=''
- for j,points in enumerate(layouts):
-  if static and j>0:break
-  off,dur=times[j]
-  for i,(ch,x,y,adv) in enumerate(points):
-   name=f'c{j}_{i}';extra=''
-   if not static:
-    start=(off+.18+(i+1)*.095)/total*100
-    end=(off+.18+len(points)*.095+3.2+(len(points)-i)*.046)/total*100
-    css+=f'.{name}{{animation:{name} {total:.3f}s steps(1,end) infinite}}@keyframes {name}{{0%{{opacity:0}}{start:.5f}%{{opacity:1}}{end:.5f}%,100%{{opacity:0}}}}'
-    extra=f' class="{name}"'
-   body+=f'<text{extra} x="{x:.3f}" y="{y:.3f}" font-size="{size}" fill="#{p["accent"]}">{html.escape(ch)}</text>'
-  if not static:
-   events=[(off/total*100,points[0][1],points[0][2]-size*.82)]
-   for i,(_,x,y,adv) in enumerate(points):events.append(((off+.18+(i+1)*.095)/total*100,x+adv+5,y-size*.82))
-   for i in range(len(points)-1,-1,-1):
-    _,x,y,_=points[i];events.append(((off+.18+len(points)*.095+3.2+(len(points)-i)*.046)/total*100,x+3,y-size*.82))
-   frames=''.join(f'{t:.5f}%{{transform:translate({x:.3f}px,{y:.3f}px)}}' for t,x,y in events)
-   a=off/total*100;b=(off+dur-.02)/total*100
-   css+=f'.cursor{j}{{animation:move{j} {total:.3f}s steps(1,end) infinite,show{j} {total:.3f}s steps(1,end) infinite}}@keyframes move{j}{{{frames}}}@keyframes show{j}{{0%{{opacity:0}}{a:.5f}%{{opacity:1}}{b:.5f}%,100%{{opacity:0}}}}'
-   body+=f'<g class="cursor{j}"><rect class="blink" width="2" height="{size*.9}" fill="#{p["accent"]}"/></g>'
- if not static:css+=' .blink{animation:blink 1.1s steps(1,end) infinite}@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}'
- save_svg(f'typing-{theme}-{mode}'+('-static' if static else ''),f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img"><title>{html.escape(" ".join(LINES))}</title><style>{css}</style>{body}</svg>')
-
 def snake_svg(theme,mode,static=False):
  p=PALETTES[theme];w=SIZES[mode][1]
  data=(ROOT/'dist'/('snake-'+theme+'.svg')).read_bytes()
@@ -145,47 +102,28 @@ def snake_svg(theme,mode,static=False):
  save_svg(f'snake-{theme}-{mode}'+('-static' if static else ''),markup)
 
 SPECS=[
- ('heading-work','.work-heading',None),
- ('feature-glassbox','.work-feature:nth-child(1)','card'),('feature-zhihu','.work-feature:nth-child(2)','card'),
- ('compact-arena','.work-compact:nth-child(1)','card'),('compact-skills','.work-compact:nth-child(2)','card'),('compact-vllm','.work-compact:nth-child(3)','card'),('compact-vision','.work-compact:nth-child(4)','card'),
- ('heading-tool','.tool-section>.next-heading',None),('heading-stats','.stats-section>.next-heading',None),
  ('overview','#stats-card','card'),('languages','#languages-card','card'),('streak','#streak-card',None),
- ('heading-writing','.tail-writing>.tail-heading',None),('heading-contributions','.tail-contributions>.tail-heading',None),
- ('article-budget','.tail-post-link:nth-child(1)',None),('article-tau','.tail-post-link:nth-child(2)',None),('article-harness','.tail-post-link:nth-child(3)',None),
- ('pr-eino','.tail-pr:nth-child(1)',None),('pr-nad','.tail-pr:nth-child(2)',None),('pr-moss','.tail-pr:nth-child(3)',None),
- ('contact','.tail-contact',None),
 ]
+CARDS=('overview','languages','streak')
 
 def build(local=False):
  from prepare_approved_layout import write
  write()
  source=ROOT/'assets/profile/approved-layout.html'
  soup=BeautifulSoup(source.read_text(),'html.parser')
- arts={
-  'banner':ROOT/'assets/readme/hero-v1.webp',
-  'glassbox':'https://raw.githubusercontent.com/lora-sys/Glassbox-Agent-Harness/main/assets/readme/glassbox-hero.png',
-  'zhihu':'https://raw.githubusercontent.com/lora-sys/zhihu-threads/main/assets/readme/lora-v3-project-zhihu-threads-zh.webp',
-  'arena':'https://raw.githubusercontent.com/lora-sys/AgentArena/main/docs/qa/visual-baselines/v052-home-desktop-20260725.png',
-  'skills':'https://raw.githubusercontent.com/lora-sys/skills/main/assets/readme/hero.png',
-  'vllm':'https://raw.githubusercontent.com/lora-sys/nano-vllm-interactive-guide/main/assets/readme/hero-v1.webp',
-  'vision':'https://raw.githubusercontent.com/lora-sys/free-vision-skill/main/assets/readme/hero-v1.webp',
- }
- art_records={}
- for key,location in arts.items():
-  if local:data=(ROOT/'local-assets'/(key+'.webp')).read_bytes()
-  else:data=location.read_bytes() if isinstance(location,Path) else download(location)
-  mime='image/png' if data.startswith(b'\x89PNG') else 'image/webp'
-  soup.find('img',src='assets/'+key+'.webp')['src']=uri(data,mime)
-  art_records[key]={'source':str(location),'sha256':hashlib.sha256(data).hexdigest()}
+ banner=ROOT/'assets/readme/hero-v1.webp'
+ data=banner.read_bytes()
+ soup.find('img',src='assets/banner.webp')['src']=uri(data,'image/webp')
+ art_records={'banner':{'source':str(banner),'sha256':hashlib.sha256(data).hexdigest()}}
  assert local or art_records['banner']['sha256']=='c2573c101012c3480a282920a82f9ab28ebbe35920009c4072d88dd6bd9ee7ff','Original banner changed'
  for el in soup.select('.work-actions,.tail-socials,.tail-end'):el.decompose()
- soup.select_one('#overview-provider-label').string='Stats Fast'
+ if soup.select_one('#overview-provider-label'):soup.select_one('#overview-provider-label').string='Stats Fast'
  for el in soup.select('.stat-source'):el.string='每日更新'
  for el in soup.select('.stat-footer span'):el.string='公开数据快照'
  stats={}
  if not local:
   for theme in PALETTES:
-   for kind in ('overview','languages','streak'):stats[(theme,kind)]=stats_asset(kind,theme)
+   for kind in CARDS:stats[(theme,kind)]=stats_asset(kind,theme)
  with sync_playwright() as playwright:
   browser=playwright.chromium.launch(executable_path='/usr/bin/chromium' if local else None)
   for theme in PALETTES:
@@ -199,28 +137,13 @@ def build(local=False):
     page.wait_for_function('()=>[...document.images].every(i=>!i.src || (i.complete&&i.naturalWidth>0))')
     page.evaluate('()=>document.fonts.ready')
     for name,sel,kind in SPECS:
-     if local and name in ('overview','languages','streak'):continue
+     if local and name in CARDS:continue
      el=page.locator(sel);title=el.inner_text().strip().replace('\n','。')
      link=el.get_attribute('href') or (el.locator('a').first.get_attribute('href') if el.locator('a').count() else None)
-     if name=='contact':link='mailto:lorasys@outlook.com'
-     if name.startswith('compact-'):link=el.locator('.work-compact-foot a').get_attribute('href')
      components.setdefault(name,dict(alt=title,href=link))
      raster_svg(f'{name}-{theme}-{mode}',el.screenshot(animations='disabled',omit_background=True),cw if kind=='card' else full,title,pad=8 if kind=='card' else 0)
-    for idx in range(8):
-     el=page.locator('.tool-tile').nth(idx);name='tool-'+str(idx)
-     components.setdefault(name,dict(alt=el.inner_text().replace('\n','。'),href=el.get_attribute('href')))
-     raster_svg(f'{name}-{theme}-{mode}',el.screenshot(animations='disabled',omit_background=True),tw,components[name]['alt'],pad=8)
-    for idx in range(4):
-     el=page.locator('.nav a').nth(idx);name='nav-'+str(idx)
-     components.setdefault(name,dict(alt=el.inner_text(),href=el.get_attribute('href')))
-     raster_svg(f'{name}-{theme}-{mode}',el.screenshot(animations='disabled',omit_background=True),138 if mode=='desktop' else 124,el.inner_text(),pad=8)
-    colors=PALETTES[theme]
-    divider=f'<svg xmlns="http://www.w3.org/2000/svg" width="{full}" height="30" viewBox="0 0 {full} 30"><style>.flow{{animation:flow 9s linear infinite}}@keyframes flow{{from{{stroke-dashoffset:48}}to{{stroke-dashoffset:-{full}}}}}@media(prefers-reduced-motion:reduce){{.flow{{animation:none}}}}</style><path d="M0 15H{full}" stroke="#{colors["line"]}"/><path class="flow" d="M0 15H{full}" stroke="#{colors["gold"]}" stroke-width="2" stroke-dasharray="48 {full}"/></svg>'
-    save_svg(f'divider-{theme}-{mode}',divider)
     for static in (False,True):
-     typing_svg(page,theme,mode,static)
      if not local:snake_svg(theme,mode,static)
-    page.locator('main').screenshot(path=str(QA/f'approved-render-{theme}-{mode}.png'),animations='disabled')
     page.close()
   browser.close()
  metadata=dict(build_source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),generated_at=captured_at,artwork=art_records,statistics=records,components=components)
@@ -235,7 +158,7 @@ def picture(name,alt=None,link=None,static=False):
  alt=alt or meta.get('alt',name);href=link if link is not None else meta.get('href')
  sources=[]
  def src(media,theme,mode,still=False):
-  filename=f'{name}-{theme}-{mode}'+('-static' if still else '')+'.svg'
+  filename=f'v5/{name}-{theme}-{mode}'+('-static' if still else '')+'.svg'
   return f'<source media="{media}" srcset="{RAW+filename}">'
  for still in ([True,False] if static else [False]):
   prefix='(prefers-reduced-motion: reduce) and ' if still else ''
@@ -243,7 +166,7 @@ def picture(name,alt=None,link=None,static=False):
    sources+=[src(prefix+f'(max-width: {maxw}px) and (prefers-color-scheme: dark)','dark',mode,still),src(prefix+f'(max-width: {maxw}px)','light',mode,still)]
   sources.append(src(prefix+'(prefers-color-scheme: dark)','dark','desktop',still))
   if still:sources.append(src('(prefers-reduced-motion: reduce)','light','desktop',True))
- pic='<picture>'+''.join(sources)+f'<img src="{RAW+name}-light-desktop.svg" alt="{html.escape(alt,quote=True)}"></picture>'
+ pic='<picture>'+''.join(sources)+f'<img src="{RAW+"v5/"+name}-light-desktop.svg" alt="{html.escape(alt,quote=True)}"></picture>'
  return '<a href="'+html.escape(href,quote=True)+'">'+pic+'</a>' if href else pic
 
 def make_readme():
@@ -265,7 +188,7 @@ def make_readme():
  md+='    ## 数据和贡献\n\n'
  md+='    '+group(['overview','languages'])+'\n'
  md+='    '+picture('streak')+'\n\n'+'    '+picture('snake','lora-sys 的贡献贪吃蛇。根据 GitHub 贡献记录每日生成。',link='https://github.com/Platane/snk',static=True)+'\n\n'
- md+=f'    <p align="center"><sub>数据每日刷新，校验失败时保留上一次成功结果。<a href="{RAW}sources.json">数据来源与更新时间</a></sub></p>\n\n'
+ md+=f'    <p align="center"><sub>数据每日刷新，校验失败时保留上一次成功结果。<a href="{RAW}v5/sources.json">数据来源与更新时间</a></sub></p>\n\n'
  md+='    <p align="center"><a href="https://lora-sys.github.io/loraSys/">lora-sys.github.io/loraSys</a> · <a href="mailto:lorasys@outlook.com">lorasys@outlook.com</a> · <a href="#top">回到顶部</a></p>\n'
  return '\n'.join(line[4:] for line in md.splitlines())
 

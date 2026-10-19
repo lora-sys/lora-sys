@@ -25,8 +25,9 @@ with sync_playwright() as p:
             for attempt in range(6):
                 response=page.goto('https://github.com/lora-sys?profile-release=v5&attempt='+str(attempt),wait_until='domcontentloaded',timeout=45000)
                 page.wait_for_timeout(2000)
-                if page.locator('article.markdown-body img[src*="v5/"]').count():break
+                if page.locator('article.markdown-body h2',has_text='数据和贡献').count():break
                 page.wait_for_timeout(4000)
+            assert page.locator('article.markdown-body h2',has_text='数据和贡献').count(),'GitHub is still serving the previous profile layout'
             assert response and response.status==200,'GitHub did not return HTTP 200'
             page.evaluate('(theme)=>{document.documentElement.dataset.colorMode=theme;document.documentElement.dataset.lightTheme="light";document.documentElement.dataset.darkTheme="dark"}',theme)
             article=page.locator('article.markdown-body').first
