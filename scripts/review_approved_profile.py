@@ -11,6 +11,10 @@ readme=Path('README.md').read_text()
 if 'output/v5/' not in readme:
     (out/'report.json').write_text(json.dumps({'status':'assets_ready_waiting_for_readme_release'}))
     sys.exit(0)
+required_headings=re.findall(r'^## (.+)$',readme,re.M)
+if not required_headings:
+    (out/'report.json').write_text(json.dumps({'status':'failed','error':'README has no level-2 headings'}))
+    sys.exit(1)
 report={'source':'https://github.com/lora-sys','checked_at':datetime.now(timezone.utc).isoformat(),'commit':os.environ.get('GITHUB_SHA'),'views':[],'errors':[],'links':[]}
 with sync_playwright() as p:
     browser=p.chromium.launch()
@@ -36,21 +40,28 @@ with sync_playwright() as p:
             page.wait_for_timeout(2400)
             data=article.evaluate('''el=>({width:el.clientWidth,scrollWidth:el.scrollWidth,images:[...el.querySelectorAll('img')].map(i=>({alt:i.alt,src:i.currentSrc,width:i.getBoundingClientRect().width,height:i.getBoundingClientRect().height,x:i.getBoundingClientRect().x,y:i.getBoundingClientRect().y})),links:[...el.querySelectorAll('a[href]')].map(a=>a.href)})''')
             assert data['scrollWidth']<=data['width']+1,'README horizontal overflow'
-            features=[i for i in data['images'] if '/feature-' in i['src']]
-            tools=[i for i in data['images'] if '/tool-' in i['src']]
-            assert len(features)==2,'Expected two featured projects'
-            assert len(tools)==8,'Expected eight toolkit links'
+            assert data['images'],'README rendered no images'
             for name in ('overview','languages','streak','snake'):
                 assert any('/'+name+'-' in i['src'] for i in data['images']),name+' card missing'
+            assert all('/typing-' not in i['src'] for i in data['images']),'Typing banner is no longer part of the layout'
+            headings=page.locator('article.markdown-body h1, article.markdown-body h2').all_text_contents()
+            for heading in required_headings:
+                assert heading.strip() in [h.strip() for h in headings],'Missing heading: '+heading
+            text=page.locator('article.markdown-body').inner_text()
+            for word in ('做过的','写过的','数据和贡献'):
+                assert word in text,'Reader-facing text missing: '+word
+            assert '。。' not in text,'Placeholder punctuation leaked into the rendered page'
             for image in data['images']:
                 if '/v5/' in image['src']:
                     assert ('-dark-' in image['src'])==(theme=='dark'),'Wrong theme: '+image['src']
-                    if reduce and ('/typing-' in image['src'] or '/snake-' in image['src']):
+                    if reduce and '/snake-' in image['src']:
                         assert '-static.svg' in image['src'],'Reduced motion fallback missing'
+            cards=[i for i in data['images'] if any('/'+n+'-' in i['src'] for n in ('overview','languages'))]
+            assert len(cards)==2,'Expected overview and language cards'
             if width>=1200:
-                assert abs(features[0]['y']-features[1]['y'])<3,'Featured cards are not side by side'
+                assert abs(cards[0]['y']-cards[1]['y'])<3,'Statistics cards are not side by side'
             else:
-                assert abs(features[0]['x']-features[1]['x'])<3,'Mobile cards are not one column'
+                assert abs(cards[0]['x']-cards[1]['x'])<3,'Statistics cards are not stacked on narrow screens'
             box=article.bounding_box()
             full_path=out/f'github-{label}.png'
             page.screenshot(path=str(full_path),full_page=True,timeout=30000)
@@ -61,7 +72,8 @@ with sync_playwright() as p:
                 image.crop((x,y,x+round(box['width']),y+round(box['height']))).save(out/f'readme-{label}.png')
             if theme=='light' and width==1440:
                 (out/'profile.html').write_text(page.content(),encoding='utf-8')
-                for name,pause in [('typing',4300),('snake',1900)]:
+                report['headings']=headings
+                for name,pause in [('snake',1900)]:
                     element=article.locator('img[src*="'+name+'-"]').first
                     first=element.screenshot(path=str(out/(name+'-a.png')))
                     page.wait_for_timeout(pause)
@@ -70,7 +82,7 @@ with sync_playwright() as p:
                     assert report[name+'_frames_differ'],name+' does not animate in the real page'
                 report['native_pins']=page.locator('.pinned-item-list-item-content .repo').all_text_contents()
             if reduce:
-                for name in ('typing','snake'):
+                for name in ('snake',):
                     element=article.locator('img[src*="'+name+'-"]').first
                     first=element.screenshot()
                     page.wait_for_timeout(1200)

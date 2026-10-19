@@ -12,7 +12,7 @@
 
 GitHub 总览固定使用 GitHub Readme Stats Fast。账号为 `lora-sys`，保留 `hide_rank=false`、`rank_icon=default` 和暖金色 `ring_color`。不要切回之前失效的总览接口，也不要用预设字母替代服务评分。
 
-语言分布使用 `github-readme-stats-sigma-fawn-45.vercel.app/api/top-langs/`。连续贡献使用 `github-readme-streak-stats-eight.vercel.app/`。两项均沿用已有自托管服务。
+语言分布使用 `github-readme-stats-fast.vercel.app/api/top-langs/`（与总览同源；旧部署已返回 DEPLOYMENT_NOT_FOUND）。连续贡献使用 `github-readme-streak-stats-eight.vercel.app/`。两项均沿用已有自托管服务。
 
 工作流读取真实 SVG，检查是否返回错误图片，再生成卡片。每个来源的 URL、获取时间和 SHA-256 写入 `output/v5/sources.json`。原始响应保存在 `output/v5/data/`。刷新失败时保留上一次通过检查的响应；首次发布没有有效数据时停止，不生成假数字。
 

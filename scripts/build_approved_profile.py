@@ -58,7 +58,7 @@ def endpoint(kind:str,theme:str)->str:
   return 'https://github-readme-stats-fast.vercel.app/api?'+urlencode(q)
  if kind=='languages':
   q.update(layout='compact',langs_count='6')
-  return 'https://github-readme-stats-sigma-fawn-45.vercel.app/api/top-langs/?'+urlencode(q)
+  return 'https://github-readme-stats-fast.vercel.app/api/top-langs/?'+urlencode(q)
  q=dict(user='lora-sys',hide_border='true',background=p['bg'],stroke=p['line'],ring=p['accent'],fire=p['accent'],currStreakNum=p['fg'],sideNums=p['fg'],currStreakLabel=p['accent'],sideLabels=p['muted'],dates=p['muted'])
  return 'https://github-readme-streak-stats-eight.vercel.app/?'+urlencode(q)
 
@@ -247,42 +247,27 @@ def picture(name,alt=None,link=None,static=False):
  return '<a href="'+html.escape(href,quote=True)+'">'+pic+'</a>' if href else pic
 
 def make_readme():
- group=lambda names:'<p align="center">\n'+'\n'.join(picture(n) for n in names)+'\n</p>\n'
- md='''<!-- Lora approved profile v5. Asset provenance: output/v5/sources.json. -->
-<a id="top"></a>
-<p align="center"><a href="https://lora-sys.github.io/loraSys/"><img src="./assets/readme/hero-v1.webp" width="100%" alt="Lora 与 Mochi，原版插画 banner"></a></p>
-'''
- md+='<p align="center">'+picture('typing','你好，我是 Lora。写 AI Agent，做开源项目。把读源码的过程做成交互教程。',static=True)+'</p>\n'
- md+='''<p align="center">我做 AI 应用和开发者工具，也把读源码的过程做成交互教程。<br>正在开发 <a href="https://github.com/lora-sys/Glassbox-Agent-Harness">Glassbox</a>，研究个人 Agent 的记忆、权限与任务执行。</p>
-'''
- md+=group(['nav-'+str(i) for i in range(4)])+'\n'+picture('divider','暖色动态分隔线')+'\n\n'
- md+=picture('heading-work')+'\n\n'+group(['feature-glassbox','feature-zhihu'])
- md+='''<p align="center"><a href="https://github.com/lora-sys/Glassbox-Agent-Harness/blob/main/.plans/03-personal-agent-foundation.md">Glassbox 当前计划</a> · <a href="https://github.com/lora-sys/zhihu-threads#快速开始">Zhihu Threads 使用说明</a></p>
-<p>工具、实验与教程</p>
-'''
- md+=group(['compact-arena','compact-skills','compact-vllm','compact-vision'])
- md+='\n[AI Engineering Harness](https://github.com/lora-sys/ai-engineering-harness) · 更多工程工作流见仓库。\n\n'
- md+=picture('heading-tool')+'\n\n'+group(['tool-'+str(i) for i in range(8)])
- md+='<p><sub>用于应用开发、数据存储和测试。点击图标查看项目依赖。</sub></p>\n\n'
- md+=picture('heading-stats')+'\n\n'+group(['overview','languages'])
- md+='<p><sub>总览来自 Stats Fast，保留字母等级。语言分布来自自托管服务，不代表熟练度。</sub></p>\n'
- md+=picture('streak')+'\n\n'+picture('snake','lora-sys 的贡献贪吃蛇。根据 GitHub 贡献记录每日生成。',link='https://github.com/Platane/snk',static=True)+'\n\n'
- md+=f'<p><sub>统计与动画每日刷新。接口失败时保留上一次成功结果。<a href="{RAW}sources.json">数据来源与更新时间</a></sub></p>\n\n'
- md+=picture('heading-writing')+'\n\n'+group(['article-budget','article-tau','article-harness'])
- md+=picture('heading-contributions')+'\n\n'+group(['pr-eino','pr-nad','pr-moss'])
- md+=picture('contact')+'\n\n'
- md+='''<p align="center"><a href="https://lora-sys.github.io/loraSys/">个人网站</a> · <a href="https://github.com/lora-sys">GitHub</a> · <a href="https://www.zhihu.com/people/lorry-23-28-30">知乎</a> · <a href="https://x.com/MierPiter33280">X</a></p>
-<p align="center"><sub>Lora · lora-sys</sub> · <a href="#top">回到顶部</a></p>
-
-<details>
-<summary>文字目录与无图阅读</summary>
-
-'''
- for name,meta in components.items():
-  if name.startswith(('feature-','compact-','article-','pr-')):
-   md+=f'[{meta["alt"].split("。")[0]}]({meta["href"]})  \n{meta["alt"]}\n\n'
- md+='邮箱 [lorasys@outlook.com](mailto:lorasys@outlook.com)。\n\n</details>\n'
- return md
+ group=lambda names:'<p align="center">\n'+'\n'.join('    '+picture(n) for n in names)+'\n</p>\n'
+ md='    <!-- Lora approved profile v5. Asset provenance: output/v5/sources.json. -->\n'
+ md+='    <a id="top"></a>\n'
+ md+='    <p align="center"><a href="https://lora-sys.github.io/loraSys/"><img src="./assets/readme/hero-v1.webp" width="100%" alt="Lora 与 Mochi，原版插画 banner"></a></p>\n\n'
+ md+='    <h1 align="center">Lora</h1>\n'
+ md+='    <p align="center">学生开发者 · 中国西安 · 写 AI Agent，也写把源码讲明白的交互教程</p>\n\n'
+ md+='    <p align="center"><a href="https://lora-sys.github.io/loraSys/">网站</a> · <a href="https://lora-sys.github.io/loraSys/projects">项目</a> · <a href="https://lora-sys.github.io/loraSys/blog">文章</a> · <a href="https://lora-sys.github.io/loraSys/rss.xml">RSS</a> · <a href="mailto:lorasys@outlook.com">邮箱</a></p>\n\n'
+ md+='    ## 做过的\n\n'
+ md+='    - **[Glassbox](https://github.com/lora-sys/Glassbox-Agent-Harness)** — 权限优先的个人 Agent 工作台，管理身份、记忆、权限与任务执行。119 个 Issue、67 个已合并 PR 在推进。\n'
+ md+='    - **[nano-vLLM 交互教程](https://lora-sys.github.io/nano-vllm-interactive-guide/guide/00-start)** — 把推理调度、KV Cache 和采样讲成可以在浏览器里跑的实验。\n'
+ md+='    - **[Free Vision Skill](https://github.com/lora-sys/free-vision-skill)** — 把图片压成文本证据，给不支持视觉的模型用。★ 17\n'
+ md+='    - **[AgentArena](https://github.com/lora-sys/AgentArena)** — 让三支 Agent 团队处理同一任务，留下提案、证据与对战回放。\n'
+ md+='    - 向 [cloudwego/eino-examples](https://github.com/cloudwego/eino-examples/pull/227)、[portdeveloper/nad-agent](https://github.com/portdeveloper/nad-agent/pull/49)、[nishuzumi/moss](https://github.com/nishuzumi/moss/pull/29) 等 13 个仓库提交过 174 个已合并 PR。\n\n'
+ md+='    ## 写过的\n\n'
+ md+='    179 篇笔记，写 Agent 架构、记忆与评测，都按可以照着复现的方式拆。最近的几篇：[Agent 该继续跑还是重新开一轮](https://lora-sys.github.io/loraSys/blog/agent-budget-memory-evaluation) · [把 Agent 拆成三层](https://lora-sys.github.io/loraSys/blog/tau-agent-architecture) · [Agent 开发的测试与审查](https://lora-sys.github.io/loraSys/blog/ai-engineering-harness)。\n\n'
+ md+='    ## 数据和贡献\n\n'
+ md+='    '+group(['overview','languages'])+'\n'
+ md+='    '+picture('streak')+'\n\n'+'    '+picture('snake','lora-sys 的贡献贪吃蛇。根据 GitHub 贡献记录每日生成。',link='https://github.com/Platane/snk',static=True)+'\n\n'
+ md+=f'    <p align="center"><sub>数据每日刷新，校验失败时保留上一次成功结果。<a href="{RAW}sources.json">数据来源与更新时间</a></sub></p>\n\n'
+ md+='    <p align="center"><a href="https://lora-sys.github.io/loraSys/">lora-sys.github.io/loraSys</a> · <a href="mailto:lorasys@outlook.com">lorasys@outlook.com</a> · <a href="#top">回到顶部</a></p>\n'
+ return '\n'.join(line[4:] for line in md.splitlines())
 
 if __name__=='__main__':
  parser=argparse.ArgumentParser();parser.add_argument('--local',action='store_true');args=parser.parse_args();build(args.local)

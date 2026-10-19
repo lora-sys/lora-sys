@@ -1,21 +1,11 @@
-<!-- ok -->
+<!-- Lora approved profile v5. Asset provenance: output/v5/sources.json. -->
 <a id="top"></a>
-<p align="center">
-  <a href="https://lora-sys.github.io/loraSys/">
-    <img src="./assets/readme/hero-v1.webp" width="100%" alt="Lora 与 Mochi 的插画">
-  </a>
-</p>
+<p align="center"><a href="https://lora-sys.github.io/loraSys/"><img src="./assets/readme/hero-v1.webp" width="100%" alt="Lora 与 Mochi，原版插画 banner"></a></p>
 
 <h1 align="center">Lora</h1>
 <p align="center">学生开发者 · 中国西安 · 写 AI Agent，也写把源码讲明白的交互教程</p>
 
-<p align="center">
-  <a href="https://lora-sys.github.io/loraSys/">网站</a> ·
-  <a href="https://lora-sys.github.io/loraSys/projects">项目</a> ·
-  <a href="https://lora-sys.github.io/loraSys/blog">文章</a> ·
-  <a href="https://lora-sys.github.io/loraSys/rss.xml">RSS</a> ·
-  <a href="mailto:lorasys@outlook.com">邮箱</a>
-</p>
+<p align="center"><a href="https://lora-sys.github.io/loraSys/">网站</a> · <a href="https://lora-sys.github.io/loraSys/projects">项目</a> · <a href="https://lora-sys.github.io/loraSys/blog">文章</a> · <a href="https://lora-sys.github.io/loraSys/rss.xml">RSS</a> · <a href="mailto:lorasys@outlook.com">邮箱</a></p>
 
 ## 做过的
 
@@ -32,34 +22,14 @@
 ## 数据和贡献
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats-fast.vercel.app/api?username=lora-sys&bg_color=25231F&title_color=E2B45D&text_color=F4F0E9&icon_color=E2B45D&hide_border=true&hide_title=true&disable_animations=true&locale=cn&card_width=520&show_icons=true&hide_rank=false&rank_icon=default&ring_color=E0A62F&line_height=31">
-    <img src="https://github-readme-stats-fast.vercel.app/api?username=lora-sys&bg_color=F6F2EA&title_color=9A661B&text_color=24211E&icon_color=9A661B&hide_border=true&hide_title=true&disable_animations=true&locale=cn&card_width=520&show_icons=true&hide_rank=false&rank_icon=default&ring_color=D6A03B&line_height=31" alt="GitHub 统计">
-  </picture>
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats-fast.vercel.app/api/top-langs/?username=lora-sys&bg_color=25231F&title_color=E2B45D&text_color=F4F0E9&icon_color=E2B45D&hide_border=true&hide_title=true&disable_animations=true&locale=cn&card_width=410&layout=compact&langs_count=6">
-    <img src="https://github-readme-stats-fast.vercel.app/api/top-langs/?username=lora-sys&bg_color=F6F2EA&title_color=9A661B&text_color=24211E&icon_color=9A661B&hide_border=true&hide_title=true&disable_animations=true&locale=cn&card_width=410&layout=compact&langs_count=6" alt="仓库语言分布">
-  </picture>
-</p>
+<a href="https://github-readme-stats-fast.vercel.app/api?username=lora-sys"><picture><source srcset="overview.svg"><img src="overview.svg" alt="GitHub 总览。每日更新。公开数据快照。查看原始图片"></picture></a>
+<a href="https://github-readme-stats-fast.vercel.app/api/top-langs/?username=lora-sys"><picture><source srcset="languages.svg"><img src="languages.svg" alt="仓库语言分布。每日更新。公开数据快照。查看原始图片"></picture></a>
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-streak-stats-eight.vercel.app/?user=lora-sys&hide_border=true&background=25231F&stroke=3A3732&ring=E2B45D&fire=E2B45D&currStreakNum=F4F0E9&sideNums=F4F0E9&currStreakLabel=E2B45D&sideLabels=BFB6A8&dates=BFB6A8">
-    <img src="https://github-readme-streak-stats-eight.vercel.app/?user=lora-sys&hide_border=true&background=F6F2EA&stroke=DED8CF&ring=9A661B&fire=9A661B&currStreakNum=24211E&sideNums=24211E&currStreakLabel=9A661B&sideLabels=70675D&dates=70675D" alt="连续贡献">
-  </picture>
-</p>
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/lora-sys/lora-sys/output/snake-dark.svg">
-    <img src="https://raw.githubusercontent.com/lora-sys/lora-sys/output/snake-light.svg" alt="贡献贪吃蛇">
-  </picture>
-</p>
+<a href="https://github-readme-streak-stats-eight.vercel.app/?user=lora-sys"><picture><source srcset="streak.svg"><img src="streak.svg" alt="连续贡献记录。每日更新。公开数据快照。查看原始图片"></picture></a>
 
-<p align="center"><sub>数据每日刷新。语言分布只统计公开仓库，不代表熟练度。</sub></p>
+<a href="https://github.com/Platane/snk"><picture><source srcset="snake.svg"><img src="snake.svg" alt="lora-sys 的贡献贪吃蛇。根据 GitHub 贡献记录每日生成。"></picture></a>
 
-<p align="center">
-  <a href="https://lora-sys.github.io/loraSys/">lora-sys.github.io/loraSys</a> ·
-  <a href="mailto:lorasys@outlook.com">lorasys@outlook.com</a> ·
-  <a href="#top">回到顶部</a>
-</p>
+<p align="center"><sub>数据每日刷新，校验失败时保留上一次成功结果。<a href="https://raw.githubusercontent.com/lora-sys/lora-sys/output/v5/sources.json">数据来源与更新时间</a></sub></p>
+
+<p align="center"><a href="https://lora-sys.github.io/loraSys/">lora-sys.github.io/loraSys</a> · <a href="mailto:lorasys@outlook.com">lorasys@outlook.com</a> · <a href="#top">回到顶部</a></p>
