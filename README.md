@@ -37,8 +37,8 @@
     <img src="https://github-readme-stats-fast.vercel.app/api?username=lora-sys&bg_color=F6F2EA&title_color=9A661B&text_color=24211E&icon_color=9A661B&hide_border=true&hide_title=true&disable_animations=true&locale=cn&card_width=520&show_icons=true&hide_rank=false&rank_icon=default&ring_color=D6A03B&line_height=31" alt="GitHub 统计">
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats-sigma-fawn-45.vercel.app/api/top-langs/?username=lora-sys&bg_color=25231F&title_color=E2B45D&text_color=F4F0E9&icon_color=E2B45D&hide_border=true&hide_title=true&disable_animations=true&locale=cn&card_width=410&layout=compact&langs_count=6">
-    <img src="https://github-readme-stats-sigma-fawn-45.vercel.app/api/top-langs/?username=lora-sys&bg_color=F6F2EA&title_color=9A661B&text_color=24211E&icon_color=9A661B&hide_border=true&hide_title=true&disable_animations=true&locale=cn&card_width=410&layout=compact&langs_count=6" alt="仓库语言分布">
+    <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats-fast.vercel.app/api/top-langs/?username=lora-sys&bg_color=25231F&title_color=E2B45D&text_color=F4F0E9&icon_color=E2B45D&hide_border=true&hide_title=true&disable_animations=true&locale=cn&card_width=410&layout=compact&langs_count=6">
+    <img src="https://github-readme-stats-fast.vercel.app/api/top-langs/?username=lora-sys&bg_color=F6F2EA&title_color=9A661B&text_color=24211E&icon_color=9A661B&hide_border=true&hide_title=true&disable_animations=true&locale=cn&card_width=410&layout=compact&langs_count=6" alt="仓库语言分布">
   </picture>
 </p>
 
