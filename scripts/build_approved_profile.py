@@ -117,6 +117,9 @@ def build(local=False):
  art_records={'banner':{'source':str(banner),'sha256':hashlib.sha256(data).hexdigest()}}
  assert local or art_records['banner']['sha256']=='c2573c101012c3480a282920a82f9ab28ebbe35920009c4072d88dd6bd9ee7ff','Original banner changed'
  for el in soup.select('.work-actions,.tail-socials,.tail-end'):el.decompose()
+ for img in soup.select('img[src^="assets/"]'):
+  if img.get('src')!='assets/banner.webp':img.decompose()
+ assert not soup.select('img[src^="assets/"]') or all(i.get('src')=='assets/banner.webp' for i in soup.select('img[src^="assets/"]')),'Unresolvable artwork left in the layout'
  if soup.select_one('#overview-provider-label'):soup.select_one('#overview-provider-label').string='Stats Fast'
  for el in soup.select('.stat-source'):el.string='每日更新'
  for el in soup.select('.stat-footer span'):el.string='公开数据快照'
@@ -170,7 +173,7 @@ def picture(name,alt=None,link=None,static=False):
  return '<a href="'+html.escape(href,quote=True)+'">'+pic+'</a>' if href else pic
 
 def make_readme():
- group=lambda names:'<p align="center">\n'+'\n'.join('    '+picture(n) for n in names)+'\n</p>\n'
+ group=lambda names:'<p align="center">\n'+'\n'.join(picture(n) for n in names)+'\n</p>\n'
  md='    <!-- Lora approved profile v5. Asset provenance: output/v5/sources.json. -->\n'
  md+='    <a id="top"></a>\n'
  md+='    <p align="center"><a href="https://lora-sys.github.io/loraSys/"><img src="./assets/readme/hero-v1.webp" width="100%" alt="Lora 与 Mochi，原版插画 banner"></a></p>\n\n'
@@ -190,7 +193,7 @@ def make_readme():
  md+='    '+picture('streak')+'\n\n'+'    '+picture('snake','lora-sys 的贡献贪吃蛇。根据 GitHub 贡献记录每日生成。',link='https://github.com/Platane/snk',static=True)+'\n\n'
  md+=f'    <p align="center"><sub>数据每日刷新，校验失败时保留上一次成功结果。<a href="{RAW}v5/sources.json">数据来源与更新时间</a></sub></p>\n\n'
  md+='    <p align="center"><a href="https://lora-sys.github.io/loraSys/">lora-sys.github.io/loraSys</a> · <a href="mailto:lorasys@outlook.com">lorasys@outlook.com</a> · <a href="#top">回到顶部</a></p>\n'
- return '\n'.join(line[4:] for line in md.splitlines())
+ return '\n'.join(line[4:] if line.startswith('    ') else line for line in md.splitlines())
 
 if __name__=='__main__':
  parser=argparse.ArgumentParser();parser.add_argument('--local',action='store_true');args=parser.parse_args();build(args.local)

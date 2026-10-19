@@ -75,7 +75,7 @@ jobs:
           with sync_playwright() as p:
               browser=p.chromium.launch()
               page=browser.new_page(viewport={'width':980,'height':700})
-              for name in ('typing-light-desktop','snake-light-desktop','typing-dark-mobile-static','snake-dark-mobile-static'):
+              for name in ('snake-light-desktop','snake-dark-mobile-static'):
                   data=base64.b64encode((root/(name+'.svg')).read_bytes()).decode()
                   page.set_content('<img src="data:image/svg+xml;base64,'+data+'">')
                   page.wait_for_timeout(150)
