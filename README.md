@@ -11,7 +11,6 @@
 
 - **[Glassbox](https://github.com/lora-sys/Glassbox-Agent-Harness)** — 权限优先的个人 Agent 工作台，管理身份、记忆、权限与任务执行。119 个 Issue、67 个已合并 PR 在推进。
 - **[nano-vLLM 交互教程](https://lora-sys.github.io/nano-vllm-interactive-guide/guide/00-start)** — 把推理调度、KV Cache 和采样讲成可以在浏览器里跑的实验。
-- **[Free Vision Skill](https://github.com/lora-sys/free-vision-skill)** — 把图片压成文本证据，给不支持视觉的模型用。★ 17
 - **[AgentArena](https://github.com/lora-sys/AgentArena)** — 让三支 Agent 团队处理同一任务，留下提案、证据与对战回放。
 - 向 [cloudwego/eino-examples](https://github.com/cloudwego/eino-examples/pull/227)、[portdeveloper/nad-agent](https://github.com/portdeveloper/nad-agent/pull/49)、[nishuzumi/moss](https://github.com/nishuzumi/moss/pull/29) 等 13 个仓库提交过 174 个已合并 PR。
 

@@ -2,10 +2,12 @@
 
 The build preserves the original banner, reads real statistics, and retains a
 previous successful data snapshot if a provider is temporarily unavailable.
+A missing optional artwork is skipped rather than failing the run, so the
+daily refresh of the statistics and snake snapshots always completes.
 No font files, credentials, or invented statistics are published.
 """
 from __future__ import annotations
-import argparse, base64, hashlib, html, io, json, re, time
+import argparse, base64, hashlib, html, io, json, re, sys, time
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlencode
@@ -26,7 +28,10 @@ PALETTES={
 SIZES={'desktop':(1440,880,400,195),'mobile':(390,342,326,156),'small':(320,272,260,123)}
 records={};components={};captured_at=datetime.now(timezone.utc).isoformat()
 
-def download(url:str)->bytes:
+def download(url:str,required:bool=True)->bytes|None:
+ """Fetch an asset. Optional artwork returns None instead of aborting the
+ build, so a removed upstream repository cannot stop the statistics and
+ snake snapshots from being refreshed."""
  for attempt in range(3):
   try:
    request=Request(url,headers={'User-Agent':'lora-profile/5','Accept':'image/svg+xml,image/*,*/*'})
@@ -35,7 +40,11 @@ def download(url:str)->bytes:
     if len(data)>12_000_000:raise ValueError('Asset too large')
     return data
   except Exception:
-   if attempt==2:raise
+   if attempt==2:
+    if not required:
+     print('Skipping unavailable artwork:',url,file=sys.stderr)
+     return None
+    raise
    time.sleep(2+attempt*3)
  raise RuntimeError('Unreachable')
 
@@ -183,7 +192,6 @@ def make_readme():
  md+='    ## 做过的\n\n'
  md+='    - **[Glassbox](https://github.com/lora-sys/Glassbox-Agent-Harness)** — 权限优先的个人 Agent 工作台，管理身份、记忆、权限与任务执行。119 个 Issue、67 个已合并 PR 在推进。\n'
  md+='    - **[nano-vLLM 交互教程](https://lora-sys.github.io/nano-vllm-interactive-guide/guide/00-start)** — 把推理调度、KV Cache 和采样讲成可以在浏览器里跑的实验。\n'
- md+='    - **[Free Vision Skill](https://github.com/lora-sys/free-vision-skill)** — 把图片压成文本证据，给不支持视觉的模型用。★ 17\n'
  md+='    - **[AgentArena](https://github.com/lora-sys/AgentArena)** — 让三支 Agent 团队处理同一任务，留下提案、证据与对战回放。\n'
  md+='    - 向 [cloudwego/eino-examples](https://github.com/cloudwego/eino-examples/pull/227)、[portdeveloper/nad-agent](https://github.com/portdeveloper/nad-agent/pull/49)、[nishuzumi/moss](https://github.com/nishuzumi/moss/pull/29) 等 13 个仓库提交过 174 个已合并 PR。\n\n'
  md+='    ## 写过的\n\n'
