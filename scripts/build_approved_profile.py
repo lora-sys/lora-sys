@@ -5,7 +5,7 @@ previous successful data snapshot if a provider is temporarily unavailable.
 No font files, credentials, or invented statistics are published.
 """
 from __future__ import annotations
-import argparse, base64, hashlib, html, io, json, re, time
+import argparse, base64, hashlib, html, io, json, re, sys, time
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlencode
@@ -27,7 +27,10 @@ LINES=['你好，我是 Lora。','写 AI Agent，做开源项目。','把读源�
 SIZES={'desktop':(1440,880,400,195),'mobile':(390,342,326,156),'small':(320,272,260,123)}
 records={};components={};captured_at=datetime.now(timezone.utc).isoformat()
 
-def download(url:str)->bytes:
+def download(url:str,required:bool=True)->bytes|None:
+ """Fetch an asset. Optional artwork returns None instead of aborting the
+ build, so a removed upstream repository cannot stop the statistics and
+ snake snapshots from being refreshed."""
  for attempt in range(3):
   try:
    request=Request(url,headers={'User-Agent':'lora-profile/5','Accept':'image/svg+xml,image/*,*/*'})
@@ -36,7 +39,11 @@ def download(url:str)->bytes:
     if len(data)>12_000_000:raise ValueError('Asset too large')
     return data
   except Exception:
-   if attempt==2:raise
+   if attempt==2:
+    if not required:
+     print('Skipping unavailable artwork:',url,file=sys.stderr)
+     return None
+    raise
    time.sleep(2+attempt*3)
  raise RuntimeError('Unreachable')
 
@@ -147,7 +154,7 @@ def snake_svg(theme,mode,static=False):
 SPECS=[
  ('heading-work','.work-heading',None),
  ('feature-glassbox','.work-feature:nth-child(1)','card'),('feature-zhihu','.work-feature:nth-child(2)','card'),
- ('compact-arena','.work-compact:nth-child(1)','card'),('compact-skills','.work-compact:nth-child(2)','card'),('compact-vllm','.work-compact:nth-child(3)','card'),('compact-vision','.work-compact:nth-child(4)','card'),
+ ('compact-arena','.work-compact:nth-child(1)','card'),('compact-skills','.work-compact:nth-child(2)','card'),('compact-vllm','.work-compact:nth-child(3)','card'),
  ('heading-tool','.tool-section>.next-heading',None),('heading-stats','.stats-section>.next-heading',None),
  ('overview','#stats-card','card'),('languages','#languages-card','card'),('streak','#streak-card',None),
  ('heading-writing','.tail-writing>.tail-heading',None),('heading-contributions','.tail-contributions>.tail-heading',None),
@@ -168,15 +175,21 @@ def build(local=False):
   'arena':'https://raw.githubusercontent.com/lora-sys/AgentArena/main/docs/qa/visual-baselines/v052-home-desktop-20260725.png',
   'skills':'https://raw.githubusercontent.com/lora-sys/skills/main/assets/readme/hero.png',
   'vllm':'https://raw.githubusercontent.com/lora-sys/nano-vllm-interactive-guide/main/assets/readme/hero-v1.webp',
-  'vision':'https://raw.githubusercontent.com/lora-sys/free-vision-skill/main/assets/readme/hero-v1.webp',
  }
- art_records={}
+ art_records={};missing=[]
  for key,location in arts.items():
   if local:data=(ROOT/'local-assets'/(key+'.webp')).read_bytes()
-  else:data=location.read_bytes() if isinstance(location,Path) else download(location)
+  else:data=location.read_bytes() if isinstance(location,Path) else download(location,required=(key=='banner'))
+  if data is None:
+   missing.append(key)
+   img=soup.find('img',src='assets/'+key+'.webp')
+   if img:img.decompose()
+   continue
   mime='image/png' if data.startswith(b'\x89PNG') else 'image/webp'
-  soup.find('img',src='assets/'+key+'.webp')['src']=uri(data,mime)
+  img=soup.find('img',src='assets/'+key+'.webp')
+  if img:img['src']=uri(data,mime)
   art_records[key]={'source':str(location),'sha256':hashlib.sha256(data).hexdigest()}
+ if missing:print('Skipped artwork:',', '.join(missing),file=sys.stderr)
  assert local or art_records['banner']['sha256']=='c2573c101012c3480a282920a82f9ab28ebbe35920009c4072d88dd6bd9ee7ff','Original banner changed'
  for el in soup.select('.work-actions,.tail-socials,.tail-end'):el.decompose()
  soup.select_one('#overview-provider-label').string='Stats Fast'
@@ -260,7 +273,7 @@ def make_readme():
  md+='''<p align="center"><a href="https://github.com/lora-sys/Glassbox-Agent-Harness/blob/main/.plans/03-personal-agent-foundation.md">Glassbox 当前计划</a> · <a href="https://github.com/lora-sys/zhihu-threads#快速开始">Zhihu Threads 使用说明</a></p>
 <p>工具、实验与教程</p>
 '''
- md+=group(['compact-arena','compact-skills','compact-vllm','compact-vision'])
+ md+=group(['compact-arena','compact-skills','compact-vllm'])
  md+='\n[AI Engineering Harness](https://github.com/lora-sys/ai-engineering-harness) · 更多工程工作流见仓库。\n\n'
  md+=picture('heading-tool')+'\n\n'+group(['tool-'+str(i) for i in range(8)])
  md+='<p><sub>用于应用开发、数据存储和测试。点击图标查看项目依赖。</sub></p>\n\n'

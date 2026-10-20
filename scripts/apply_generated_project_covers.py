@@ -20,12 +20,11 @@ BUILD = ROOT / "scripts/build_approved_profile.py"
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-NAMES = ("arena", "skills", "vllm", "vision")
+NAMES = ("arena", "skills", "vllm")
 REMOTE_LINES = {
     "arena": "  'arena':'https://raw.githubusercontent.com/lora-sys/AgentArena/main/docs/qa/visual-baselines/v052-home-desktop-20260725.png',",
     "skills": "  'skills':'https://raw.githubusercontent.com/lora-sys/skills/main/assets/readme/hero.png',",
     "vllm": "  'vllm':'https://raw.githubusercontent.com/lora-sys/nano-vllm-interactive-guide/main/assets/readme/hero-v1.webp',",
-    "vision": "  'vision':'https://raw.githubusercontent.com/lora-sys/free-vision-skill/main/assets/readme/hero-v1.webp',",
 }
 
 
