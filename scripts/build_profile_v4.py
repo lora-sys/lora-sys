@@ -37,10 +37,6 @@ PROJECTS = [
          lines=['结合源码与浏览器交互实验，','讲解推理调度、KV Cache 与采样。'],
          source=f'{ROOT}/nano-vllm-interactive-guide/main/assets/readme/hero-v1.webp',
          crop=[620,32,1175,340],local='vllm.webp',caption='项目插画'),
-    dict(slug='vision',title='Free Vision Skill',kind='DEVELOPER TOOL',status='工具',repo='free-vision-skill',
-         lines=['按任务提取图片中的相关信息。','将文本证据交给 Agent 继续处理。'],
-         source=f'{ROOT}/free-vision-skill/main/assets/readme/hero-v1.webp',
-         crop=[630,37,1173,326],local='vision.webp',caption='项目插画'),
 ]
 FONT = '"Noto Sans CJK SC","Microsoft YaHei","PingFang SC",Arial,sans-serif'
 MONO = 'ui-monospace,"SFMono-Regular",Consolas,monospace'

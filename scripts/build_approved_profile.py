@@ -2,6 +2,8 @@
 
 The build preserves the original banner, reads real statistics, and retains a
 previous successful data snapshot if a provider is temporarily unavailable.
+A missing optional artwork is skipped rather than failing the run, so the
+daily refresh of the statistics and snake snapshots always completes.
 No font files, credentials, or invented statistics are published.
 """
 from __future__ import annotations
@@ -18,12 +20,11 @@ from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'dist/v5';OUT.mkdir(parents=True,exist_ok=True)
 QA=ROOT/'qa';QA.mkdir(exist_ok=True)
-RAW='https://raw.githubusercontent.com/lora-sys/lora-sys/output/v5/'
+RAW='https://raw.githubusercontent.com/lora-sys/lora-sys/output/'
 PALETTES={
  'light':dict(page='FFFFFF',bg='F6F2EA',fg='24211E',muted='70675D',line='DED8CF',accent='9A661B',gold='D6A03B'),
  'dark':dict(page='161719',bg='25231F',fg='F4F0E9',muted='BFB6A8',line='3A3732',accent='E2B45D',gold='E0A62F'),
 }
-LINES=['你好，我是 Lora。','写 AI Agent，做开源项目。','把读源码的过程做成交互教程。']
 SIZES={'desktop':(1440,880,400,195),'mobile':(390,342,326,156),'small':(320,272,260,123)}
 records={};components={};captured_at=datetime.now(timezone.utc).isoformat()
 
@@ -65,7 +66,7 @@ def endpoint(kind:str,theme:str)->str:
   return 'https://github-readme-stats-fast.vercel.app/api?'+urlencode(q)
  if kind=='languages':
   q.update(layout='compact',langs_count='6')
-  return 'https://github-readme-stats-sigma-fawn-45.vercel.app/api/top-langs/?'+urlencode(q)
+  return 'https://github-readme-stats-fast.vercel.app/api/top-langs/?'+urlencode(q)
  q=dict(user='lora-sys',hide_border='true',background=p['bg'],stroke=p['line'],ring=p['accent'],fire=p['accent'],currStreakNum=p['fg'],sideNums=p['fg'],currStreakLabel=p['accent'],sideLabels=p['muted'],dates=p['muted'])
  return 'https://github-readme-streak-stats-eight.vercel.app/?'+urlencode(q)
 
@@ -99,48 +100,6 @@ def raster_svg(name:str,data:bytes,css_width:float,title:str,pad=0):
  label=html.escape(title,quote=True)
  save_svg(name,f'<svg xmlns="http://www.w3.org/2000/svg" width="{css_width+pad:.2f}" height="{height+pad:.2f}" viewBox="0 0 {css_width+pad:.2f} {height+pad:.2f}" role="img" aria-label="{label}"><title>{html.escape(title)}</title><image x="{pad/2}" y="0" width="{css_width:.2f}" height="{height:.2f}" href="{uri(buf.getvalue(),"image/webp")}"/></svg>')
 
-def typing_svg(page,theme,mode,static=False):
- p=PALETTES[theme];w=SIZES[mode][1];size=30 if mode=='desktop' else 22;h=88 if mode=='desktop' else 100
- font=f'650 {size}px system-ui, "Noto Sans CJK SC", sans-serif'
- lengths=page.evaluate('''({lines,font})=>{const c=document.createElement('canvas').getContext('2d');c.font=font;return lines.map(t=>[...t].map(ch=>c.measureText(ch).width));}''',dict(lines=LINES,font=font))
- layouts=[];times=[];offset=0
- for line,widths in zip(LINES,lengths):
-  rows=[[]];rw=0
-  for ch,adv in zip(line,widths):
-   if rw+adv>w-16 and rows[-1]:rows.append([]);rw=0
-   rows[-1].append((ch,adv));rw+=adv
-  points=[]
-  for rowid,row in enumerate(rows):
-   x=(w-sum(a for _,a in row))/2;y=(h-(len(rows)-1)*size*1.5)/2+size*.35+rowid*size*1.5
-   for ch,adv in row:points.append((ch,x,y,adv));x+=adv
-  duration=.18+len(line)*.095+3.2+len(line)*.046+.38
-  layouts.append(points);times.append((offset,duration));offset+=duration
- total=offset
- css='text{font-family:system-ui,"Noto Sans CJK SC","Microsoft YaHei",sans-serif;letter-spacing:.01em;font-weight:650;}'
- body=''
- for j,points in enumerate(layouts):
-  if static and j>0:break
-  off,dur=times[j]
-  for i,(ch,x,y,adv) in enumerate(points):
-   name=f'c{j}_{i}';extra=''
-   if not static:
-    start=(off+.18+(i+1)*.095)/total*100
-    end=(off+.18+len(points)*.095+3.2+(len(points)-i)*.046)/total*100
-    css+=f'.{name}{{animation:{name} {total:.3f}s steps(1,end) infinite}}@keyframes {name}{{0%{{opacity:0}}{start:.5f}%{{opacity:1}}{end:.5f}%,100%{{opacity:0}}}}'
-    extra=f' class="{name}"'
-   body+=f'<text{extra} x="{x:.3f}" y="{y:.3f}" font-size="{size}" fill="#{p["accent"]}">{html.escape(ch)}</text>'
-  if not static:
-   events=[(off/total*100,points[0][1],points[0][2]-size*.82)]
-   for i,(_,x,y,adv) in enumerate(points):events.append(((off+.18+(i+1)*.095)/total*100,x+adv+5,y-size*.82))
-   for i in range(len(points)-1,-1,-1):
-    _,x,y,_=points[i];events.append(((off+.18+len(points)*.095+3.2+(len(points)-i)*.046)/total*100,x+3,y-size*.82))
-   frames=''.join(f'{t:.5f}%{{transform:translate({x:.3f}px,{y:.3f}px)}}' for t,x,y in events)
-   a=off/total*100;b=(off+dur-.02)/total*100
-   css+=f'.cursor{j}{{animation:move{j} {total:.3f}s steps(1,end) infinite,show{j} {total:.3f}s steps(1,end) infinite}}@keyframes move{j}{{{frames}}}@keyframes show{j}{{0%{{opacity:0}}{a:.5f}%{{opacity:1}}{b:.5f}%,100%{{opacity:0}}}}'
-   body+=f'<g class="cursor{j}"><rect class="blink" width="2" height="{size*.9}" fill="#{p["accent"]}"/></g>'
- if not static:css+=' .blink{animation:blink 1.1s steps(1,end) infinite}@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}'
- save_svg(f'typing-{theme}-{mode}'+('-static' if static else ''),f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img"><title>{html.escape(" ".join(LINES))}</title><style>{css}</style>{body}</svg>')
-
 def snake_svg(theme,mode,static=False):
  p=PALETTES[theme];w=SIZES[mode][1]
  data=(ROOT/'dist'/('snake-'+theme+'.svg')).read_bytes()
@@ -152,53 +111,31 @@ def snake_svg(theme,mode,static=False):
  save_svg(f'snake-{theme}-{mode}'+('-static' if static else ''),markup)
 
 SPECS=[
- ('heading-work','.work-heading',None),
- ('feature-glassbox','.work-feature:nth-child(1)','card'),('feature-zhihu','.work-feature:nth-child(2)','card'),
- ('compact-arena','.work-compact:nth-child(1)','card'),('compact-skills','.work-compact:nth-child(2)','card'),('compact-vllm','.work-compact:nth-child(3)','card'),
- ('heading-tool','.tool-section>.next-heading',None),('heading-stats','.stats-section>.next-heading',None),
  ('overview','#stats-card','card'),('languages','#languages-card','card'),('streak','#streak-card',None),
- ('heading-writing','.tail-writing>.tail-heading',None),('heading-contributions','.tail-contributions>.tail-heading',None),
- ('article-budget','.tail-post-link:nth-child(1)',None),('article-tau','.tail-post-link:nth-child(2)',None),('article-harness','.tail-post-link:nth-child(3)',None),
- ('pr-eino','.tail-pr:nth-child(1)',None),('pr-nad','.tail-pr:nth-child(2)',None),('pr-moss','.tail-pr:nth-child(3)',None),
- ('contact','.tail-contact',None),
 ]
+CARDS=('overview','languages','streak')
 
 def build(local=False):
  from prepare_approved_layout import write
  write()
  source=ROOT/'assets/profile/approved-layout.html'
  soup=BeautifulSoup(source.read_text(),'html.parser')
- arts={
-  'banner':ROOT/'assets/readme/hero-v1.webp',
-  'glassbox':'https://raw.githubusercontent.com/lora-sys/Glassbox-Agent-Harness/main/assets/readme/glassbox-hero.png',
-  'zhihu':'https://raw.githubusercontent.com/lora-sys/zhihu-threads/main/assets/readme/lora-v3-project-zhihu-threads-zh.webp',
-  'arena':'https://raw.githubusercontent.com/lora-sys/AgentArena/main/docs/qa/visual-baselines/v052-home-desktop-20260725.png',
-  'skills':'https://raw.githubusercontent.com/lora-sys/skills/main/assets/readme/hero.png',
-  'vllm':'https://raw.githubusercontent.com/lora-sys/nano-vllm-interactive-guide/main/assets/readme/hero-v1.webp',
- }
- art_records={};missing=[]
- for key,location in arts.items():
-  if local:data=(ROOT/'local-assets'/(key+'.webp')).read_bytes()
-  else:data=location.read_bytes() if isinstance(location,Path) else download(location,required=(key=='banner'))
-  if data is None:
-   missing.append(key)
-   img=soup.find('img',src='assets/'+key+'.webp')
-   if img:img.decompose()
-   continue
-  mime='image/png' if data.startswith(b'\x89PNG') else 'image/webp'
-  img=soup.find('img',src='assets/'+key+'.webp')
-  if img:img['src']=uri(data,mime)
-  art_records[key]={'source':str(location),'sha256':hashlib.sha256(data).hexdigest()}
- if missing:print('Skipped artwork:',', '.join(missing),file=sys.stderr)
+ banner=ROOT/'assets/readme/hero-v1.webp'
+ data=banner.read_bytes()
+ soup.find('img',src='assets/banner.webp')['src']=uri(data,'image/webp')
+ art_records={'banner':{'source':str(banner),'sha256':hashlib.sha256(data).hexdigest()}}
  assert local or art_records['banner']['sha256']=='c2573c101012c3480a282920a82f9ab28ebbe35920009c4072d88dd6bd9ee7ff','Original banner changed'
  for el in soup.select('.work-actions,.tail-socials,.tail-end'):el.decompose()
- soup.select_one('#overview-provider-label').string='Stats Fast'
+ for img in soup.select('img[src^="assets/"]'):
+  if img.get('src')!='assets/banner.webp':img.decompose()
+ assert not soup.select('img[src^="assets/"]') or all(i.get('src')=='assets/banner.webp' for i in soup.select('img[src^="assets/"]')),'Unresolvable artwork left in the layout'
+ if soup.select_one('#overview-provider-label'):soup.select_one('#overview-provider-label').string='Stats Fast'
  for el in soup.select('.stat-source'):el.string='每日更新'
  for el in soup.select('.stat-footer span'):el.string='公开数据快照'
  stats={}
  if not local:
   for theme in PALETTES:
-   for kind in ('overview','languages','streak'):stats[(theme,kind)]=stats_asset(kind,theme)
+   for kind in CARDS:stats[(theme,kind)]=stats_asset(kind,theme)
  with sync_playwright() as playwright:
   browser=playwright.chromium.launch(executable_path='/usr/bin/chromium' if local else None)
   for theme in PALETTES:
@@ -212,28 +149,13 @@ def build(local=False):
     page.wait_for_function('()=>[...document.images].every(i=>!i.src || (i.complete&&i.naturalWidth>0))')
     page.evaluate('()=>document.fonts.ready')
     for name,sel,kind in SPECS:
-     if local and name in ('overview','languages','streak'):continue
+     if local and name in CARDS:continue
      el=page.locator(sel);title=el.inner_text().strip().replace('\n','。')
      link=el.get_attribute('href') or (el.locator('a').first.get_attribute('href') if el.locator('a').count() else None)
-     if name=='contact':link='mailto:lorasys@outlook.com'
-     if name.startswith('compact-'):link=el.locator('.work-compact-foot a').get_attribute('href')
      components.setdefault(name,dict(alt=title,href=link))
      raster_svg(f'{name}-{theme}-{mode}',el.screenshot(animations='disabled',omit_background=True),cw if kind=='card' else full,title,pad=8 if kind=='card' else 0)
-    for idx in range(8):
-     el=page.locator('.tool-tile').nth(idx);name='tool-'+str(idx)
-     components.setdefault(name,dict(alt=el.inner_text().replace('\n','。'),href=el.get_attribute('href')))
-     raster_svg(f'{name}-{theme}-{mode}',el.screenshot(animations='disabled',omit_background=True),tw,components[name]['alt'],pad=8)
-    for idx in range(4):
-     el=page.locator('.nav a').nth(idx);name='nav-'+str(idx)
-     components.setdefault(name,dict(alt=el.inner_text(),href=el.get_attribute('href')))
-     raster_svg(f'{name}-{theme}-{mode}',el.screenshot(animations='disabled',omit_background=True),138 if mode=='desktop' else 124,el.inner_text(),pad=8)
-    colors=PALETTES[theme]
-    divider=f'<svg xmlns="http://www.w3.org/2000/svg" width="{full}" height="30" viewBox="0 0 {full} 30"><style>.flow{{animation:flow 9s linear infinite}}@keyframes flow{{from{{stroke-dashoffset:48}}to{{stroke-dashoffset:-{full}}}}}@media(prefers-reduced-motion:reduce){{.flow{{animation:none}}}}</style><path d="M0 15H{full}" stroke="#{colors["line"]}"/><path class="flow" d="M0 15H{full}" stroke="#{colors["gold"]}" stroke-width="2" stroke-dasharray="48 {full}"/></svg>'
-    save_svg(f'divider-{theme}-{mode}',divider)
     for static in (False,True):
-     typing_svg(page,theme,mode,static)
      if not local:snake_svg(theme,mode,static)
-    page.locator('main').screenshot(path=str(QA/f'approved-render-{theme}-{mode}.png'),animations='disabled')
     page.close()
   browser.close()
  metadata=dict(build_source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),generated_at=captured_at,artwork=art_records,statistics=records,components=components)
@@ -248,7 +170,7 @@ def picture(name,alt=None,link=None,static=False):
  alt=alt or meta.get('alt',name);href=link if link is not None else meta.get('href')
  sources=[]
  def src(media,theme,mode,still=False):
-  filename=f'{name}-{theme}-{mode}'+('-static' if still else '')+'.svg'
+  filename=f'v5/{name}-{theme}-{mode}'+('-static' if still else '')+'.svg'
   return f'<source media="{media}" srcset="{RAW+filename}">'
  for still in ([True,False] if static else [False]):
   prefix='(prefers-reduced-motion: reduce) and ' if still else ''
@@ -256,46 +178,30 @@ def picture(name,alt=None,link=None,static=False):
    sources+=[src(prefix+f'(max-width: {maxw}px) and (prefers-color-scheme: dark)','dark',mode,still),src(prefix+f'(max-width: {maxw}px)','light',mode,still)]
   sources.append(src(prefix+'(prefers-color-scheme: dark)','dark','desktop',still))
   if still:sources.append(src('(prefers-reduced-motion: reduce)','light','desktop',True))
- pic='<picture>'+''.join(sources)+f'<img src="{RAW+name}-light-desktop.svg" alt="{html.escape(alt,quote=True)}"></picture>'
+ pic='<picture>'+''.join(sources)+f'<img src="{RAW+"v5/"+name}-light-desktop.svg" alt="{html.escape(alt,quote=True)}"></picture>'
  return '<a href="'+html.escape(href,quote=True)+'">'+pic+'</a>' if href else pic
 
 def make_readme():
  group=lambda names:'<p align="center">\n'+'\n'.join(picture(n) for n in names)+'\n</p>\n'
- md='''<!-- Lora approved profile v5. Asset provenance: output/v5/sources.json. -->
-<a id="top"></a>
-<p align="center"><a href="https://lora-sys.github.io/loraSys/"><img src="./assets/readme/hero-v1.webp" width="100%" alt="Lora 与 Mochi，原版插画 banner"></a></p>
-'''
- md+='<p align="center">'+picture('typing','你好，我是 Lora。写 AI Agent，做开源项目。把读源码的过程做成交互教程。',static=True)+'</p>\n'
- md+='''<p align="center">我做 AI 应用和开发者工具，也把读源码的过程做成交互教程。<br>正在开发 <a href="https://github.com/lora-sys/Glassbox-Agent-Harness">Glassbox</a>，研究个人 Agent 的记忆、权限与任务执行。</p>
-'''
- md+=group(['nav-'+str(i) for i in range(4)])+'\n'+picture('divider','暖色动态分隔线')+'\n\n'
- md+=picture('heading-work')+'\n\n'+group(['feature-glassbox','feature-zhihu'])
- md+='''<p align="center"><a href="https://github.com/lora-sys/Glassbox-Agent-Harness/blob/main/.plans/03-personal-agent-foundation.md">Glassbox 当前计划</a> · <a href="https://github.com/lora-sys/zhihu-threads#快速开始">Zhihu Threads 使用说明</a></p>
-<p>工具、实验与教程</p>
-'''
- md+=group(['compact-arena','compact-skills','compact-vllm'])
- md+='\n[AI Engineering Harness](https://github.com/lora-sys/ai-engineering-harness) · 更多工程工作流见仓库。\n\n'
- md+=picture('heading-tool')+'\n\n'+group(['tool-'+str(i) for i in range(8)])
- md+='<p><sub>用于应用开发、数据存储和测试。点击图标查看项目依赖。</sub></p>\n\n'
- md+=picture('heading-stats')+'\n\n'+group(['overview','languages'])
- md+='<p><sub>总览来自 Stats Fast，保留字母等级。语言分布来自自托管服务，不代表熟练度。</sub></p>\n'
- md+=picture('streak')+'\n\n'+picture('snake','lora-sys 的贡献贪吃蛇。根据 GitHub 贡献记录每日生成。',link='https://github.com/Platane/snk',static=True)+'\n\n'
- md+=f'<p><sub>统计与动画每日刷新。接口失败时保留上一次成功结果。<a href="{RAW}sources.json">数据来源与更新时间</a></sub></p>\n\n'
- md+=picture('heading-writing')+'\n\n'+group(['article-budget','article-tau','article-harness'])
- md+=picture('heading-contributions')+'\n\n'+group(['pr-eino','pr-nad','pr-moss'])
- md+=picture('contact')+'\n\n'
- md+='''<p align="center"><a href="https://lora-sys.github.io/loraSys/">个人网站</a> · <a href="https://github.com/lora-sys">GitHub</a> · <a href="https://www.zhihu.com/people/lorry-23-28-30">知乎</a> · <a href="https://x.com/MierPiter33280">X</a></p>
-<p align="center"><sub>Lora · lora-sys</sub> · <a href="#top">回到顶部</a></p>
-
-<details>
-<summary>文字目录与无图阅读</summary>
-
-'''
- for name,meta in components.items():
-  if name.startswith(('feature-','compact-','article-','pr-')):
-   md+=f'[{meta["alt"].split("。")[0]}]({meta["href"]})  \n{meta["alt"]}\n\n'
- md+='邮箱 [lorasys@outlook.com](mailto:lorasys@outlook.com)。\n\n</details>\n'
- return md
+ md='    <!-- Lora approved profile v5. Asset provenance: output/v5/sources.json. -->\n'
+ md+='    <a id="top"></a>\n'
+ md+='    <p align="center"><a href="https://lora-sys.github.io/loraSys/"><img src="./assets/readme/hero-v1.webp" width="100%" alt="Lora 与 Mochi，原版插画 banner"></a></p>\n\n'
+ md+='    <h1 align="center">Lora</h1>\n'
+ md+='    <p align="center">学生开发者 · 中国西安 · 写 AI Agent，也写把源码讲明白的交互教程</p>\n\n'
+ md+='    <p align="center"><a href="https://lora-sys.github.io/loraSys/">网站</a> · <a href="https://lora-sys.github.io/loraSys/projects">项目</a> · <a href="https://lora-sys.github.io/loraSys/blog">文章</a> · <a href="https://lora-sys.github.io/loraSys/rss.xml">RSS</a> · <a href="mailto:lorasys@outlook.com">邮箱</a></p>\n\n'
+ md+='    ## 做过的\n\n'
+ md+='    - **[Glassbox](https://github.com/lora-sys/Glassbox-Agent-Harness)** — 权限优先的个人 Agent 工作台，管理身份、记忆、权限与任务执行。119 个 Issue、67 个已合并 PR 在推进。\n'
+ md+='    - **[nano-vLLM 交互教程](https://lora-sys.github.io/nano-vllm-interactive-guide/guide/00-start)** — 把推理调度、KV Cache 和采样讲成可以在浏览器里跑的实验。\n'
+ md+='    - **[AgentArena](https://github.com/lora-sys/AgentArena)** — 让三支 Agent 团队处理同一任务，留下提案、证据与对战回放。\n'
+ md+='    - 向 [cloudwego/eino-examples](https://github.com/cloudwego/eino-examples/pull/227)、[portdeveloper/nad-agent](https://github.com/portdeveloper/nad-agent/pull/49)、[nishuzumi/moss](https://github.com/nishuzumi/moss/pull/29) 等 13 个仓库提交过 174 个已合并 PR。\n\n'
+ md+='    ## 写过的\n\n'
+ md+='    179 篇笔记，写 Agent 架构、记忆与评测，都按可以照着复现的方式拆。最近的几篇：[Agent 该继续跑还是重新开一轮](https://lora-sys.github.io/loraSys/blog/agent-budget-memory-evaluation) · [把 Agent 拆成三层](https://lora-sys.github.io/loraSys/blog/tau-agent-architecture) · [Agent 开发的测试与审查](https://lora-sys.github.io/loraSys/blog/ai-engineering-harness)。\n\n'
+ md+='    ## 数据和贡献\n\n'
+ md+='    '+group(['overview','languages'])+'\n'
+ md+='    '+picture('streak')+'\n\n'+'    '+picture('snake','lora-sys 的贡献贪吃蛇。根据 GitHub 贡献记录每日生成。',link='https://github.com/Platane/snk',static=True)+'\n\n'
+ md+=f'    <p align="center"><sub>数据每日刷新，校验失败时保留上一次成功结果。<a href="{RAW}v5/sources.json">数据来源与更新时间</a></sub></p>\n\n'
+ md+='    <p align="center"><a href="https://lora-sys.github.io/loraSys/">lora-sys.github.io/loraSys</a> · <a href="mailto:lorasys@outlook.com">lorasys@outlook.com</a> · <a href="#top">回到顶部</a></p>\n'
+ return '\n'.join(line[4:] if line.startswith('    ') else line for line in md.splitlines())
 
 if __name__=='__main__':
  parser=argparse.ArgumentParser();parser.add_argument('--local',action='store_true');args=parser.parse_args();build(args.local)
