@@ -56,6 +56,9 @@ def validate_svg(data:bytes,kind:str)->str:
   raise ValueError(kind+' returned an error image: '+words[:350])
  if kind=='overview' and not re.search(r'rank',data.decode(),re.I):raise ValueError('Overview rank missing')
  if kind=='languages' and not re.search(r'%|language',words,re.I):raise ValueError('Language data missing')
+ if kind=='streak':
+  for label in ('Current Streak','Longest Streak','Total Contributions'):
+   if label not in words:raise ValueError('Streak captions missing: '+label)
  return words
 
 def endpoint(kind:str,theme:str)->str:
@@ -70,6 +73,14 @@ def endpoint(kind:str,theme:str)->str:
  q=dict(user='lora-sys',hide_border='true',background=p['bg'],stroke=p['line'],ring=p['accent'],fire=p['accent'],currStreakNum=p['fg'],sideNums=p['fg'],currStreakLabel=p['accent'],sideLabels=p['muted'],dates=p['muted'])
  return 'https://github-readme-streak-stats-eight.vercel.app/?'+urlencode(q)
 
+def flatten_streak(data:bytes)->bytes:
+ """streak-stats hides its labels behind `opacity:0` + a CSS fade-in. When the
+ card is captured as a still image the animation never runs, so the captions
+ vanish. Drop the entrance styles and keep the final state."""
+ text=data.decode('utf-8')
+ text=re.sub(r"opacity:\s*0;\s*animation:[^'\"]*",'',text)
+ return text.encode('utf-8')
+
 def stats_asset(kind:str,theme:str)->bytes:
  url=endpoint(kind,theme);key=kind+'-'+theme
  try:
@@ -83,7 +94,7 @@ def stats_asset(kind:str,theme:str)->bytes:
   record={**prior,'status':'retained_previous','refresh_error':str(exc)[:300]}
  (OUT/'data').mkdir(exist_ok=True)
  (OUT/'data'/(key+'.svg')).write_bytes(data);records[key]=record
- return data
+ return flatten_streak(data) if kind=='streak' else data
 
 def uri(data:bytes,mime='image/svg+xml')->str:
  return 'data:'+mime+';base64,'+base64.b64encode(data).decode()
@@ -130,8 +141,8 @@ def build(local=False):
   if img.get('src')!='assets/banner.webp':img.decompose()
  assert not soup.select('img[src^="assets/"]') or all(i.get('src')=='assets/banner.webp' for i in soup.select('img[src^="assets/"]')),'Unresolvable artwork left in the layout'
  if soup.select_one('#overview-provider-label'):soup.select_one('#overview-provider-label').string='Stats Fast'
- for el in soup.select('.stat-source'):el.string='每日更新'
- for el in soup.select('.stat-footer span'):el.string='公开数据快照'
+ for el in soup.select('.stat-source'):el.decompose()
+ for el in soup.select('.stat-footer'):el.decompose()
  stats={}
  if not local:
   for theme in PALETTES:
@@ -147,7 +158,11 @@ def build(local=False):
     for kind,host in [('overview','#stats-body'),('languages','#languages-body'),('streak','#streak-card .stat-body')]:
      if not local:page.locator(host).evaluate('(el,src)=>{el.replaceChildren(Object.assign(new Image(),{src,alt:"lora-sys real statistics",className:"stat-live-image"}));}',uri(stats[(theme,kind)]))
     page.wait_for_function('()=>[...document.images].every(i=>!i.src || (i.complete&&i.naturalWidth>0))')
+    # streak-stats animates its labels in via @keyframes; a static card
+    # capture otherwise records opacity:0 frames and loses the captions.
+    page.add_style_tag(content='img.stat-live-image{animation:none!important;transition:none!important}')
     page.evaluate('()=>document.fonts.ready')
+    page.wait_for_timeout(1200)
     for name,sel,kind in SPECS:
      if local and name in CARDS:continue
      el=page.locator(sel);title=el.inner_text().strip().replace('\n','。')
@@ -199,7 +214,7 @@ def make_readme():
  md+='    ## 数据和贡献\n\n'
  md+='    '+group(['overview','languages'])+'\n'
  md+='    '+picture('streak')+'\n\n'+'    '+picture('snake','lora-sys 的贡献贪吃蛇。根据 GitHub 贡献记录每日生成。',link='https://github.com/Platane/snk',static=True)+'\n\n'
- md+=f'    <p align="center"><sub>数据每日刷新，校验失败时保留上一次成功结果。<a href="{RAW}v5/sources.json">数据来源与更新时间</a></sub></p>\n\n'
+ md+='    <p align="center"><sub>数据来自 GitHub，由 GitHub Actions 每日生成。</sub></p>\n\n'
  md+='    <p align="center"><a href="https://lora-sys.github.io/loraSys/">lora-sys.github.io/loraSys</a> · <a href="mailto:lorasys@outlook.com">lorasys@outlook.com</a> · <a href="#top">回到顶部</a></p>\n'
  return '\n'.join(line[4:] if line.startswith('    ') else line for line in md.splitlines())
 
