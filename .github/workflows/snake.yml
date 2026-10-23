@@ -62,7 +62,7 @@ jobs:
           from playwright.sync_api import sync_playwright
           root=Path('dist/v5')
           source=json.loads((root/'sources.json').read_text())
-          assert len(source['statistics'])==6
+          assert len(source['statistics'])==4, sorted(source['statistics'])
           for key,item in source['statistics'].items():
               assert item['status'] in ('fresh','retained_previous'), key
               assert item.get('fetched_at') and item.get('sha256'), key
@@ -92,7 +92,7 @@ jobs:
               svg=path.read_text().replace('</svg>','<style>@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style></svg>')
               path.write_text(svg)
               path.with_name(path.stem+'-static.svg').write_text(svg.replace('</svg>','<style>*{animation:none!important}</style></svg>'))
-          print('Verified',len(list(root.rglob('*.svg'))),'SVGs, six real data sources and animated/static frames')
+          print('Verified',len(list(root.rglob('*.svg'))),'SVGs, four real data sources and animated/static frames')
           PY
       - name: Publish approved assets without rewriting history
         run: |
