@@ -56,9 +56,6 @@ def validate_svg(data:bytes,kind:str)->str:
   raise ValueError(kind+' returned an error image: '+words[:350])
  if kind=='overview' and not re.search(r'rank',data.decode(),re.I):raise ValueError('Overview rank missing')
  if kind=='languages' and not re.search(r'%|language',words,re.I):raise ValueError('Language data missing')
- if kind=='streak':
-  for label in ('Current Streak','Longest Streak','Total Contributions'):
-   if label not in words:raise ValueError('Streak captions missing: '+label)
  return words
 
 def endpoint(kind:str,theme:str)->str:
@@ -70,16 +67,6 @@ def endpoint(kind:str,theme:str)->str:
  if kind=='languages':
   q.update(layout='compact',langs_count='6')
   return 'https://github-readme-stats-fast.vercel.app/api/top-langs/?'+urlencode(q)
- q=dict(user='lora-sys',hide_border='true',background=p['bg'],stroke=p['line'],ring=p['accent'],fire=p['accent'],currStreakNum=p['fg'],sideNums=p['fg'],currStreakLabel=p['accent'],sideLabels=p['muted'],dates=p['muted'])
- return 'https://github-readme-streak-stats-eight.vercel.app/?'+urlencode(q)
-
-def flatten_streak(data:bytes)->bytes:
- """streak-stats hides its labels behind `opacity:0` + a CSS fade-in. When the
- card is captured as a still image the animation never runs, so the captions
- vanish. Drop the entrance styles and keep the final state."""
- text=data.decode('utf-8')
- text=re.sub(r"opacity:\s*0;\s*animation:[^'\"]*",'',text)
- return text.encode('utf-8')
 
 def stats_asset(kind:str,theme:str)->bytes:
  url=endpoint(kind,theme);key=kind+'-'+theme
@@ -94,7 +81,7 @@ def stats_asset(kind:str,theme:str)->bytes:
   record={**prior,'status':'retained_previous','refresh_error':str(exc)[:300]}
  (OUT/'data').mkdir(exist_ok=True)
  (OUT/'data'/(key+'.svg')).write_bytes(data);records[key]=record
- return flatten_streak(data) if kind=='streak' else data
+ return data
 
 def uri(data:bytes,mime='image/svg+xml')->str:
  return 'data:'+mime+';base64,'+base64.b64encode(data).decode()
@@ -122,9 +109,9 @@ def snake_svg(theme,mode,static=False):
  save_svg(f'snake-{theme}-{mode}'+('-static' if static else ''),markup)
 
 SPECS=[
- ('overview','#stats-card','card'),('languages','#languages-card','card'),('streak','#streak-card',None),
+ ('overview','#stats-card','card'),('languages','#languages-card','card'),
 ]
-CARDS=('overview','languages','streak')
+CARDS=('overview','languages')
 
 def build(local=False):
  from prepare_approved_layout import write
@@ -155,14 +142,10 @@ def build(local=False):
     markup=str(soup).replace('data-theme="light"',f'data-theme="{theme}"')
     page.set_content(markup,wait_until='load')
     page.add_style_tag(content='body{background:transparent!important}.sample{border:0;border-radius:0;background:transparent!important}.tail-contact-right{min-width:0}.tail-contact-main{align-items:center}.tail-contact{margin-bottom:0}.stat-body img{max-width:100%;height:auto}.work-feature-copy{padding-bottom:0}')
-    for kind,host in [('overview','#stats-body'),('languages','#languages-body'),('streak','#streak-card .stat-body')]:
+    for kind,host in [('overview','#stats-body'),('languages','#languages-body')]:
      if not local:page.locator(host).evaluate('(el,src)=>{el.replaceChildren(Object.assign(new Image(),{src,alt:"lora-sys real statistics",className:"stat-live-image"}));}',uri(stats[(theme,kind)]))
     page.wait_for_function('()=>[...document.images].every(i=>!i.src || (i.complete&&i.naturalWidth>0))')
-    # streak-stats animates its labels in via @keyframes; a static card
-    # capture otherwise records opacity:0 frames and loses the captions.
-    page.add_style_tag(content='img.stat-live-image{animation:none!important;transition:none!important}')
     page.evaluate('()=>document.fonts.ready')
-    page.wait_for_timeout(1200)
     for name,sel,kind in SPECS:
      if local and name in CARDS:continue
      el=page.locator(sel);title=el.inner_text().strip().replace('\n','。')
@@ -213,7 +196,7 @@ def make_readme():
  md+='    179 篇笔记，写 Agent 架构、记忆与评测，都按可以照着复现的方式拆。最近的几篇：[Agent 该继续跑还是重新开一轮](https://lora-sys.github.io/loraSys/blog/agent-budget-memory-evaluation) · [把 Agent 拆成三层](https://lora-sys.github.io/loraSys/blog/tau-agent-architecture) · [Agent 开发的测试与审查](https://lora-sys.github.io/loraSys/blog/ai-engineering-harness)。\n\n'
  md+='    ## 数据和贡献\n\n'
  md+='    '+group(['overview','languages'])+'\n'
- md+='    '+picture('streak')+'\n\n'+'    '+picture('snake','lora-sys 的贡献贪吃蛇。根据 GitHub 贡献记录每日生成。',link='https://github.com/Platane/snk',static=True)+'\n\n'
+ md+='    '+picture('snake','lora-sys 的贡献贪吃蛇。根据 GitHub 贡献记录每日生成。',link='https://github.com/Platane/snk',static=True)+'\n\n'
  md+='    <p align="center"><sub>数据来自 GitHub，由 GitHub Actions 每日生成。</sub></p>\n\n'
  md+='    <p align="center"><a href="https://lora-sys.github.io/loraSys/">lora-sys.github.io/loraSys</a> · <a href="mailto:lorasys@outlook.com">lorasys@outlook.com</a> · <a href="#top">回到顶部</a></p>\n'
  return '\n'.join(line[4:] if line.startswith('    ') else line for line in md.splitlines())

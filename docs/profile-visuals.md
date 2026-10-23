@@ -4,7 +4,7 @@
 
 保留原文件 `assets/readme/hero-v1.webp`。构建检查它的 SHA-256，避免在后续排版中误换原 banner。
 
-首屏是原 banner，下面依次是身份一行、导航一行、三个纯文本小节（做过的 / 写过的 / 数据和贡献）和页尾。数据区保留 GitHub 总览、语言分布、连续贡献三张卡和贡献贪吃蛇。打字 banner、项目图文卡、技术图标、文章卡、PR 卡与无图文字目录都已移除，内容改由 Markdown 正文承担，正文必须保持可选中、可搜索。
+首屏是原 banner，下面依次是身份一行、导航一行、三个纯文本小节（做过的 / 写过的 / 数据和贡献）和页尾。数据区保留 GitHub 总览、语言分布两张卡和贡献贪吃蛇。打字 banner、项目图文卡、技术图标、文章卡、PR 卡与无图文字目录都已移除，内容改由 Markdown 正文承担，正文必须保持可选中、可搜索。
 
 浅色卡片为 `#F6F2EA`，强调色为 `#9A661B`，等级圆环为 `#D6A03B`。深色卡片为 `#25231F`，强调色为 `#E2B45D`，等级圆环为 `#E0A62F`。
 
@@ -12,7 +12,7 @@
 
 GitHub 总览固定使用 GitHub Readme Stats Fast。账号为 `lora-sys`，保留 `hide_rank=false`、`rank_icon=default` 和暖金色 `ring_color`。不要切回之前失效的总览接口，也不要用预设字母替代服务评分。
 
-语言分布使用 `github-readme-stats-fast.vercel.app/api/top-langs/`（与总览同源；旧部署已返回 DEPLOYMENT_NOT_FOUND）。连续贡献使用 `github-readme-streak-stats-eight.vercel.app/`。两项均沿用已有自托管服务。
+语言分布使用 `github-readme-stats-fast.vercel.app/api/top-langs/`（与总览同源；旧部署已返回 DEPLOYMENT_NOT_FOUND）。
 
 工作流读取真实 SVG，检查是否返回错误图片，再生成卡片。每个来源的 URL、获取时间和 SHA-256 写入 `output/v5/sources.json`。原始响应保存在 `output/v5/data/`。刷新失败时保留上一次通过检查的响应；首次发布没有有效数据时停止，不生成假数字。
 
@@ -22,7 +22,7 @@ GitHub 总览固定使用 GitHub Readme Stats Fast。账号为 `lora-sys`，保�
 
 ` scripts/prepare_approved_layout.py ` 保存可编辑的布局样式和已确认文案，生成 `assets/profile/approved-layout.html`。
 
-` scripts/build_approved_profile.py ` 以 Chromium 渲染三张统计卡和贡献贪吃蛇，输出为自包含 SVG。构建只处理 README 实际引用的资源：banner、overview、languages、streak 和 snake；布局里其余图片节点在渲染前移除，不下载任何第三方项目插画。不会提交字体文件、Cookie、令牌或个人文件。
+` scripts/build_approved_profile.py ` 以 Chromium 渲染两张统计卡和贡献贪吃蛇，输出为自包含 SVG。构建只处理 README 实际引用的资源：banner、overview、languages 和 snake；布局里其余图片节点在渲染前移除，不下载任何第三方项目插画。不会提交字体文件、Cookie、令牌或个人文件。
 
 ```sh
 python3 -m pip install Pillow==11.3.0 beautifulsoup4==4.13.4 playwright==1.55.0

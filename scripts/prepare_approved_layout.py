@@ -65,11 +65,10 @@ def write():
   repo='Glassbox-Agent-Harness' if i in (1,6,7) else 'zhihu-threads'
   out.append(f'<a class="tool-tile" href="{BASE+repo}/blob/main/package.json"><span class="tool-logo"><svg viewBox="0 0 32 32">{tool_shapes[i]}</svg></span><span class="tool-name">{name}</span><span class="tool-use">{use}</span></a>')
  out+=['</div><p class="tool-note">用于应用开发、数据存储和测试。点击图标可查看项目依赖。</p></section><div class="section-break"><span></span><i></i><span></span></div><section class="stats-section">',heading('next','03','GITHUB ACTIVITY','代码与贡献','lora-sys'),'<div class="stats-grid">']
- for key,title in [('stats','GitHub 总览'),('languages','仓库语言分布'),('streak','连续贡献记录')]:
-  if key=='streak':out.append('</div>')
+ for key,title in [('stats','GitHub 总览'),('languages','仓库语言分布')]:
   src='Stats Fast' if key=='stats' else '自托管服务'
-  url='https://github-readme-stats-fast.vercel.app/api?username=lora-sys' if key=='stats' else ('https://github-readme-stats-fast.vercel.app/api/top-langs/?username=lora-sys' if key=='languages' else 'https://github-readme-streak-stats-eight.vercel.app/?user=lora-sys')
-  out.append(f'<article class="stat-card {"activity-extension" if key=="streak" else ""}" id="{key}-card"><header class="stat-heading"><div class="stat-title">{icon("book" if key=="stats" else "code")}<h3>{title}</h3></div></header><div class="stat-body" id="{key}-body"></div></article>')
+  url='https://github-readme-stats-fast.vercel.app/api?username=lora-sys' if key=='stats' else 'https://github-readme-stats-fast.vercel.app/api/top-langs/?username=lora-sys'
+  out.append(f'<article class="stat-card" id="{key}-card"><header class="stat-heading"><div class="stat-title">{icon("book" if key=="stats" else "code")}<h3>{title}</h3></div></header><div class="stat-body" id="{key}-body"></div></article>')
  out+=['</section></section><section class="tail-sections"><div class="tail-rule"><span></span><i></i><span></span></div><section class="tail-writing">',heading('tail','04','FIELD NOTES','文章与笔记','全部文章','https://lora-sys.github.io/loraSys/blog'),'<div class="tail-posts">']
  for i,(slug,kind,date,title,desc) in enumerate(articles):out.append(f'<a class="tail-post-link" href="https://lora-sys.github.io/loraSys/blog/{slug}"><span class="tail-entry-number">0{i+1}</span><div class="tail-entry-content"><div class="tail-post-meta"><span>{kind}</span><time>{date}</time></div><h3>{title}</h3><p>{desc}</p></div><span class="tail-open">{icon("arrow")}</span></a>')
  out+=['</div></section><section class="tail-contributions">',heading('tail','05','OPEN SOURCE','参与的开源项目','更多合并记录','https://github.com/search?q=author%3Alora-sys+is%3Apr+is%3Amerged&type=pullrequests'),'<div class="tail-timeline">']

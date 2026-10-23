@@ -42,7 +42,7 @@ with sync_playwright() as p:
             data=article.evaluate('''el=>({width:el.clientWidth,scrollWidth:el.scrollWidth,images:[...el.querySelectorAll('img')].map(i=>({alt:i.alt,src:i.currentSrc,width:i.getBoundingClientRect().width,height:i.getBoundingClientRect().height,x:i.getBoundingClientRect().x,y:i.getBoundingClientRect().y})),links:[...el.querySelectorAll('a[href]')].map(a=>a.href)})''')
             assert data['scrollWidth']<=data['width']+1,'README horizontal overflow'
             assert data['images'],'README rendered no images'
-            for name in ('overview','languages','streak','snake'):
+            for name in ('overview','languages','snake'):
                 assert any('/'+name+'-' in i['src'] for i in data['images']),name+' card missing'
             assert all('/typing-' not in i['src'] for i in data['images']),'Typing banner is no longer part of the layout'
             headings=page.locator('article.markdown-body h1, article.markdown-body h2').all_text_contents()
