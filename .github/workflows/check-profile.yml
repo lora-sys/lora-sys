@@ -4,8 +4,8 @@ on:
   push:
     branches: [main]
     paths:
-      - scripts/review_approved_profile.py
-      - .github/workflows/profile-review.yml
+      - scripts/check_live_profile.py
+      - .github/workflows/check-profile.yml
   workflow_run:
     workflows: [Build profile visuals]
     types: [completed]
@@ -20,18 +20,22 @@ concurrency:
 
 jobs:
   review:
-    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.event != 'schedule')
-    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+      - name: Set up Python
+        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
+        with:
+          python-version: '3.12'
       - name: Install browser and Chinese fonts
         run: |
-          python -m pip install playwright==1.55.0 Pillow==11.3.0
+          python -m pip install -r requirements.txt
           python -m playwright install --with-deps chromium
           sudo apt-get install -y fonts-noto-cjk
       - name: Verify the actual public profile
-        run: python scripts/review_approved_profile.py
+        run: python scripts/check_live_profile.py
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
