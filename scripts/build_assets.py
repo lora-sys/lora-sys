@@ -113,7 +113,7 @@ def build():
  banner=ROOT/'assets/readme/hero.webp'
  data=banner.read_bytes()
  art_records={'banner':{'source':'assets/readme/hero.webp','sha256':hashlib.sha256(data).hexdigest()}}
- assert art_records['banner']['sha256']=='c2573c101012c3480a282920a82f9ab28ebbe35920009c4072d88dd6bd9ee7ff','Original banner changed'
+ assert art_records['banner']['sha256']=='090dcbf55c230564990259e7778cbff0e641945d42b360ebf680c6869941d34d','Approved banner changed'
  for theme in PALETTES:
   path=ROOT/'dist'/f'snake-{theme}.svg'
   svg=path.read_text().replace('</svg>','<style>@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style></svg>')
