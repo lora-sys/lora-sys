@@ -8,7 +8,7 @@ def write():
     for key, title, shape in [('stats', 'GitHub 总览', '<path d="M12 21V5M3 3c4-1 7 0 9 2 2-2 5-3 9-2v16c-4-1-7 0-9 2-2-2-5-3-9-2Z"/>'), ('languages', '仓库语言分布', '<path d="m8 5-6 7 6 7m8-14 6 7-6 7M14 3l-4 18"/>')]:
         cards.append(f'<article class="stat-card" id="{key}-card"><header class="stat-heading"><div class="stat-title"><svg viewBox="0 0 24 24" aria-hidden="true">{shape}</svg><h3>{title}</h3></div></header><div class="stat-body" id="{key}-body"></div></article>')
     markup = '<!doctype html><html lang="zh-CN" data-theme="light"><head><meta charset="utf-8"><title>Profile statistics</title><style>' + CSS + '</style></head><body><main class="sample"><div class="stats-grid">' + ''.join(cards) + '</div></main></body></html>'
-    dest = ROOT / 'assets/profile/approved-layout.html'
+    dest = ROOT / 'assets/profile/stats-layout.html'
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(markup, encoding='utf-8')
 

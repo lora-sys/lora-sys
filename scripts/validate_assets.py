@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
-from build_approved_profile import CARDS, PALETTES, SIZES, ROOT
+from build_assets import CARDS, PALETTES, SIZES, ROOT
 
 
 def validate_files(root: Path, readme: str):

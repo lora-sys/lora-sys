@@ -48,10 +48,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build approved profile and verify real statistics
         run: |
-          python3 scripts/build_approved_profile.py
-          python3 scripts/normalize_profile_svg.py dist/v5
+          python3 scripts/build_assets.py
+          python3 scripts/normalize_svg.py dist/v5
       - name: Validate published files and motion
-        run: python3 scripts/validate_profile.py
+        run: python3 scripts/validate_assets.py
       - name: Publish approved assets without rewriting history
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         run: |
@@ -77,11 +77,11 @@ jobs:
           path: |
             dist/
             qa/
-            scripts/build_approved_profile.py
-            scripts/prepare_approved_layout.py
-            scripts/normalize_profile_svg.py
-            scripts/validate_profile.py
+            scripts/build_assets.py
+            scripts/render_stats_layout.py
+            scripts/normalize_svg.py
+            scripts/validate_assets.py
             requirements.txt
-            assets/profile/approved-layout.html
-            assets/readme/hero-v1.webp
+            assets/profile/stats-layout.html
+            assets/readme/hero.webp
           retention-days: 7

@@ -43,6 +43,6 @@
       <circle cx="34" cy="12" r="7" fill="#E0A62F" stroke="none"/>
       <circle cx="159" cy="221" r="7" fill="#1A1A1A" stroke="none"/>
     </g>
-    <image id="lora-mochi" x="702" y="22" width="475" height="398" xlink:href="hero-subject-v1.png" preserveAspectRatio="xMidYMid meet"/>
+    <image id="lora-mochi" x="702" y="22" width="475" height="398" xlink:href="hero-subject.png" preserveAspectRatio="xMidYMid meet"/>
   </g>
 </svg>

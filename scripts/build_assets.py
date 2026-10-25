@@ -11,7 +11,6 @@ from pathlib import Path
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 import xml.etree.ElementTree as ET
-from bs4 import BeautifulSoup
 from PIL import Image
 from playwright.sync_api import sync_playwright
 
@@ -107,13 +106,13 @@ SPECS=[
 CARDS=('overview','languages')
 
 def build():
- from prepare_approved_layout import write
+ from render_stats_layout import write
  write()
- source=ROOT/'assets/profile/approved-layout.html'
- soup=BeautifulSoup(source.read_text(),'html.parser')
- banner=ROOT/'assets/readme/hero-v1.webp'
+ source=ROOT/'assets/profile/stats-layout.html'
+ layout=source.read_text()
+ banner=ROOT/'assets/readme/hero.webp'
  data=banner.read_bytes()
- art_records={'banner':{'source':'assets/readme/hero-v1.webp','sha256':hashlib.sha256(data).hexdigest()}}
+ art_records={'banner':{'source':'assets/readme/hero.webp','sha256':hashlib.sha256(data).hexdigest()}}
  assert art_records['banner']['sha256']=='c2573c101012c3480a282920a82f9ab28ebbe35920009c4072d88dd6bd9ee7ff','Original banner changed'
  for theme in PALETTES:
   path=ROOT/'dist'/f'snake-{theme}.svg'
@@ -128,7 +127,7 @@ def build():
   for theme in PALETTES:
    for mode,(viewport,full,cw,tw) in SIZES.items():
     page=browser.new_page(viewport={'width':viewport,'height':1000},device_scale_factor=2,reduced_motion='reduce',color_scheme=theme)
-    markup=str(soup).replace('data-theme="light"',f'data-theme="{theme}"')
+    markup=layout.replace('data-theme="light"',f'data-theme="{theme}"')
     page.set_content(markup,wait_until='load')
     for kind,host in [('overview','#stats-body'),('languages','#languages-body')]:
      page.locator(host).evaluate('(el,src)=>{el.replaceChildren(Object.assign(new Image(),{src,alt:"lora-sys real statistics",className:"stat-live-image"}));}',uri(stats[(theme,kind)]))
@@ -145,8 +144,6 @@ def build():
   browser.close()
  metadata=dict(build_source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),generated_at=captured_at,artwork=art_records,statistics=records,components=components)
  (OUT/'sources.json').write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+'\n')
- # README.md is the only source of profile copy and asset references.
- (OUT/'candidate-README.md').write_text((ROOT/'README.md').read_text(),encoding='utf-8')
  for path in OUT.rglob('*.svg'):ET.fromstring(path.read_bytes())
  print('Built',len(list(OUT.glob('*.svg'))),'assets; all SVGs parsed.')
 

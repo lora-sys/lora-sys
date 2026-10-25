@@ -1,6 +1,6 @@
 <!-- Lora approved profile v5. Asset provenance: output/v5/sources.json. -->
 <a id="top"></a>
-<p align="center"><a href="https://lora-sys.github.io/loraSys/"><img src="./assets/readme/hero-v1.webp" width="100%" alt="Lora 与 Mochi，原版插画 banner"></a></p>
+<p align="center"><a href="https://lora-sys.github.io/loraSys/"><img src="./assets/readme/hero.webp" width="100%" alt="Lora 与 Mochi，原版插画 banner"></a></p>
 
 <h1 align="center">Lora</h1>
 <p align="center">学生开发者 · 中国西安 · 写 AI Agent，也写把源码讲明白的交互教程</p>
