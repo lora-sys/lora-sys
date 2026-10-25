@@ -25,16 +25,16 @@
       <text x="0" y="190" fill="#4A4A4A" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="520">Building inspectable agent systems, inference</text>
       <text x="0" y="220" fill="#4A4A4A" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="20" font-weight="520">guides, and developer tools.</text>
 
-      <g transform="translate(0 258)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" font-weight="700">
+      <g id="topic-labels" transform="translate(0 258)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700">
         <rect width="154" height="42" rx="21" fill="#1A1A1A"/>
         <circle cx="22" cy="21" r="6" fill="#E0A62F"/>
         <text x="39" y="27" fill="#F7F4EE">AGENT SYSTEMS</text>
-        <rect x="168" width="164" height="42" rx="21" fill="#EDE6D6" stroke="#8B5E34" stroke-opacity="0.35"/>
+        <rect x="168" width="184" height="42" rx="21" fill="#EDE6D6" stroke="#8B5E34" stroke-opacity="0.35"/>
         <circle cx="190" cy="21" r="6" fill="#E0A62F"/>
         <text x="207" y="27" fill="#1A1A1A">INFERENCE GUIDES</text>
-        <rect x="346" width="166" height="42" rx="21" fill="#EDE6D6" stroke="#8B5E34" stroke-opacity="0.35"/>
-        <circle cx="368" cy="21" r="6" fill="#E0A62F"/>
-        <text x="385" y="27" fill="#1A1A1A">DEVELOPER TOOLS</text>
+        <rect x="366" width="178" height="42" rx="21" fill="#EDE6D6" stroke="#8B5E34" stroke-opacity="0.35"/>
+        <circle cx="388" cy="21" r="6" fill="#E0A62F"/>
+        <text x="405" y="27" fill="#1A1A1A">DEVELOPER TOOLS</text>
       </g>
     </g>
 
