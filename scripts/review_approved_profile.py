@@ -7,6 +7,7 @@ from PIL import Image
 from playwright.sync_api import sync_playwright
 
 out=Path('qa-live');out.mkdir(exist_ok=True)
+VIEWS=[('light',1440,False),('dark',1440,False),('light',390,False),('dark',390,False),('light',320,False),('dark',390,True)]
 readme=Path('README.md').read_text()
 if 'output/v5/' not in readme:
     (out/'report.json').write_text(json.dumps({'status':'assets_ready_waiting_for_readme_release'}))
@@ -18,7 +19,7 @@ if not required_headings:
 report={'source':'https://github.com/lora-sys','checked_at':datetime.now(timezone.utc).isoformat(),'commit':os.environ.get('GITHUB_SHA'),'views':[],'errors':[],'links':[]}
 with sync_playwright() as p:
     browser=p.chromium.launch()
-    for theme,width,reduce in [('light',1440,False),('dark',1440,False),('light',390,False),('dark',390,False),('light',320,False),('dark',390,True)]:
+    for theme,width,reduce in VIEWS:
         label=f'{theme}-{width}'+('-static' if reduce else '')
         page=browser.new_page(viewport={'width':width,'height':1000},color_scheme=theme,reduced_motion='reduce' if reduce else 'no-preference')
         try:
@@ -99,20 +100,17 @@ with sync_playwright() as p:
         finally:page.close()
     browser.close()
 
-urls=[
- 'https://lora-sys.github.io/loraSys/blog/agent-budget-memory-evaluation',
- 'https://lora-sys.github.io/loraSys/blog/tau-agent-architecture',
- 'https://lora-sys.github.io/loraSys/blog/ai-engineering-harness',
- 'https://lora-sys.github.io/nano-vllm-interactive-guide/guide/00-start',
-]
+urls=sorted(set(re.findall(r'https://lora-sys\.github\.io/[^\s<>\"\)]+', readme)))
 for url in urls:
     try:
         with urlopen(Request(url,headers={'User-Agent':'lora-profile-review'}),timeout=25) as response:
             body=response.read(2_000_000).decode('utf-8','replace')
             title=re.search(r'<title>(.*?)</title>',body,re.S)
             report['links'].append({'url':url,'status':response.status,'title':title.group(1) if title else ''})
-    except Exception as exc:report['links'].append({'url':url,'error':str(exc)})
-report['passed']=not report['errors'] and len(report['views'])==6
+    except Exception as exc:
+        report['links'].append({'url':url,'error':str(exc)})
+        report['errors'].append({'url':url,'error':str(exc)})
+report['passed']=not report['errors'] and len(report['views'])==len(VIEWS)
 (out/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
 print(json.dumps({'passed':report['passed'],'views':len(report['views']),'errors':report['errors'],'links':report['links']},ensure_ascii=False))
 if not report['passed']:sys.exit(1)

@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+*.pyc
+dist/
+qa/
+qa-live/
+previous/
+assets/profile/approved-layout.html

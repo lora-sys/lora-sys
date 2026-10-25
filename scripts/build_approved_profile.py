@@ -2,12 +2,10 @@
 
 The build preserves the original banner, reads real statistics, and retains a
 previous successful data snapshot if a provider is temporarily unavailable.
-A missing optional artwork is skipped rather than failing the run, so the
-daily refresh of the statistics and snake snapshots always completes.
 No font files, credentials, or invented statistics are published.
 """
 from __future__ import annotations
-import argparse, base64, hashlib, html, io, json, re, sys, time
+import base64, hashlib, html, io, json, re, sys, time
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlencode
@@ -28,10 +26,8 @@ PALETTES={
 SIZES={'desktop':(1440,880,400,195),'mobile':(390,342,326,156),'small':(320,272,260,123)}
 records={};components={};captured_at=datetime.now(timezone.utc).isoformat()
 
-def download(url:str,required:bool=True)->bytes|None:
- """Fetch an asset. Optional artwork returns None instead of aborting the
- build, so a removed upstream repository cannot stop the statistics and
- snake snapshots from being refreshed."""
+def download(url:str)->bytes:
+ """Fetch a statistics response with bounded retries."""
  for attempt in range(3):
   try:
    request=Request(url,headers={'User-Agent':'lora-profile/5','Accept':'image/svg+xml,image/*,*/*'})
@@ -41,9 +37,6 @@ def download(url:str,required:bool=True)->bytes|None:
     return data
   except Exception:
    if attempt==2:
-    if not required:
-     print('Skipping unavailable artwork:',url,file=sys.stderr)
-     return None
     raise
    time.sleep(2+attempt*3)
  raise RuntimeError('Unreachable')
@@ -113,93 +106,49 @@ SPECS=[
 ]
 CARDS=('overview','languages')
 
-def build(local=False):
+def build():
  from prepare_approved_layout import write
  write()
  source=ROOT/'assets/profile/approved-layout.html'
  soup=BeautifulSoup(source.read_text(),'html.parser')
  banner=ROOT/'assets/readme/hero-v1.webp'
  data=banner.read_bytes()
- soup.find('img',src='assets/banner.webp')['src']=uri(data,'image/webp')
- art_records={'banner':{'source':str(banner),'sha256':hashlib.sha256(data).hexdigest()}}
- assert local or art_records['banner']['sha256']=='c2573c101012c3480a282920a82f9ab28ebbe35920009c4072d88dd6bd9ee7ff','Original banner changed'
- for el in soup.select('.work-actions,.tail-socials,.tail-end'):el.decompose()
- for img in soup.select('img[src^="assets/"]'):
-  if img.get('src')!='assets/banner.webp':img.decompose()
- assert not soup.select('img[src^="assets/"]') or all(i.get('src')=='assets/banner.webp' for i in soup.select('img[src^="assets/"]')),'Unresolvable artwork left in the layout'
- if soup.select_one('#overview-provider-label'):soup.select_one('#overview-provider-label').string='Stats Fast'
- for el in soup.select('.stat-source'):el.decompose()
- for el in soup.select('.stat-footer'):el.decompose()
+ art_records={'banner':{'source':'assets/readme/hero-v1.webp','sha256':hashlib.sha256(data).hexdigest()}}
+ assert art_records['banner']['sha256']=='c2573c101012c3480a282920a82f9ab28ebbe35920009c4072d88dd6bd9ee7ff','Original banner changed'
+ for theme in PALETTES:
+  path=ROOT/'dist'/f'snake-{theme}.svg'
+  svg=path.read_text().replace('</svg>','<style>@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style></svg>')
+  path.write_text(svg)
+  path.with_name(path.stem+'-static.svg').write_text(svg.replace('</svg>','<style>*{animation:none!important}</style></svg>'))
  stats={}
- if not local:
-  for theme in PALETTES:
-   for kind in CARDS:stats[(theme,kind)]=stats_asset(kind,theme)
+ for theme in PALETTES:
+  for kind in CARDS:stats[(theme,kind)]=stats_asset(kind,theme)
  with sync_playwright() as playwright:
-  browser=playwright.chromium.launch(executable_path='/usr/bin/chromium' if local else None)
+  browser=playwright.chromium.launch()
   for theme in PALETTES:
    for mode,(viewport,full,cw,tw) in SIZES.items():
     page=browser.new_page(viewport={'width':viewport,'height':1000},device_scale_factor=2,reduced_motion='reduce',color_scheme=theme)
     markup=str(soup).replace('data-theme="light"',f'data-theme="{theme}"')
     page.set_content(markup,wait_until='load')
-    page.add_style_tag(content='body{background:transparent!important}.sample{border:0;border-radius:0;background:transparent!important}.tail-contact-right{min-width:0}.tail-contact-main{align-items:center}.tail-contact{margin-bottom:0}.stat-body img{max-width:100%;height:auto}.work-feature-copy{padding-bottom:0}')
     for kind,host in [('overview','#stats-body'),('languages','#languages-body')]:
-     if not local:page.locator(host).evaluate('(el,src)=>{el.replaceChildren(Object.assign(new Image(),{src,alt:"lora-sys real statistics",className:"stat-live-image"}));}',uri(stats[(theme,kind)]))
+     page.locator(host).evaluate('(el,src)=>{el.replaceChildren(Object.assign(new Image(),{src,alt:"lora-sys real statistics",className:"stat-live-image"}));}',uri(stats[(theme,kind)]))
     page.wait_for_function('()=>[...document.images].every(i=>!i.src || (i.complete&&i.naturalWidth>0))')
     page.evaluate('()=>document.fonts.ready')
     for name,sel,kind in SPECS:
-     if local and name in CARDS:continue
      el=page.locator(sel);title=el.inner_text().strip().replace('\n','。')
      link=el.get_attribute('href') or (el.locator('a').first.get_attribute('href') if el.locator('a').count() else None)
      components.setdefault(name,dict(alt=title,href=link))
      raster_svg(f'{name}-{theme}-{mode}',el.screenshot(animations='disabled',omit_background=True),cw if kind=='card' else full,title,pad=8 if kind=='card' else 0)
     for static in (False,True):
-     if not local:snake_svg(theme,mode,static)
+     snake_svg(theme,mode,static)
     page.close()
   browser.close()
  metadata=dict(build_source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),generated_at=captured_at,artwork=art_records,statistics=records,components=components)
  (OUT/'sources.json').write_text(json.dumps(metadata,ensure_ascii=False,indent=2)+'\n')
- (ROOT/'dist/README.md').write_text(make_readme(),encoding='utf-8')
- (OUT/'candidate-README.md').write_text(make_readme(),encoding='utf-8')
+ # README.md is the only source of profile copy and asset references.
+ (OUT/'candidate-README.md').write_text((ROOT/'README.md').read_text(),encoding='utf-8')
  for path in OUT.rglob('*.svg'):ET.fromstring(path.read_bytes())
  print('Built',len(list(OUT.glob('*.svg'))),'assets; all SVGs parsed.')
 
-def picture(name,alt=None,link=None,static=False):
- meta=components.get(name,{})
- alt=alt or meta.get('alt',name);href=link if link is not None else meta.get('href')
- sources=[]
- def src(media,theme,mode,still=False):
-  filename=f'v5/{name}-{theme}-{mode}'+('-static' if still else '')+'.svg'
-  return f'<source media="{media}" srcset="{RAW+filename}">'
- for still in ([True,False] if static else [False]):
-  prefix='(prefers-reduced-motion: reduce) and ' if still else ''
-  for maxw,mode in [(360,'small'),(680,'mobile')]:
-   sources+=[src(prefix+f'(max-width: {maxw}px) and (prefers-color-scheme: dark)','dark',mode,still),src(prefix+f'(max-width: {maxw}px)','light',mode,still)]
-  sources.append(src(prefix+'(prefers-color-scheme: dark)','dark','desktop',still))
-  if still:sources.append(src('(prefers-reduced-motion: reduce)','light','desktop',True))
- pic='<picture>'+''.join(sources)+f'<img src="{RAW+"v5/"+name}-light-desktop.svg" alt="{html.escape(alt,quote=True)}"></picture>'
- return '<a href="'+html.escape(href,quote=True)+'">'+pic+'</a>' if href else pic
-
-def make_readme():
- group=lambda names:'<p align="center">\n'+'\n'.join(picture(n) for n in names)+'\n</p>\n'
- md='    <!-- Lora approved profile v5. Asset provenance: output/v5/sources.json. -->\n'
- md+='    <a id="top"></a>\n'
- md+='    <p align="center"><a href="https://lora-sys.github.io/loraSys/"><img src="./assets/readme/hero-v1.webp" width="100%" alt="Lora 与 Mochi，原版插画 banner"></a></p>\n\n'
- md+='    <h1 align="center">Lora</h1>\n'
- md+='    <p align="center">学生开发者 · 中国西安 · 写 AI Agent，也写把源码讲明白的交互教程</p>\n\n'
- md+='    <p align="center"><a href="https://lora-sys.github.io/loraSys/">网站</a> · <a href="https://lora-sys.github.io/loraSys/projects">项目</a> · <a href="https://lora-sys.github.io/loraSys/blog">文章</a> · <a href="https://lora-sys.github.io/loraSys/rss.xml">RSS</a> · <a href="mailto:lorasys@outlook.com">邮箱</a></p>\n\n'
- md+='    ## 做过的\n\n'
- md+='    - **[Glassbox](https://github.com/lora-sys/Glassbox-Agent-Harness)** — 权限优先的个人 Agent 工作台，管理身份、记忆、权限与任务执行。119 个 Issue、67 个已合并 PR 在推进。\n'
- md+='    - **[nano-vLLM 交互教程](https://lora-sys.github.io/nano-vllm-interactive-guide/guide/00-start)** — 把推理调度、KV Cache 和采样讲成可以在浏览器里跑的实验。\n'
- md+='    - **[AgentArena](https://github.com/lora-sys/AgentArena)** — 让三支 Agent 团队处理同一任务，留下提案、证据与对战回放。\n'
- md+='    - 向 [cloudwego/eino-examples](https://github.com/cloudwego/eino-examples/pull/227)、[portdeveloper/nad-agent](https://github.com/portdeveloper/nad-agent/pull/49)、[nishuzumi/moss](https://github.com/nishuzumi/moss/pull/29) 等 13 个仓库提交过 174 个已合并 PR。\n\n'
- md+='    ## 写过的\n\n'
- md+='    179 篇笔记，写 Agent 架构、记忆与评测，都按可以照着复现的方式拆。最近的几篇：[Agent 该继续跑还是重新开一轮](https://lora-sys.github.io/loraSys/blog/agent-budget-memory-evaluation) · [把 Agent 拆成三层](https://lora-sys.github.io/loraSys/blog/tau-agent-architecture) · [Agent 开发的测试与审查](https://lora-sys.github.io/loraSys/blog/ai-engineering-harness)。\n\n'
- md+='    ## 数据和贡献\n\n'
- md+='    '+group(['overview','languages'])+'\n'
- md+='    '+picture('snake','lora-sys 的贡献贪吃蛇。根据 GitHub 贡献记录每日生成。',link='https://github.com/Platane/snk',static=True)+'\n\n'
- md+='    <p align="center"><sub>数据来自 GitHub，由 GitHub Actions 每日生成。</sub></p>\n\n'
- md+='    <p align="center"><a href="https://lora-sys.github.io/loraSys/">lora-sys.github.io/loraSys</a> · <a href="mailto:lorasys@outlook.com">lorasys@outlook.com</a> · <a href="#top">回到顶部</a></p>\n'
- return '\n'.join(line[4:] if line.startswith('    ') else line for line in md.splitlines())
-
 if __name__=='__main__':
- parser=argparse.ArgumentParser();parser.add_argument('--local',action='store_true');args=parser.parse_args();build(args.local)
+ build()

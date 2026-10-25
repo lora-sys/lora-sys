@@ -20,25 +20,27 @@ GitHub 总览固定使用 GitHub Readme Stats Fast。账号为 `lora-sys`，保�
 
 ## 文件与构建
 
-` scripts/prepare_approved_layout.py ` 保存可编辑的布局样式和已确认文案，生成 `assets/profile/approved-layout.html`。
+`scripts/prepare_approved_layout.py` 只保存总览和语言卡的布局样式，生成被 Git 忽略的 `assets/profile/approved-layout.html`。README.md 是主页文案和资源引用的唯一来源，构建只复制候选 README，不另存一套文案。
 
-` scripts/build_approved_profile.py ` 以 Chromium 渲染两张统计卡和贡献贪吃蛇，输出为自包含 SVG。构建只处理 README 实际引用的资源：banner、overview、languages 和 snake；布局里其余图片节点在渲染前移除，不下载任何第三方项目插画。不会提交字体文件、Cookie、令牌或个人文件。
+` scripts/build_approved_profile.py ` 以 Chromium 渲染两张统计卡和贡献贪吃蛇，输出为自包含 SVG。构建只处理 README 实际引用的资源：banner、overview、languages 和 snake；不包含旧项目卡、工具图标或第三方项目插画。不会提交字体文件、Cookie、令牌或个人文件。
 
 ```sh
-python3 -m pip install Pillow==11.3.0 beautifulsoup4==4.13.4 playwright==1.55.0
+python3 -m pip install -r requirements.txt
 python3 -m playwright install --with-deps chromium
 python3 scripts/build_approved_profile.py
+python3 scripts/normalize_profile_svg.py dist/v5
+python3 scripts/validate_profile.py
 ```
 
-完整构建在 `Build profile visuals` 中执行，它还负责安装中文字体、获取历史输出和生成贡献蛇。工作流在相关推送、每日 00:23 UTC 或手动触发时运行。
+完整构建在 `Build profile visuals` 中执行，它还负责安装中文字体、获取历史输出和生成贡献蛇。两个工作流固定 Ubuntu 24.04 和 Python 3.12，避免 ubuntu-latest 切换系统使固定版本的 Playwright 失效；依赖统一来自 requirements.txt。构建在 main 推送、PR、每日 00:23 UTC 或手动触发时运行。PR 完整生成与校验但不发布。验证检查精确资源集合、README 引用、原始数据哈希，以及全部 12 个贪吃蛇动态/静态变体。
 
-输出写入 `output/v5/`。使用普通快进提交，不强制推送，不删除原有资源。主分支的 README 是经过审查的发布入口，构建脚本不会自动替换它。新布局先生成 `output/v5/candidate-README.md`，检查后再发布为主分支 README。
+输出写入 `output/v5/`。使用普通快进提交，不强制推送。仅在所有验证通过后，将 dist/v5/ 通过 rsync --delete 同步到 previous/v5/，清除不再生成的旧卡片及数据；不会删除 v5 目录外的文件。主分支的 README 是经过审查的发布入口，构建脚本不会自动替换它。新布局先生成 `output/v5/candidate-README.md`，检查后再发布为主分支 README。
 
 ## 真实页面检查
 
-`Review profile appearance` 在成功的非定时构建后，使用 `scripts/review_approved_profile.py` 打开真实 GitHub 主页。等待新布局的「数据和贡献」标题出现后再断言，检查浅色与深色、桌面与手机、减少动画设置、图片加载、四张卡在窄屏纵向堆叠、二级标题与正文关键字、无 `。。` 占位符和横向溢出，并保存整页截图。
+`Review profile appearance` 在成功的 main 构建后（包括每日定时构建），使用 `scripts/review_approved_profile.py` 打开真实 GitHub 主页。等待新布局的「数据和贡献」标题出现后再断言，检查浅色与深色、桌面与手机、减少动画设置、图片加载、两张统计卡在窄屏纵向堆叠、二级标题与正文关键字、无 `。。` 占位符和横向溢出，并保存整页截图。
 
-构建截图与实际 GitHub 截图区分存放。Actions 产物保留七天。真实页面检查也记录文章与教程链接的 HTTP 状态。接口返回成功和卡片包含正确数据是两个独立检查。
+构建截图与实际 GitHub 截图区分存放。Actions 产物保留七天。真实页面检查从 README 提取网站、文章、RSS 与教程链接，记录 HTTP 状态；请求失败将使检查失败。接口返回成功和卡片包含正确数据是两个独立检查。
 
 ## 修改边界
 
